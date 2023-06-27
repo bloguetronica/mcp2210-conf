@@ -1,4 +1,4 @@
-/* MCP2130 Configurator - Version 1.0 for Debian Linux
+/* MCP2210 Configurator - Version 1.0 for Debian Linux
    Copyright (c) 2023 Samuel Lourenço
 
    This program is free software: you can redistribute it and/or modify it
@@ -23,6 +23,10 @@
 
 // Includes
 #include <QMainWindow>
+#include <QMap>
+#include <QPointer>
+#include <QString>
+#include "configuratorwindow.h"
 
 namespace Ui {
 class MainWindow;
@@ -36,8 +40,20 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+private slots:
+    void on_comboBoxDevices_currentIndexChanged(int index);
+    void on_lineEditPID_textEdited();
+    void on_lineEditVID_textEdited();
+    void on_pushButtonOpen_clicked();
+    void on_pushButtonRefresh_clicked();
+
 private:
     Ui::MainWindow *ui;
+    QMap<QString, QPointer<ConfiguratorWindow>> confWindowMap_;
+    quint16 pid_, vid_;
+
+    void refresh();
+    void validateInput();
 };
 
-#endif // MAINWINDOW_H
+#endif  // MAINWINDOW_H

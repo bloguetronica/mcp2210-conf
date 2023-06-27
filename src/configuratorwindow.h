@@ -1,4 +1,4 @@
-/* MCP2130 Configurator - Version 1.0 for Debian Linux
+/* MCP2210 Configurator - Version 1.0 for Debian Linux
    Copyright (c) 2023 Samuel Lourenço
 
    This program is free software: you can redistribute it and/or modify it
@@ -23,6 +23,7 @@
 
 // Includes
 #include <QMainWindow>
+#include "mcp2210.h"
 
 namespace Ui {
 class ConfiguratorWindow;
@@ -36,8 +37,15 @@ public:
     explicit ConfiguratorWindow(QWidget *parent = nullptr);
     ~ConfiguratorWindow();
 
+    bool isViewEnabled();
+    void openDevice(quint16 vid, quint16 pid, const QString &serialstr);
+
 private:
     Ui::ConfiguratorWindow *ui;
+    MCP2210 mcp2210_;
+    QString serialstr_;
+    quint16 pid_, vid_;
+    bool viewEnabled_ = false;
 };
 
-#endif // CONFIGURATORWINDOW_H
+#endif  // CONFIGURATORWINDOW_H
