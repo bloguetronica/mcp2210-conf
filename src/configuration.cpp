@@ -18,40 +18,17 @@
    Please feel free to contact me via e-mail: samuel.fmlourenco@gmail.com */
 
 
-#ifndef CONFIGURATORWINDOW_H
-#define CONFIGURATORWINDOW_H
-
 // Includes
-#include <QMainWindow>
-#include <QString>
 #include "configuration.h"
-#include "mcp2210.h"
 
-namespace Ui {
-class ConfiguratorWindow;
+// "Equal to" operator for Configuration
+bool Configuration::operator ==(const Configuration &other) const
+{
+    return manufacturer == other.manufacturer && product == other.product;
 }
 
-class ConfiguratorWindow : public QMainWindow
+// "Not equal to" operator for SiliconVersion
+bool Configuration::operator !=(const Configuration &other) const
 {
-    Q_OBJECT
-
-public:
-    explicit ConfiguratorWindow(QWidget *parent = nullptr);
-    ~ConfiguratorWindow();
-
-    bool isViewEnabled();
-    void openDevice(quint16 vid, quint16 pid, const QString &serialstr);
-
-private:
-    Ui::ConfiguratorWindow *ui;
-    Configuration deviceConfig_, editedConfig_;
-    MCP2210 mcp2210_;
-    QString serialstr_;
-    quint16 pid_, vid_;
-    bool viewEnabled_ = false;
-
-    //void displayConfiguration(const Configuration &config);
-    void readDeviceConfiguration();
-};
-
-#endif  // CONFIGURATORWINDOW_H
+    return !(operator ==(other));
+}

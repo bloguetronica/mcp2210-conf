@@ -65,3 +65,22 @@ void ConfiguratorWindow::openDevice(quint16 vid, quint16 pid, const QString &ser
         this->deleteLater();  // Close window after the subsequent show() call
     }
 }
+
+// This is the routine that reads the configuration from the CP2130 OTP ROM
+void ConfiguratorWindow::readDeviceConfiguration()
+{
+    int errcnt = 0;
+    QString errstr;
+    deviceConfig_.manufacturer = mcp2210_.getManufacturerDesc(errcnt, errstr);
+    deviceConfig_.product = mcp2210_.getProductDesc(errcnt, errstr);
+    if (errcnt > 0) {
+        mcp2210_.close();
+        if (mcp2210_.disconnected()) {
+            QMessageBox::critical(this, tr("Error"), tr("Device disconnected.\n\nPlease reconnect it and try again."));
+        } else {
+            errstr.chop(1);  // Remove the last character, which is always a newline
+            QMessageBox::critical(this, tr("Error"), tr("Read operation returned the following error(s):\n– %1\n\nPlease try accessing the device again.", "", errcnt).arg(errstr.replace("\n", "\n– ")));
+        }
+        this->deleteLater();  // In a context where the window is already visible, it has the same effect as this->close()
+    }
+}

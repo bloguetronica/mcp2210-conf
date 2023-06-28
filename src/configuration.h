@@ -18,40 +18,20 @@
    Please feel free to contact me via e-mail: samuel.fmlourenco@gmail.com */
 
 
-#ifndef CONFIGURATORWINDOW_H
-#define CONFIGURATORWINDOW_H
+#ifndef CONFIGURATION_H
+#define CONFIGURATION_H
 
 // Includes
-#include <QMainWindow>
 #include <QString>
-#include "configuration.h"
 #include "mcp2210.h"
 
-namespace Ui {
-class ConfiguratorWindow;
-}
-
-class ConfiguratorWindow : public QMainWindow
+struct Configuration
 {
-    Q_OBJECT
+    QString manufacturer;
+    QString product;
 
-public:
-    explicit ConfiguratorWindow(QWidget *parent = nullptr);
-    ~ConfiguratorWindow();
-
-    bool isViewEnabled();
-    void openDevice(quint16 vid, quint16 pid, const QString &serialstr);
-
-private:
-    Ui::ConfiguratorWindow *ui;
-    Configuration deviceConfig_, editedConfig_;
-    MCP2210 mcp2210_;
-    QString serialstr_;
-    quint16 pid_, vid_;
-    bool viewEnabled_ = false;
-
-    //void displayConfiguration(const Configuration &config);
-    void readDeviceConfiguration();
+    bool operator ==(const Configuration &other) const;
+    bool operator !=(const Configuration &other) const;
 };
 
-#endif  // CONFIGURATORWINDOW_H
+#endif  // CONFIGURATION_H

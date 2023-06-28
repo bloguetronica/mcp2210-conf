@@ -23,6 +23,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    configuration.cpp \
     configuratorwindow.cpp \
     libusb-extra.c \
     main.cpp \
@@ -30,6 +31,7 @@ SOURCES += \
     mcp2210.cpp
 
 HEADERS += \
+    configuration.h \
     configuratorwindow.h \
     libusb-extra.h \
     mainwindow.h \
