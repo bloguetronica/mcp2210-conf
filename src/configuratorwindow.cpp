@@ -49,9 +49,9 @@ void ConfiguratorWindow::openDevice(quint16 vid, quint16 pid, const QString &ser
         vid_ = vid;  // Pass VID
         pid_ = pid;  // and PID
         serialstr_ = serialstr;  // and the serial number as well
-        //readDeviceConfiguration();
+        readDeviceConfiguration();
         this->setWindowTitle(tr("MCP2210 Device (S/N: %1)").arg(serialstr_));
-        //displayConfiguration(deviceConfig_);
+        displayConfiguration(deviceConfig_);
         viewEnabled_ = true;
     } else if (err == MCP2210::ERROR_INIT) {  // Failed to initialize libusb
         QMessageBox::critical(this, tr("Critical Error"), tr("Could not initialize libusb.\n\nThis is a critical error and execution will be aborted."));
@@ -66,13 +66,49 @@ void ConfiguratorWindow::openDevice(quint16 vid, quint16 pid, const QString &ser
     }
 }
 
-// This is the routine that reads the configuration from the CP2130 OTP ROM
+void ConfiguratorWindow::on_lineEditManufacturer_textEdited()
+{
+    int curPosition = ui->lineEditManufacturer->cursorPosition();
+    ui->lineEditManufacturer->setText(ui->lineEditManufacturer->text().replace('\n', ' '));
+    ui->lineEditManufacturer->setCursorPosition(curPosition);
+}
+
+void ConfiguratorWindow::on_lineEditProduct_textEdited()
+{
+    int curPosition = ui->lineEditProduct->cursorPosition();
+    ui->lineEditProduct->setText(ui->lineEditProduct->text().replace('\n', ' '));
+    ui->lineEditProduct->setCursorPosition(curPosition);
+}
+
+// This is the main display routine, used to display the given configuration, updating all fields accordingly
+void ConfiguratorWindow::displayConfiguration(const Configuration &config)
+{
+    displayManufacturer(config.manufacturer);
+    setManufacturerEnabled(!deviceLocked_);
+    displayProduct(config.product);
+    setProductEnabled(!deviceLocked_);
+}
+
+// Updates the manufacturer descriptor field
+void ConfiguratorWindow::displayManufacturer(const QString &manufacturer)
+{
+    ui->lineEditManufacturer->setText(manufacturer);
+}
+
+// Updates the product descriptor field
+void ConfiguratorWindow::displayProduct(const QString &product)
+{
+    ui->lineEditProduct->setText(product);
+}
+
+// This is the routine that reads the configuration from the MCP2210 OTP ROM
 void ConfiguratorWindow::readDeviceConfiguration()
 {
     int errcnt = 0;
     QString errstr;
     deviceConfig_.manufacturer = mcp2210_.getManufacturerDesc(errcnt, errstr);
     deviceConfig_.product = mcp2210_.getProductDesc(errcnt, errstr);
+    deviceLocked_ = mcp2210_.getAccessControlMode(errcnt, errstr) == MCP2210::ACLOCKED;
     if (errcnt > 0) {
         mcp2210_.close();
         if (mcp2210_.disconnected()) {
@@ -83,4 +119,16 @@ void ConfiguratorWindow::readDeviceConfiguration()
         }
         this->deleteLater();  // In a context where the window is already visible, it has the same effect as this->close()
     }
+}
+
+// Enables or disables the manufacturer descriptor field
+void ConfiguratorWindow::setManufacturerEnabled(bool value)
+{
+    ui->lineEditManufacturer->setReadOnly(!value);
+}
+
+// Enables or disables the product descriptor field
+void ConfiguratorWindow::setProductEnabled(bool value)
+{
+    ui->lineEditProduct->setReadOnly(!value);
 }

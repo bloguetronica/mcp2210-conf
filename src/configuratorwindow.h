@@ -42,16 +42,24 @@ public:
     bool isViewEnabled();
     void openDevice(quint16 vid, quint16 pid, const QString &serialstr);
 
+private slots:
+    void on_lineEditManufacturer_textEdited();
+    void on_lineEditProduct_textEdited();
+
 private:
     Ui::ConfiguratorWindow *ui;
     Configuration deviceConfig_, editedConfig_;
     MCP2210 mcp2210_;
     QString serialstr_;
     quint16 pid_, vid_;
-    bool viewEnabled_ = false;
+    bool deviceLocked_ = true, viewEnabled_ = false;
 
-    //void displayConfiguration(const Configuration &config);
+    void displayConfiguration(const Configuration &config);
+    void displayManufacturer(const QString &manufacturer);
+    void displayProduct(const QString &product);
     void readDeviceConfiguration();
+    void setManufacturerEnabled(bool value);
+    void setProductEnabled(bool value);
 };
 
 #endif  // CONFIGURATORWINDOW_H
