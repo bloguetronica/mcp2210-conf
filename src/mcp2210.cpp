@@ -1,4 +1,4 @@
-/* MCP2210 class for Qt - Version 1.1.0
+/* MCP2210 class for Qt - Version 1.2.0
    Copyright (c) 2022 Samuel Lourenço
 
    This library is free software: you can redistribute it and/or modify it
@@ -38,11 +38,12 @@ QString MCP2210::getDescGeneric(quint8 subcomid, int &errcnt, QString &errstr)
         GET_NVRAM_SETTINGS, subcomid  // Header
     };
     QVector<quint8> response = hidTransfer(command, errcnt, errstr);
-    size_t maxLength = 2 * DESC_MAXLEN + 2;  // Maximum descriptor length in bytes
-    size_t length = (response[4] > maxLength ? maxLength : response[4]) - 2;  // Descriptor internal length
+    size_t maxSize = 2 * DESC_MAXLEN;  // Maximum size of the descriptor in bytes (the zero padding at the end takes two more bytes)
+    size_t size = response[4] - 2;  // Descriptor actual size, excluding the padding
+    size = size > maxSize ? maxSize : size;  // This also fixes an erroneous result due to a possible unsigned integer rollover (bug fixed in version 1.2.0)
     QString descriptor;
-    for (size_t i = 0; i < length; i += 2) {
-        descriptor += QChar(response[i + 7] << 8 | response[i + 6]);  // UTF-16LE conversion as per the USB 2.0 specification
+    for (size_t i = 0; i < size; i += 2) {
+        descriptor += QChar(response[i + PREAMBLE_SIZE + 3] << 8 | response[i + PREAMBLE_SIZE + 2]);  // UTF-16LE conversion as per the USB 2.0 specification
     }
     return descriptor;
 }
@@ -73,7 +74,7 @@ void MCP2210::interruptTransfer(quint8 endpointAddr, unsigned char *data, int le
 quint8 MCP2210::writeDescGeneric(const QString &descriptor, quint8 subcomid, int &errcnt, QString &errstr)
 {
     int strLength = descriptor.size();  // Descriptor string length
-    QVector<quint8> command(2 * strLength + 6);
+    QVector<quint8> command(2 * strLength + PREAMBLE_SIZE + 2);
     command[0] = SET_NVRAM_SETTINGS;                      // Header
     command[1] = subcomid;
     command[2] = 0x00;
@@ -81,8 +82,8 @@ quint8 MCP2210::writeDescGeneric(const QString &descriptor, quint8 subcomid, int
     command[4] = static_cast<quint8>(2 * strLength + 2);  // Descriptor length in bytes
     command[5] = 0x03;                                    // USB descriptor constant
     for (int i = 0; i < strLength; ++i) {
-        command[2 * i + 6] = static_cast<quint8>(descriptor[i].unicode());
-        command[2 * i + 7] = static_cast<quint8>(descriptor[i].unicode() >> 8);
+        command[2 * i + PREAMBLE_SIZE + 2] = static_cast<quint8>(descriptor[i].unicode());
+        command[2 * i + PREAMBLE_SIZE + 3] = static_cast<quint8>(descriptor[i].unicode() >> 8);
     }
     QVector<quint8> response = hidTransfer(command, errcnt, errstr);
     return response[1];
@@ -625,11 +626,11 @@ QVector<quint8> MCP2210::spiTransfer(const QVector<quint8> &data, quint8 &status
         ++errcnt;
         errstr += QObject::tr("In spiTransfer(): vector size cannot exceed 60 bytes.\n");  // Program logic error
     } else {
-        QVector<quint8> command(bytesToSend + 4);
+        QVector<quint8> command(bytesToSend + PREAMBLE_SIZE);
         command[0] = TRANSFER_SPI_DATA;                 // Header
         command[1] = static_cast<quint8>(bytesToSend);  // Number of bytes to send
         for (size_t i = 0; i < bytesToSend; ++i) {
-            command[i + 4] = data[i];
+            command[i + PREAMBLE_SIZE] = data[i];
         }
         QVector<quint8> response = hidTransfer(command, errcnt, errstr);
         if (response[1] == COMPLETED) {  // If the HID transfer was completed
@@ -637,7 +638,7 @@ QVector<quint8> MCP2210::spiTransfer(const QVector<quint8> &data, quint8 &status
             size_t bytesReceived = response[2];
             retdata.resize(bytesReceived);
             for (size_t i = 0; i < bytesReceived; ++i) {
-                retdata[i] = response[i + 4];
+                retdata[i] = response[i + PREAMBLE_SIZE];
             }
         } else {
             status = response[1];  // The returned status corresponds to the obtained HID command response (it can be "BUSY" [0xf7] or "IN_PROGRESS" [0xf8])
@@ -688,10 +689,10 @@ quint8 MCP2210::usePassword(const QString &password, int &errcnt, QString &errst
         errstr += "In usePassword(): password cannot have non-latin characters.\n";  // Program logic error
         retval = OTHER_ERROR;
     } else {
-        QVector<quint8> command(passwordLength + 4);
+        QVector<quint8> command(passwordLength + PREAMBLE_SIZE);
         command[0] = SEND_PASSWORD;  // Header
         for (int i = 0; i < passwordLength; ++i) {
-            command[i + 4] = static_cast<quint8>(passwordLatin1[i]);
+            command[i + PREAMBLE_SIZE] = static_cast<quint8>(passwordLatin1[i]);
         }
         QVector<quint8> response = hidTransfer(command, errcnt, errstr);
         retval = response[1];
