@@ -51,6 +51,9 @@ TRANSLATIONS += \
 
 LIBS += -lusb-1.0
 
+RESOURCES += \
+    resources.qrc
+
 # Added installation option
 unix {
     isEmpty(PREFIX) {
@@ -70,6 +73,3 @@ unix {
 DISTFILES += \
     icons/mcp2210-conf.png \
     misc/mcp2210-conf.desktop
-
-RESOURCES += \
-    resources.qrc
