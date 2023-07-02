@@ -65,3 +65,6 @@ unix {
 DISTFILES += \
     icons/mcp2210-conf.png \
     misc/mcp2210-conf.desktop
+
+RESOURCES += \
+    resources.qrc
