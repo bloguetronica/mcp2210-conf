@@ -43,6 +43,7 @@ public:
     void openDevice(quint16 vid, quint16 pid, const QString &serialstr);
 
 private slots:
+    void on_actionAbout_triggered();
     void on_lineEditManufacturer_textEdited();
     void on_lineEditProduct_textEdited();
 

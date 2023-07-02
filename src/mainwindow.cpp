@@ -23,6 +23,7 @@
 #include <QRegExp>
 #include <QRegExpValidator>
 #include <QStringList>
+#include "common.h"
 #include "mcp2210.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
@@ -40,6 +41,17 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    Q_UNUSED(event);
+    closeAboutDialog();  // See "common.h" and "common.cpp"
+}
+
+void MainWindow::on_actionAbout_triggered()
+{
+    showAboutDialog();
 }
 
 void MainWindow::on_comboBoxDevices_currentIndexChanged(int index)
