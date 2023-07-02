@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>MCP2210 Device</string>
   </property>
   <property name="windowIcon">
    <iconset resource="resources.qrc">
