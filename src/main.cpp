@@ -1,4 +1,4 @@
-/* MCP2130 Configurator - Version 1.0 for Debian Linux
+/* MCP2210 Configurator - Version 1.0 for Debian Linux
    Copyright (c) 2023 Samuel Lourenço
 
    This program is free software: you can redistribute it and/or modify it
@@ -28,8 +28,8 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     QTranslator translator;
-    if (!translator.load("cp2130-conf_" + QLocale::system().name(), ":/translations/translations")) {  // It the locale translation does not exist or cannot be loaded
-        translator.load("cp2130-conf_en_US", ":/translations/translations");  // Fall back to the en-US translation
+    if (!translator.load("mcp2210-conf_" + QLocale::system().name(), ":/translations/translations")) {  // It the locale translation does not exist or cannot be loaded
+        translator.load("mcp2210-conf_en_US", ":/translations/translations");  // Fall back to the en-US translation
     }
     a.installTranslator(&translator);
     MainWindow w;
