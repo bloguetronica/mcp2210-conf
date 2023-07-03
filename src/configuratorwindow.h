@@ -45,7 +45,11 @@ public:
 private slots:
     void on_actionAbout_triggered();
     void on_lineEditManufacturer_textEdited();
+    void on_lineEditPID_textChanged();
+    void on_lineEditPID_textEdited();
     void on_lineEditProduct_textEdited();
+    void on_lineEditVID_textChanged();
+    void on_lineEditVID_textEdited();
 
 private:
     Ui::ConfiguratorWindow *ui;
@@ -58,9 +62,12 @@ private:
     void displayConfiguration(const Configuration &config);
     void displayManufacturer(const QString &manufacturer);
     void displayProduct(const QString &product);
+    void displayUSBParameters(const MCP2210::USBParameters &usbparameters);
     void readDeviceConfiguration();
     void setManufacturerEnabled(bool value);
+    void setPIDEnabled(bool value);
     void setProductEnabled(bool value);
+    void setVIDEnabled(bool value);
 };
 
 #endif  // CONFIGURATORWINDOW_H

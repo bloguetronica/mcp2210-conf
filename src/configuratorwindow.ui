@@ -82,7 +82,7 @@
        </rect>
       </property>
       <property name="maxLength">
-       <number>62</number>
+       <number>28</number>
       </property>
       <property name="readOnly">
        <bool>true</bool>
@@ -117,10 +117,86 @@
        </rect>
       </property>
       <property name="maxLength">
-       <number>62</number>
+       <number>28</number>
       </property>
       <property name="readOnly">
        <bool>true</bool>
+      </property>
+      <property name="clearButtonEnabled">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="labelVID">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>97</y>
+        <width>105</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Vendor ID:</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEditVID">
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>90</y>
+        <width>101</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="maxLength">
+       <number>4</number>
+      </property>
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+      <property name="placeholderText">
+       <string>0x</string>
+      </property>
+      <property name="clearButtonEnabled">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="labelPID">
+      <property name="geometry">
+       <rect>
+        <x>230</x>
+        <y>97</y>
+        <width>105</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Product ID:</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEditPID">
+      <property name="geometry">
+       <rect>
+        <x>340</x>
+        <y>90</y>
+        <width>101</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="maxLength">
+       <number>4</number>
+      </property>
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+      <property name="placeholderText">
+       <string>0x</string>
       </property>
       <property name="clearButtonEnabled">
        <bool>true</bool>
