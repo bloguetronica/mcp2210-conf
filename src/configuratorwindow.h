@@ -45,6 +45,12 @@ public:
 private slots:
     void on_actionAbout_triggered();
     void on_lineEditManufacturer_textEdited();
+    void on_lineEditMaxPower_editingFinished();
+    void on_lineEditMaxPower_textChanged();
+    void on_lineEditMaxPower_textEdited();
+    void on_lineEditMaxPowerHex_editingFinished();
+    void on_lineEditMaxPowerHex_textChanged();
+    void on_lineEditMaxPowerHex_textEdited();
     void on_lineEditPID_textChanged();
     void on_lineEditPID_textEdited();
     void on_lineEditProduct_textEdited();
@@ -65,6 +71,7 @@ private:
     void displayUSBParameters(const MCP2210::USBParameters &usbparameters);
     void readDeviceConfiguration();
     void setManufacturerEnabled(bool value);
+    void setMaxPowerEnabled(bool value);
     void setPIDEnabled(bool value);
     void setProductEnabled(bool value);
     void setVIDEnabled(bool value);

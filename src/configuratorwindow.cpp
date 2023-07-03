@@ -20,15 +20,24 @@
 
 // Includes
 #include <QMessageBox>
+#include <QRegExp>
+#include <QRegExpValidator>
 #include "common.h"
 #include "configuratorwindow.h"
 #include "ui_configuratorwindow.h"
+
+// Definitions
+const int POWER_LIMIT = 500;  // Maximum current consumption limit, as per the USB 2.0 specification
 
 ConfiguratorWindow::ConfiguratorWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::ConfiguratorWindow)
 {
     ui->setupUi(this);
+    ui->lineEditVID->setValidator(new QRegExpValidator(QRegExp("[A-Fa-f\\d]+"), this));
+    ui->lineEditPID->setValidator(new QRegExpValidator(QRegExp("[A-Fa-f\\d]+"), this));
+    ui->lineEditMaxPower->setValidator(new QRegExpValidator(QRegExp("[\\d]+"), this));
+    ui->lineEditMaxPowerHex->setValidator(new QRegExpValidator(QRegExp("[A-Fa-f\\d]+"), this));
 }
 
 ConfiguratorWindow::~ConfiguratorWindow()
@@ -77,6 +86,61 @@ void ConfiguratorWindow::on_lineEditManufacturer_textEdited()
     int curPosition = ui->lineEditManufacturer->cursorPosition();
     ui->lineEditManufacturer->setText(ui->lineEditManufacturer->text().replace('\n', ' '));
     ui->lineEditManufacturer->setCursorPosition(curPosition);
+}
+
+void ConfiguratorWindow::on_lineEditMaxPower_editingFinished()
+{
+    ui->lineEditMaxPower->setText(QString::number(2 * (ui->lineEditMaxPower->text().toInt() / 2)));  // This removes any leading zeros and also rounds to the previous even number, if the value is odd
+}
+
+void ConfiguratorWindow::on_lineEditMaxPower_textChanged()
+{
+    if (ui->lineEditMaxPower->text().isEmpty()) {
+        ui->lineEditMaxPower->setStyleSheet("background: rgb(255, 204, 0);");
+    } else {
+        ui->lineEditMaxPower->setStyleSheet("");
+    }
+}
+
+void ConfiguratorWindow::on_lineEditMaxPower_textEdited()
+{
+    QString maxPowerStr = ui->lineEditMaxPower->text();
+    int maxPower = maxPowerStr.toInt();
+    if (maxPower > POWER_LIMIT) {
+        maxPowerStr.chop(1);
+        ui->lineEditMaxPower->setText(maxPowerStr);
+        maxPower /= 10;
+    }
+    ui->lineEditMaxPowerHex->setText(QString("%1").arg(maxPower / 2, 2, 16, QChar('0')));  // This will autofill with up to two leading zeros
+}
+
+void ConfiguratorWindow::on_lineEditMaxPowerHex_editingFinished()
+{
+    if (ui->lineEditMaxPowerHex->text().size() < 2) {
+        ui->lineEditMaxPowerHex->setText(QString("%1").arg(ui->lineEditMaxPowerHex->text().toInt(nullptr, 16), 2, 16, QChar('0')));  // This will autofill with up to two leading zeros
+    }
+}
+
+void ConfiguratorWindow::on_lineEditMaxPowerHex_textChanged()
+{
+    if (ui->lineEditMaxPowerHex->text().isEmpty()) {
+        ui->lineEditMaxPowerHex->setStyleSheet("background: rgb(255, 204, 0);");
+    } else {
+        ui->lineEditMaxPowerHex->setStyleSheet("");
+    }
+}
+
+void ConfiguratorWindow::on_lineEditMaxPowerHex_textEdited()
+{
+    int curPosition = ui->lineEditMaxPowerHex->cursorPosition();
+    ui->lineEditMaxPowerHex->setText(ui->lineEditMaxPowerHex->text().toLower());
+    int maxPower = 2 * ui->lineEditMaxPowerHex->text().toInt(nullptr, 16);
+    if (maxPower > POWER_LIMIT) {
+        maxPower = POWER_LIMIT;
+        ui->lineEditMaxPowerHex->setText(QString("%1").arg(POWER_LIMIT / 2, 2, 16, QChar('0')));  // This will autofill with up to two leading zeros
+    }
+    ui->lineEditMaxPowerHex->setCursorPosition(curPosition);
+    ui->lineEditMaxPower->setText(QString::number(maxPower));
 }
 
 void ConfiguratorWindow::on_lineEditPID_textChanged()
@@ -128,6 +192,7 @@ void ConfiguratorWindow::displayConfiguration(const Configuration &config)
     displayUSBParameters(config.usbparameters);
     setVIDEnabled(!deviceLocked_);
     setPIDEnabled(!deviceLocked_);
+    setMaxPowerEnabled(!deviceLocked_);
 }
 
 // Updates the manufacturer descriptor field
@@ -147,8 +212,8 @@ void ConfiguratorWindow::displayUSBParameters(const MCP2210::USBParameters &usbp
 {
     ui->lineEditVID->setText(QString("%1").arg(usbparameters.vid, 4, 16, QChar('0')));  // This will autofill with up to four leading zeros
     ui->lineEditPID->setText(QString("%1").arg(usbparameters.pid, 4, 16, QChar('0')));  // Same as before
-    //ui->lineEditMaxPower->setText(QString::number(2 * usbparameters.maxpow));
-    //ui->lineEditMaxPowerHex->setText(QString("%1").arg(usbparameters.maxpow, 2, 16, QChar('0')));  // This will autofill with up to two leading zeros
+    ui->lineEditMaxPower->setText(QString::number(2 * usbparameters.maxpow));
+    ui->lineEditMaxPowerHex->setText(QString("%1").arg(usbparameters.maxpow, 2, 16, QChar('0')));  // This will autofill with up to two leading zeros
     //ui->comboBoxPowerMode->setCurrentIndex(usbparameters.powmode);
 }
 
@@ -177,6 +242,13 @@ void ConfiguratorWindow::readDeviceConfiguration()
 void ConfiguratorWindow::setManufacturerEnabled(bool value)
 {
     ui->lineEditManufacturer->setReadOnly(!value);
+}
+
+// Enables or disables the maximum power consuption configuration fields
+void ConfiguratorWindow::setMaxPowerEnabled(bool value)
+{
+    ui->lineEditMaxPower->setReadOnly(!value);
+    ui->lineEditMaxPowerHex->setReadOnly(!value);
 }
 
 // Enables or disables the PID field

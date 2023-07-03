@@ -202,6 +202,60 @@
        <bool>true</bool>
       </property>
      </widget>
+     <widget class="QLabel" name="labelMaxPower">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>137</y>
+        <width>215</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Max. power consumption (mA):</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEditMaxPower">
+      <property name="geometry">
+       <rect>
+        <x>230</x>
+        <y>130</y>
+        <width>101</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+      <property name="clearButtonEnabled">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEditMaxPowerHex">
+      <property name="geometry">
+       <rect>
+        <x>340</x>
+        <y>130</y>
+        <width>101</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="maxLength">
+       <number>2</number>
+      </property>
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+      <property name="placeholderText">
+       <string>0x</string>
+      </property>
+      <property name="clearButtonEnabled">
+       <bool>true</bool>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="tabPinConfig">
      <attribute name="title">
