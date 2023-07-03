@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>471</width>
-    <height>600</height>
+    <height>580</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -277,6 +277,9 @@
     <property name="title">
      <string>&amp;Device</string>
     </property>
+    <addaction name="actionInformation"/>
+    <addaction name="separator"/>
+    <addaction name="actionClose"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -292,9 +295,39 @@
     <string>&amp;About MCP2210 Configurator</string>
    </property>
   </action>
+  <action name="actionInformation">
+   <property name="text">
+    <string>&amp;Information</string>
+   </property>
+  </action>
+  <action name="actionClose">
+   <property name="text">
+    <string>&amp;Close</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+W</string>
+   </property>
+  </action>
  </widget>
  <resources>
   <include location="resources.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>actionClose</sender>
+   <signal>triggered()</signal>
+   <receiver>ConfiguratorWindow</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>235</x>
+     <y>289</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>
