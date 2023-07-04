@@ -1,4 +1,4 @@
-/* MCP2210 class for Qt - Version 1.2.0
+/* MCP2210 class for Qt - Version 1.2.1
    Copyright (c) 2022-2023 Samuel Lourenço
 
    This library is free software: you can redistribute it and/or modify it
@@ -256,7 +256,7 @@ MCP2210::ChipSettings MCP2210::getChipSettings(int &errcnt, QString &errstr)
     settings.gp8 = response[12];                                       // GP8 pin configuration corresponds to byte 12
     settings.gpdir = response[15];                                     // Default GPIO directions (GPIO7 to GPIO0) corresponds to byte 15
     settings.gpout = response[13];                                     // Default GPIO outputs (GPIO7 to GPIO0) corresponds to byte 13
-    settings.rmwakeup = (0x10 & response[17]) != 0x00;                 // Remote wakeup corresponds to bit 4 of byte 17
+    settings.rmwakeup = (0x10 & response[17]) != 0x00;                 // Remote wake-up corresponds to bit 4 of byte 17
     settings.intmode = static_cast<quint8>(0x07 & response[17] >> 1);  // Interrupt counting mode corresponds to bits 3:1 of byte 17
     settings.nrelspi = (0x01 & response[17]) != 0x00;                  // SPI bus release corresponds to bit 0 of byte 17
     return settings;
@@ -361,7 +361,7 @@ MCP2210::ChipSettings MCP2210::getNVChipSettings(int &errcnt, QString &errstr)
     settings.gp8 = response[12];                                       // GP8 pin configuration corresponds to byte 12
     settings.gpdir = response[15];                                     // Default GPIO directions (GPIO7 to GPIO0) corresponds to byte 15
     settings.gpout = response[13];                                     // Default GPIO outputs (GPIO7 to GPIO0) corresponds to byte 13
-    settings.rmwakeup = (0x10 & response[17]) != 0x00;                 // Remote wakeup corresponds to bit 4 of byte 17
+    settings.rmwakeup = (0x10 & response[17]) != 0x00;                 // Remote wake-up corresponds to bit 4 of byte 17
     settings.intmode = static_cast<quint8>(0x07 & response[17] >> 1);  // Interrupt counting mode corresponds to bits 3:1 of byte 17
     settings.nrelspi = (0x01 & response[17]) != 0x00;                  // SPI bus release corresponds to bit 0 of byte 17
     return settings;
@@ -422,8 +422,8 @@ MCP2210::USBParameters MCP2210::getUSBParameters(int &errcnt, QString &errstr)
     parameters.vid = static_cast<quint16>(response[13] << 8 | response[12]);  // Vendor ID corresponds to bytes 12 and 13 (little-endian conversion)
     parameters.pid = static_cast<quint32>(response[15] << 8 | response[14]);  // Product ID corresponds to bytes 14 and 15 (little-endian conversion)
     parameters.maxpow = response[30];                                         // Maximum consumption current corresponds to byte 30
-    parameters.powmode = (0x80 & response[29]) != 0x00;                       // Power mode corresponds to bit 7 of byte 29 (bit 6 is redundant)
-    parameters.rmwakeup = (0x20 & response[29]) != 0x00;                      // Remote wakeup corresponds to bit 5 of byte 29
+    parameters.powmode = (0x40 & response[29]) != 0x00;                       // Power mode corresponds to bit 6 of byte 29 (bit 7 is redundant)
+    parameters.rmwakeup = (0x20 & response[29]) != 0x00;                      // Remote wake-up capability corresponds to bit 5 of byte 29
     return parameters;
 }
 
@@ -847,7 +847,7 @@ quint8 MCP2210::writeUSBParameters(const USBParameters &parameters, int &errcnt,
         SET_NVRAM_SETTINGS, USB_PARAMETERS, 0x00, 0x00,                                                      // Header
         static_cast<quint8>(parameters.vid), static_cast<quint8>(parameters.vid >> 8),                       // Vendor ID
         static_cast<quint8>(parameters.pid), static_cast<quint8>(parameters.pid >> 8),                       // Product ID
-        static_cast<quint8>(parameters.powmode << 7 | !parameters.powmode << 6 | parameters.rmwakeup << 5),  // Chip power options
+        static_cast<quint8>(!parameters.powmode << 7 | parameters.powmode << 6 | parameters.rmwakeup << 5),  // Chip power options
         parameters.maxpow                                                                                    // Maximum consumption current
     };
     QVector<quint8> response = hidTransfer(command, errcnt, errstr);

@@ -1,4 +1,4 @@
-/* MCP2210 class for Qt - Version 1.2.0
+/* MCP2210 class for Qt - Version 1.2.1
    Copyright (c) 2022-2023 Samuel Lourenço
 
    This library is free software: you can redistribute it and/or modify it
@@ -219,7 +219,7 @@ public:
         quint8 gp8;      // GP8 pin configuration
         quint8 gpdir;    // Default GPIO directions (CS7 to CS0)
         quint8 gpout;    // Default GPIO outputs (CS7 to CS0)
-        bool rmwakeup;   // Remote wakeup
+        bool rmwakeup;   // Remote wake-up
         quint8 intmode;  // Interrupt counting mode
         bool nrelspi;    // SPI bus release (negated)
 
@@ -256,7 +256,7 @@ public:
         quint16 pid;    // Product ID
         quint8 maxpow;  // Maximum consumption current (raw value in 2 mA units)
         bool powmode;   // Power mode (false for bus-powered, true for self-powered)
-        bool rmwakeup;  // Remote wakeup
+        bool rmwakeup;  // Remote wake-up capability
 
         bool operator ==(const USBParameters &other) const;
         bool operator !=(const USBParameters &other) const;
