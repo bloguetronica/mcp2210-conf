@@ -256,6 +256,61 @@
        <bool>true</bool>
       </property>
      </widget>
+     <widget class="QLabel" name="labelPowerMode">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>177</y>
+        <width>215</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Power mode:</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="comboBoxPowerMode">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>230</x>
+        <y>170</y>
+        <width>211</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <item>
+       <property name="text">
+        <string>Bus-powered</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Self-powered</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QCheckBox" name="checkBoxRemoteWakeUpCapable">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>230</x>
+        <y>210</y>
+        <width>211</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Remote wake-up capable</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="tabPinConfig">
      <attribute name="title">

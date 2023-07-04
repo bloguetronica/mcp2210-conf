@@ -193,6 +193,8 @@ void ConfiguratorWindow::displayConfiguration(const Configuration &config)
     setVIDEnabled(!deviceLocked_);
     setPIDEnabled(!deviceLocked_);
     setMaxPowerEnabled(!deviceLocked_);
+    setPowerModeEnabled(!deviceLocked_);
+    setRemoteWakeUpCapableEnabled(!deviceLocked_);
 }
 
 // Updates the manufacturer descriptor field
@@ -214,7 +216,8 @@ void ConfiguratorWindow::displayUSBParameters(const MCP2210::USBParameters &usbp
     ui->lineEditPID->setText(QString("%1").arg(usbparameters.pid, 4, 16, QChar('0')));  // Same as before
     ui->lineEditMaxPower->setText(QString::number(2 * usbparameters.maxpow));
     ui->lineEditMaxPowerHex->setText(QString("%1").arg(usbparameters.maxpow, 2, 16, QChar('0')));  // This will autofill with up to two leading zeros
-    //ui->comboBoxPowerMode->setCurrentIndex(usbparameters.powmode);
+    ui->comboBoxPowerMode->setCurrentIndex(usbparameters.powmode);
+    ui->checkBoxRemoteWakeUpCapable->setChecked(usbparameters.rmwakeup);
 }
 
 // This is the routine that reads the configuration from the MCP2210 OTP ROM
@@ -257,10 +260,22 @@ void ConfiguratorWindow::setPIDEnabled(bool value)
     ui->lineEditPID->setReadOnly(!value);
 }
 
+// Enables or disables the power mode configuration combo box
+void ConfiguratorWindow::setPowerModeEnabled(bool value)
+{
+    ui->comboBoxPowerMode->setEnabled(value);
+}
+
 // Enables or disables the product descriptor field
 void ConfiguratorWindow::setProductEnabled(bool value)
 {
     ui->lineEditProduct->setReadOnly(!value);
+}
+
+// Enables or disables the remote wake-up capability check box
+void ConfiguratorWindow::setRemoteWakeUpCapableEnabled(bool value)
+{
+    ui->checkBoxRemoteWakeUpCapable->setEnabled(value);
 }
 
 // Enables or disables the VID field

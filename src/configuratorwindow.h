@@ -73,7 +73,9 @@ private:
     void setManufacturerEnabled(bool value);
     void setMaxPowerEnabled(bool value);
     void setPIDEnabled(bool value);
+    void setPowerModeEnabled(bool value);
     void setProductEnabled(bool value);
+    void setRemoteWakeUpCapableEnabled(bool value);
     void setVIDEnabled(bool value);
 };
 
