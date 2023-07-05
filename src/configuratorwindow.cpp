@@ -81,6 +81,28 @@ void ConfiguratorWindow::on_actionAbout_triggered()
     showAboutDialog();
 }
 
+void ConfiguratorWindow::on_actionStatus_triggered()
+{
+    if (statusDialog_.isNull()) {  // If the dialog is not open
+        int errcnt = 0;
+        QString errstr;
+        // Obtain information here????
+        opCheck(tr("device-status-retrieval-op"), errcnt, errstr);  // The string "device-status-retrieval-op" should be translated to "Device status retrieval"
+        if (err_) {
+            handleError();
+        } else {  // If error check passes
+            statusDialog_ = new StatusDialog(this);
+            statusDialog_->setAttribute(Qt::WA_DeleteOnClose);  // It is important to delete the dialog in memory once closed, in order to force the application to retrieve the device status if the window is opened again???
+            statusDialog_->setWindowTitle(tr("Device Status (S/N: %1)").arg(serialstr_));
+            // To implement set texts
+            statusDialog_->show();
+        }
+    } else {
+        statusDialog_->showNormal();  // Required if the dialog is minimized
+        statusDialog_->activateWindow();  // Set focus on the previous dialog (dialog is raised and selected)
+    }
+}
+
 void ConfiguratorWindow::on_lineEditManufacturer_textEdited()
 {
     int curPosition = ui->lineEditManufacturer->cursorPosition();
@@ -182,6 +204,15 @@ void ConfiguratorWindow::on_lineEditVID_textEdited()
     ui->lineEditVID->setCursorPosition(curPosition);
 }
 
+// Partially disables configurator window
+void ConfiguratorWindow::disableView()
+{
+    ui->actionStatus->setEnabled(false);
+    ui->actionClose->setText(tr("&Close Window"));
+    ui->centralWidget->setEnabled(false);
+    viewEnabled_ = false;
+}
+
 // This is the main display routine, used to display the given configuration, updating all fields accordingly
 void ConfiguratorWindow::displayConfiguration(const Configuration &config)
 {
@@ -218,6 +249,30 @@ void ConfiguratorWindow::displayUSBParameters(const MCP2210::USBParameters &usbp
     ui->lineEditMaxPowerHex->setText(QString("%1").arg(usbparameters.maxpow, 2, 16, QChar('0')));  // This will autofill with up to two leading zeros
     ui->comboBoxPowerMode->setCurrentIndex(usbparameters.powmode);
     ui->checkBoxRemoteWakeUpCapable->setChecked(usbparameters.rmwakeup);
+}
+
+// Determines the type of error and acts accordingly, always showing a message
+void ConfiguratorWindow::handleError()
+{
+    if (mcp2210_.disconnected() || !mcp2210_.isOpen()) {
+        disableView();  // Disable configurator window
+        mcp2210_.close();  // If the device is already closed, this will have no effect
+    }
+    QMessageBox::critical(this, tr("Error"), errmsg_);
+}
+
+// Checks for errors and validates device operations
+void ConfiguratorWindow::opCheck(const QString &op, int errcnt, QString errstr)
+{
+    if (errcnt > 0) {
+        err_ = true;
+        if (mcp2210_.disconnected()) {
+            errmsg_ = tr("Device disconnected.\n\nPlease reconnect it and try again.");
+        } else {
+            errstr.chop(1);  // Remove the last character, which is always a newline
+            errmsg_ = tr("%1 operation returned the following error(s):\n– %2", "", errcnt).arg(op, errstr.replace("\n", "\n– "));
+        }
+    }
 }
 
 // This is the routine that reads the configuration from the MCP2210 OTP ROM

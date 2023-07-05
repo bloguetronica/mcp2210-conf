@@ -23,9 +23,11 @@
 
 // Includes
 #include <QMainWindow>
+#include <QPointer>
 #include <QString>
 #include "configuration.h"
 #include "mcp2210.h"
+#include "statusdialog.h"
 
 namespace Ui {
 class ConfiguratorWindow;
@@ -44,6 +46,7 @@ public:
 
 private slots:
     void on_actionAbout_triggered();
+    void on_actionStatus_triggered();
     void on_lineEditManufacturer_textEdited();
     void on_lineEditMaxPower_editingFinished();
     void on_lineEditMaxPower_textChanged();
@@ -61,14 +64,18 @@ private:
     Ui::ConfiguratorWindow *ui;
     Configuration deviceConfig_, editedConfig_;
     MCP2210 mcp2210_;
-    QString serialstr_;
+    QPointer<StatusDialog> statusDialog_;
+    QString errmsg_, serialstr_;
     quint16 pid_, vid_;
-    bool deviceLocked_ = true, viewEnabled_ = false;
+    bool deviceLocked_ = true, err_, viewEnabled_ = false;
 
+    void disableView();
     void displayConfiguration(const Configuration &config);
     void displayManufacturer(const QString &manufacturer);
     void displayProduct(const QString &product);
     void displayUSBParameters(const MCP2210::USBParameters &usbparameters);
+    void handleError();
+    void opCheck(const QString &op, int errcnt, QString errstr);
     void readDeviceConfiguration();
     void setManufacturerEnabled(bool value);
     void setMaxPowerEnabled(bool value);

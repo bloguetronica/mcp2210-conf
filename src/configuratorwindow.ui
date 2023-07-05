@@ -332,7 +332,7 @@
     <property name="title">
      <string>&amp;Device</string>
     </property>
-    <addaction name="actionInformation"/>
+    <addaction name="actionStatus"/>
     <addaction name="separator"/>
     <addaction name="actionClose"/>
    </widget>
@@ -350,9 +350,9 @@
     <string>&amp;About MCP2210 Configurator</string>
    </property>
   </action>
-  <action name="actionInformation">
+  <action name="actionStatus">
    <property name="text">
-    <string>&amp;Information</string>
+    <string>&amp;Status</string>
    </property>
   </action>
   <action name="actionClose">

@@ -30,7 +30,8 @@ SOURCES += \
     libusb-extra.c \
     main.cpp \
     mainwindow.cpp \
-    mcp2210.cpp
+    mcp2210.cpp \
+    statusdialog.cpp
 
 HEADERS += \
     aboutdialog.h \
@@ -39,12 +40,14 @@ HEADERS += \
     configuratorwindow.h \
     libusb-extra.h \
     mainwindow.h \
-    mcp2210.h
+    mcp2210.h \
+    statusdialog.h
 
 FORMS += \
     aboutdialog.ui \
     configuratorwindow.ui \
-    mainwindow.ui
+    mainwindow.ui \
+    statusdialog.ui
 
 TRANSLATIONS += \
     translations/mcp2210-conf_en_US.ts
