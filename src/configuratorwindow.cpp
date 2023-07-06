@@ -103,6 +103,86 @@ void ConfiguratorWindow::on_actionStatus_triggered()
     }
 }
 
+void ConfiguratorWindow::on_comboBoxGP0_currentIndexChanged(int index)
+{
+    if (index == 1 && !deviceLocked_) {
+        ui->checkBoxGP0DefaultValue->setEnabled(true);
+    } else {
+        ui->checkBoxGP0DefaultValue->setChecked(false);
+        ui->checkBoxGP0DefaultValue->setEnabled(false);
+    }
+}
+
+void ConfiguratorWindow::on_comboBoxGP1_currentIndexChanged(int index)
+{
+    if (index == 1 && !deviceLocked_) {
+        ui->checkBoxGP1DefaultValue->setEnabled(true);
+    } else {
+        ui->checkBoxGP1DefaultValue->setChecked(false);
+        ui->checkBoxGP1DefaultValue->setEnabled(false);
+    }
+}
+
+void ConfiguratorWindow::on_comboBoxGP2_currentIndexChanged(int index)
+{
+    if (index == 1 && !deviceLocked_) {
+        ui->checkBoxGP2DefaultValue->setEnabled(true);
+    } else {
+        ui->checkBoxGP2DefaultValue->setChecked(false);
+        ui->checkBoxGP2DefaultValue->setEnabled(false);
+    }
+}
+
+void ConfiguratorWindow::on_comboBoxGP3_currentIndexChanged(int index)
+{
+    if (index == 1 && !deviceLocked_) {
+        ui->checkBoxGP3DefaultValue->setEnabled(true);
+    } else {
+        ui->checkBoxGP3DefaultValue->setChecked(false);
+        ui->checkBoxGP3DefaultValue->setEnabled(false);
+    }
+}
+
+void ConfiguratorWindow::on_comboBoxGP4_currentIndexChanged(int index)
+{
+    if (index == 1 && !deviceLocked_) {
+        ui->checkBoxGP4DefaultValue->setEnabled(true);
+    } else {
+        ui->checkBoxGP4DefaultValue->setChecked(false);
+        ui->checkBoxGP4DefaultValue->setEnabled(false);
+    }
+}
+
+void ConfiguratorWindow::on_comboBoxGP5_currentIndexChanged(int index)
+{
+    if (index == 1 && !deviceLocked_) {
+        ui->checkBoxGP5DefaultValue->setEnabled(true);
+    } else {
+        ui->checkBoxGP5DefaultValue->setChecked(false);
+        ui->checkBoxGP5DefaultValue->setEnabled(false);
+    }
+}
+
+void ConfiguratorWindow::on_comboBoxGP6_currentIndexChanged(int index)
+{
+    if (index == 1 && !deviceLocked_) {
+        ui->checkBoxGP6DefaultValue->setEnabled(true);
+    } else {
+        ui->checkBoxGP6DefaultValue->setChecked(false);
+        ui->checkBoxGP6DefaultValue->setEnabled(false);
+    }
+}
+
+void ConfiguratorWindow::on_comboBoxGP7_currentIndexChanged(int index)
+{
+    if (index == 1 && !deviceLocked_) {
+        ui->checkBoxGP7DefaultValue->setEnabled(true);
+    } else {
+        ui->checkBoxGP7DefaultValue->setChecked(false);
+        ui->checkBoxGP7DefaultValue->setEnabled(false);
+    }
+}
+
 void ConfiguratorWindow::on_lineEditManufacturer_textEdited()
 {
     int curPosition = ui->lineEditManufacturer->cursorPosition();
@@ -213,6 +293,20 @@ void ConfiguratorWindow::disableView()
     viewEnabled_ = false;
 }
 
+// Updates all fields pertaining to the MCP2210 chip settings
+void ConfiguratorWindow::displayChipSettings(const MCP2210::ChipSettings &chipsettings)
+{
+    ui->comboBoxGP0->setCurrentIndex(chipsettings.gp0 == MCP2210::PCGPIO ? (0x01 & chipsettings.gpdir) == 0x00 : chipsettings.gp0 + 1);
+    ui->comboBoxGP1->setCurrentIndex(chipsettings.gp1 == MCP2210::PCGPIO ? (0x02 & chipsettings.gpdir) == 0x00 : chipsettings.gp1 + 1);
+    ui->comboBoxGP2->setCurrentIndex(chipsettings.gp2 == MCP2210::PCGPIO ? (0x04 & chipsettings.gpdir) == 0x00 : chipsettings.gp2 + 1);
+    ui->comboBoxGP3->setCurrentIndex(chipsettings.gp3 == MCP2210::PCGPIO ? (0x08 & chipsettings.gpdir) == 0x00 : chipsettings.gp3 + 1);
+    ui->comboBoxGP4->setCurrentIndex(chipsettings.gp4 == MCP2210::PCGPIO ? (0x10 & chipsettings.gpdir) == 0x00 : chipsettings.gp4 + 1);
+    ui->comboBoxGP5->setCurrentIndex(chipsettings.gp5 == MCP2210::PCGPIO ? (0x20 & chipsettings.gpdir) == 0x00 : chipsettings.gp5 + 1);
+    ui->comboBoxGP6->setCurrentIndex(chipsettings.gp6 == MCP2210::PCGPIO ? (0x40 & chipsettings.gpdir) == 0x00 : chipsettings.gp6 + 1);
+    ui->comboBoxGP7->setCurrentIndex(chipsettings.gp7 == MCP2210::PCGPIO ? (0x80 & chipsettings.gpdir) == 0x00 : chipsettings.gp7 + 1);
+    ui->comboBoxGP8->setCurrentIndex(chipsettings.gp8 == MCP2210::PCGPIO ? 0 : 1);
+}
+
 // This is the main display routine, used to display the given configuration, updating all fields accordingly
 void ConfiguratorWindow::displayConfiguration(const Configuration &config)
 {
@@ -226,6 +320,8 @@ void ConfiguratorWindow::displayConfiguration(const Configuration &config)
     setMaxPowerEnabled(!deviceLocked_);
     setPowerModeEnabled(!deviceLocked_);
     setRemoteWakeUpCapableEnabled(!deviceLocked_);
+    displayChipSettings(config.chipsettings);
+    setChipSettingsEnabled(!deviceLocked_);
 }
 
 // Updates the manufacturer descriptor field
@@ -275,7 +371,7 @@ void ConfiguratorWindow::opCheck(const QString &op, int errcnt, QString errstr)
     }
 }
 
-// This is the routine that reads the configuration from the MCP2210 OTP ROM
+// This is the routine that reads the configuration from the MCP2210 NVRAM
 void ConfiguratorWindow::readDeviceConfiguration()
 {
     int errcnt = 0;
@@ -283,6 +379,7 @@ void ConfiguratorWindow::readDeviceConfiguration()
     deviceConfig_.manufacturer = mcp2210_.getManufacturerDesc(errcnt, errstr);
     deviceConfig_.product = mcp2210_.getProductDesc(errcnt, errstr);
     deviceConfig_.usbparameters = mcp2210_.getUSBParameters(errcnt, errstr);
+    deviceConfig_.chipsettings = mcp2210_.getNVChipSettings(errcnt, errstr);
     deviceLocked_ = mcp2210_.getAccessControlMode(errcnt, errstr) == MCP2210::ACLOCKED;
     if (errcnt > 0) {
         mcp2210_.close();
@@ -294,6 +391,20 @@ void ConfiguratorWindow::readDeviceConfiguration()
         }
         this->deleteLater();  // In a context where the window is already visible, it has the same effect as this->close()
     }
+}
+
+// Enables or disables all fields pertaining to the MCP2210 chip settings
+void ConfiguratorWindow::setChipSettingsEnabled(bool value)
+{
+    ui->comboBoxGP0->setEnabled(value);
+    ui->comboBoxGP1->setEnabled(value);
+    ui->comboBoxGP2->setEnabled(value);
+    ui->comboBoxGP3->setEnabled(value);
+    ui->comboBoxGP4->setEnabled(value);
+    ui->comboBoxGP5->setEnabled(value);
+    ui->comboBoxGP6->setEnabled(value);
+    ui->comboBoxGP7->setEnabled(value);
+    ui->comboBoxGP8->setEnabled(value);
 }
 
 // Enables or disables the manufacturer descriptor field

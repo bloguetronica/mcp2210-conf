@@ -47,6 +47,14 @@ public:
 private slots:
     void on_actionAbout_triggered();
     void on_actionStatus_triggered();
+    void on_comboBoxGP0_currentIndexChanged(int index);
+    void on_comboBoxGP1_currentIndexChanged(int index);
+    void on_comboBoxGP2_currentIndexChanged(int index);
+    void on_comboBoxGP3_currentIndexChanged(int index);
+    void on_comboBoxGP4_currentIndexChanged(int index);
+    void on_comboBoxGP5_currentIndexChanged(int index);
+    void on_comboBoxGP6_currentIndexChanged(int index);
+    void on_comboBoxGP7_currentIndexChanged(int index);
     void on_lineEditManufacturer_textEdited();
     void on_lineEditMaxPower_editingFinished();
     void on_lineEditMaxPower_textChanged();
@@ -70,6 +78,7 @@ private:
     bool deviceLocked_ = true, err_, viewEnabled_ = false;
 
     void disableView();
+    void displayChipSettings(const MCP2210::ChipSettings &chipsettings);
     void displayConfiguration(const Configuration &config);
     void displayManufacturer(const QString &manufacturer);
     void displayProduct(const QString &product);
@@ -77,6 +86,7 @@ private:
     void handleError();
     void opCheck(const QString &op, int errcnt, QString errstr);
     void readDeviceConfiguration();
+    void setChipSettingsEnabled(bool value);
     void setManufacturerEnabled(bool value);
     void setMaxPowerEnabled(bool value);
     void setPIDEnabled(bool value);

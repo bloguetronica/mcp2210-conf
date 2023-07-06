@@ -46,7 +46,7 @@
       <x>6</x>
       <y>9</y>
       <width>459</width>
-      <height>326</height>
+      <height>471</height>
      </rect>
     </property>
     <property name="currentIndex">
@@ -312,10 +312,559 @@
       </property>
      </widget>
     </widget>
-    <widget class="QWidget" name="tabPinConfig">
+    <widget class="QWidget" name="tabChipSettings">
      <attribute name="title">
-      <string>Pin Configuration</string>
+      <string>Chip Settings</string>
      </attribute>
+     <widget class="QLabel" name="labelGP0">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>17</y>
+        <width>105</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>GP0:</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="comboBoxGP0">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>10</y>
+        <width>211</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <item>
+       <property name="text">
+        <string>Input</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Output</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Chip select</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QCheckBox" name="checkBoxGP0DefaultValue">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>340</x>
+        <y>15</y>
+        <width>101</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>High</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="labelGP1">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>57</y>
+        <width>105</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>GP1:</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="checkBoxGP1DefaultValue">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>340</x>
+        <y>55</y>
+        <width>101</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>High</string>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="comboBoxGP1">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>50</y>
+        <width>211</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <item>
+       <property name="text">
+        <string>Input</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Output</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Chip select</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QComboBox" name="comboBoxGP2">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>90</y>
+        <width>211</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <item>
+       <property name="text">
+        <string>Input</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Output</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Chip select</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Suspend</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QCheckBox" name="checkBoxGP2DefaultValue">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>340</x>
+        <y>95</y>
+        <width>101</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>High</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="labelGP2">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>97</y>
+        <width>105</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>GP2:</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="comboBoxGP4">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>170</y>
+        <width>211</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <item>
+       <property name="text">
+        <string>Input</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Output</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Chip select</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>USB low power</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QCheckBox" name="checkBoxGP4DefaultValue">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>340</x>
+        <y>175</y>
+        <width>101</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>High</string>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="comboBoxGP5">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>210</y>
+        <width>211</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <item>
+       <property name="text">
+        <string>Input</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Output</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Chip select</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>USB configured</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QLabel" name="labelGP4">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>177</y>
+        <width>105</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>GP4:</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="labelGP3">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>137</y>
+        <width>105</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>GP3:</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="checkBoxGP5DefaultValue">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>340</x>
+        <y>215</y>
+        <width>101</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>High</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="checkBoxGP3DefaultValue">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>340</x>
+        <y>135</y>
+        <width>101</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>High</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="labelGP5">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>217</y>
+        <width>105</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>GP5:</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="comboBoxGP3">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>130</y>
+        <width>211</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <item>
+       <property name="text">
+        <string>Input</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Output</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Chip select</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>SPI transfer LED</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QComboBox" name="comboBoxGP7">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>290</y>
+        <width>211</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <item>
+       <property name="text">
+        <string>Input</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Output</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Chip select</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>SPI bus release ACK</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QCheckBox" name="checkBoxGP7DefaultValue">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>340</x>
+        <y>295</y>
+        <width>101</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>High</string>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="comboBoxGP8">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>330</y>
+        <width>211</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <item>
+       <property name="text">
+        <string>Input</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>SPI bus release REQ</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QLabel" name="labelGP7">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>297</y>
+        <width>105</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>GP7:</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="labelGP6">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>257</y>
+        <width>105</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>GP6:</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="checkBoxGP6DefaultValue">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>340</x>
+        <y>255</y>
+        <width>101</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>High</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="labelGP8">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>337</y>
+        <width>105</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>GP8:</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="comboBoxGP6">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>250</y>
+        <width>211</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <item>
+       <property name="text">
+        <string>Input</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Output</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Chip select</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>External interrupt</string>
+       </property>
+      </item>
+     </widget>
     </widget>
    </widget>
   </widget>

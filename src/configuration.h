@@ -30,6 +30,7 @@ struct Configuration
     QString manufacturer;
     QString product;
     MCP2210::USBParameters usbparameters;
+    MCP2210::ChipSettings chipsettings;
 
     bool operator ==(const Configuration &other) const;
     bool operator !=(const Configuration &other) const;
