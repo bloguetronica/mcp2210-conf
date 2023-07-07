@@ -108,7 +108,6 @@ void ConfiguratorWindow::on_comboBoxGP0_currentIndexChanged(int index)
     if (index == 1 && !deviceLocked_) {
         ui->checkBoxGP0DefaultValue->setEnabled(true);
     } else {
-        ui->checkBoxGP0DefaultValue->setChecked(false);
         ui->checkBoxGP0DefaultValue->setEnabled(false);
     }
 }
@@ -118,7 +117,6 @@ void ConfiguratorWindow::on_comboBoxGP1_currentIndexChanged(int index)
     if (index == 1 && !deviceLocked_) {
         ui->checkBoxGP1DefaultValue->setEnabled(true);
     } else {
-        ui->checkBoxGP1DefaultValue->setChecked(false);
         ui->checkBoxGP1DefaultValue->setEnabled(false);
     }
 }
@@ -128,7 +126,6 @@ void ConfiguratorWindow::on_comboBoxGP2_currentIndexChanged(int index)
     if (index == 1 && !deviceLocked_) {
         ui->checkBoxGP2DefaultValue->setEnabled(true);
     } else {
-        ui->checkBoxGP2DefaultValue->setChecked(false);
         ui->checkBoxGP2DefaultValue->setEnabled(false);
     }
 }
@@ -138,7 +135,6 @@ void ConfiguratorWindow::on_comboBoxGP3_currentIndexChanged(int index)
     if (index == 1 && !deviceLocked_) {
         ui->checkBoxGP3DefaultValue->setEnabled(true);
     } else {
-        ui->checkBoxGP3DefaultValue->setChecked(false);
         ui->checkBoxGP3DefaultValue->setEnabled(false);
     }
 }
@@ -148,7 +144,6 @@ void ConfiguratorWindow::on_comboBoxGP4_currentIndexChanged(int index)
     if (index == 1 && !deviceLocked_) {
         ui->checkBoxGP4DefaultValue->setEnabled(true);
     } else {
-        ui->checkBoxGP4DefaultValue->setChecked(false);
         ui->checkBoxGP4DefaultValue->setEnabled(false);
     }
 }
@@ -158,7 +153,6 @@ void ConfiguratorWindow::on_comboBoxGP5_currentIndexChanged(int index)
     if (index == 1 && !deviceLocked_) {
         ui->checkBoxGP5DefaultValue->setEnabled(true);
     } else {
-        ui->checkBoxGP5DefaultValue->setChecked(false);
         ui->checkBoxGP5DefaultValue->setEnabled(false);
     }
 }
@@ -168,7 +162,6 @@ void ConfiguratorWindow::on_comboBoxGP6_currentIndexChanged(int index)
     if (index == 1 && !deviceLocked_) {
         ui->checkBoxGP6DefaultValue->setEnabled(true);
     } else {
-        ui->checkBoxGP6DefaultValue->setChecked(false);
         ui->checkBoxGP6DefaultValue->setEnabled(false);
     }
 }
@@ -178,7 +171,6 @@ void ConfiguratorWindow::on_comboBoxGP7_currentIndexChanged(int index)
     if (index == 1 && !deviceLocked_) {
         ui->checkBoxGP7DefaultValue->setEnabled(true);
     } else {
-        ui->checkBoxGP7DefaultValue->setChecked(false);
         ui->checkBoxGP7DefaultValue->setEnabled(false);
     }
 }
@@ -297,13 +289,21 @@ void ConfiguratorWindow::disableView()
 void ConfiguratorWindow::displayChipSettings(const MCP2210::ChipSettings &chipsettings)
 {
     ui->comboBoxGP0->setCurrentIndex(chipsettings.gp0 == MCP2210::PCGPIO ? (0x01 & chipsettings.gpdir) == 0x00 : chipsettings.gp0 + 1);
+    ui->checkBoxGP0DefaultValue->setChecked((0x01 & chipsettings.gpout) != 0x00);
     ui->comboBoxGP1->setCurrentIndex(chipsettings.gp1 == MCP2210::PCGPIO ? (0x02 & chipsettings.gpdir) == 0x00 : chipsettings.gp1 + 1);
+    ui->checkBoxGP1DefaultValue->setChecked((0x02 & chipsettings.gpout) != 0x00);
     ui->comboBoxGP2->setCurrentIndex(chipsettings.gp2 == MCP2210::PCGPIO ? (0x04 & chipsettings.gpdir) == 0x00 : chipsettings.gp2 + 1);
+    ui->checkBoxGP2DefaultValue->setChecked((0x04 & chipsettings.gpout) != 0x00);
     ui->comboBoxGP3->setCurrentIndex(chipsettings.gp3 == MCP2210::PCGPIO ? (0x08 & chipsettings.gpdir) == 0x00 : chipsettings.gp3 + 1);
+    ui->checkBoxGP3DefaultValue->setChecked((0x08 & chipsettings.gpout) != 0x00);
     ui->comboBoxGP4->setCurrentIndex(chipsettings.gp4 == MCP2210::PCGPIO ? (0x10 & chipsettings.gpdir) == 0x00 : chipsettings.gp4 + 1);
+    ui->checkBoxGP4DefaultValue->setChecked((0x10 & chipsettings.gpout) != 0x00);
     ui->comboBoxGP5->setCurrentIndex(chipsettings.gp5 == MCP2210::PCGPIO ? (0x20 & chipsettings.gpdir) == 0x00 : chipsettings.gp5 + 1);
+    ui->checkBoxGP5DefaultValue->setChecked((0x20 & chipsettings.gpout) != 0x00);
     ui->comboBoxGP6->setCurrentIndex(chipsettings.gp6 == MCP2210::PCGPIO ? (0x40 & chipsettings.gpdir) == 0x00 : chipsettings.gp6 + 1);
+    ui->checkBoxGP6DefaultValue->setChecked((0x40 & chipsettings.gpout) != 0x00);
     ui->comboBoxGP7->setCurrentIndex(chipsettings.gp7 == MCP2210::PCGPIO ? (0x80 & chipsettings.gpdir) == 0x00 : chipsettings.gp7 + 1);
+    ui->checkBoxGP7DefaultValue->setChecked((0x80 & chipsettings.gpout) != 0x00);
     ui->comboBoxGP8->setCurrentIndex(chipsettings.gp8 == MCP2210::PCGPIO ? 0 : 1);
 }
 
