@@ -273,6 +273,9 @@ void ConfiguratorWindow::displayChipSettings(const MCP2210::ChipSettings &chipse
     ui->comboBoxGP7->setCurrentIndex(chipsettings.gp7 == MCP2210::PCGPIO ? (0x80 & chipsettings.gpdir) == 0x00 : chipsettings.gp7 + 1);
     ui->checkBoxGP7DefaultValue->setChecked((0x80 & chipsettings.gpout) != 0x00);
     ui->comboBoxGP8->setCurrentIndex(chipsettings.gp8 == MCP2210::PCGPIO ? 0 : 1);
+    ui->comboBoxInterruptCounting->setCurrentIndex(chipsettings.intmode);
+    ui->checkBoxRemoteWakeUp->setChecked(chipsettings.rmwakeup);
+    ui->checkBoxSPIBusCaptive->setChecked(chipsettings.nrelspi);
 }
 
 // This is the main display routine, used to display the given configuration, updating all fields accordingly
@@ -373,6 +376,9 @@ void ConfiguratorWindow::setChipSettingsEnabled(bool value)
     ui->comboBoxGP6->setEnabled(value);
     ui->comboBoxGP7->setEnabled(value);
     ui->comboBoxGP8->setEnabled(value);
+    ui->comboBoxInterruptCounting->setEnabled(value);
+    ui->checkBoxRemoteWakeUp->setEnabled(value);
+    ui->checkBoxSPIBusCaptive->setEnabled(value);
 }
 
 // Enables or disables the manufacturer descriptor field
