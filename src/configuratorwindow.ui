@@ -865,7 +865,7 @@
        </property>
       </item>
      </widget>
-     <widget class="QComboBox" name="comboBoxInterruptCounting">
+     <widget class="QComboBox" name="comboBoxInterruptMode">
       <property name="enabled">
        <bool>false</bool>
       </property>
@@ -884,26 +884,26 @@
       </item>
       <item>
        <property name="text">
-        <string>Falling edges</string>
+        <string>Count falling edges</string>
        </property>
       </item>
       <item>
        <property name="text">
-        <string>Rising edges</string>
+        <string>Count rising edges</string>
        </property>
       </item>
       <item>
        <property name="text">
-        <string>Low pulses</string>
+        <string>Count low pulses</string>
        </property>
       </item>
       <item>
        <property name="text">
-        <string>High pulses</string>
+        <string>Count high pulses</string>
        </property>
       </item>
      </widget>
-     <widget class="QLabel" name="labelInterruptCounting">
+     <widget class="QLabel" name="labelInterruptMode">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -913,7 +913,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>Int. counting:</string>
+       <string>Int. mode:</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
