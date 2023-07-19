@@ -431,7 +431,7 @@ void ConfiguratorWindow::setVIDEnabled(bool value)
     ui->lineEditVID->setReadOnly(!value);
 }
 
-// Enables or disables editing related buttons and checkboxes
+// Enables or disables editing related buttons
 void ConfiguratorWindow::setWriteEnabled(bool value)
 {
     ui->pushButtonRevert->setEnabled(value);
