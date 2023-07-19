@@ -244,6 +244,11 @@ void ConfiguratorWindow::on_lineEditVID_textEdited()
     ui->lineEditVID->setCursorPosition(curPosition);
 }
 
+void ConfiguratorWindow::on_pushButtonRevert_clicked()
+{
+    displayConfiguration(deviceConfig_);
+}
+
 // Partially disables configurator window
 void ConfiguratorWindow::disableView()
 {
@@ -293,6 +298,7 @@ void ConfiguratorWindow::displayConfiguration(const Configuration &config)
     setRemoteWakeUpCapableEnabled(!deviceLocked_);
     displayChipSettings(config.chipsettings);
     setChipSettingsEnabled(!deviceLocked_);
+    setWriteEnabled(!deviceLocked_);
 }
 
 // Updates the manufacturer descriptor field
@@ -351,6 +357,7 @@ void ConfiguratorWindow::readDeviceConfiguration()
     deviceConfig_.product = mcp2210_.getProductDesc(errcnt, errstr);
     deviceConfig_.usbparameters = mcp2210_.getUSBParameters(errcnt, errstr);
     deviceConfig_.chipsettings = mcp2210_.getNVChipSettings(errcnt, errstr);
+    deviceConfig_.spisettings = mcp2210_.getNVSPISettings(errcnt, errstr);
     deviceLocked_ = mcp2210_.getAccessControlMode(errcnt, errstr) == MCP2210::ACLOCKED;
     if (errcnt > 0) {
         mcp2210_.close();
@@ -422,4 +429,11 @@ void ConfiguratorWindow::setRemoteWakeUpCapableEnabled(bool value)
 void ConfiguratorWindow::setVIDEnabled(bool value)
 {
     ui->lineEditVID->setReadOnly(!value);
+}
+
+// Enables or disables editing related buttons and checkboxes
+void ConfiguratorWindow::setWriteEnabled(bool value)
+{
+    ui->pushButtonRevert->setEnabled(value);
+    ui->pushButtonWrite->setEnabled(value);
 }

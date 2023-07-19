@@ -67,6 +67,7 @@ private slots:
     void on_lineEditProduct_textEdited();
     void on_lineEditVID_textChanged();
     void on_lineEditVID_textEdited();
+    void on_pushButtonRevert_clicked();
 
 private:
     Ui::ConfiguratorWindow *ui;
@@ -94,6 +95,7 @@ private:
     void setProductEnabled(bool value);
     void setRemoteWakeUpCapableEnabled(bool value);
     void setVIDEnabled(bool value);
+    void setWriteEnabled(bool value);
 };
 
 #endif  // CONFIGURATORWINDOW_H
