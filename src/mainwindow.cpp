@@ -51,7 +51,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
 void MainWindow::on_actionAbout_triggered()
 {
-    showAboutDialog();
+    showAboutDialog();  // See "common.h" and "common.cpp"
 }
 
 void MainWindow::on_comboBoxDevices_currentIndexChanged(int index)
