@@ -990,20 +990,20 @@
      <string>Write</string>
     </property>
    </widget>
-   <widget class="QCheckBox" name="checkBoxApplyNow">
+   <widget class="QCheckBox" name="checkBoxApplyImmediately">
     <property name="enabled">
      <bool>false</bool>
     </property>
     <property name="geometry">
      <rect>
-      <x>230</x>
+      <x>190</x>
       <y>535</y>
-      <width>121</width>
+      <width>161</width>
       <height>21</height>
      </rect>
     </property>
     <property name="text">
-     <string>Apply now</string>
+     <string>Apply immediately</string>
     </property>
    </widget>
   </widget>

@@ -435,6 +435,6 @@ void ConfiguratorWindow::setVIDEnabled(bool value)
 void ConfiguratorWindow::setWriteEnabled(bool value)
 {
     ui->pushButtonRevert->setEnabled(value);
-    ui->checkBoxApplyNow->setEnabled(value);
+    ui->checkBoxApplyImmediately->setEnabled(value);
     ui->pushButtonWrite->setEnabled(value);
 }
