@@ -78,7 +78,7 @@ void ConfiguratorWindow::openDevice(quint16 vid, quint16 pid, const QString &ser
 
 void ConfiguratorWindow::on_actionAbout_triggered()
 {
-    showAboutDialog();
+    showAboutDialog();  // See "common.h" and "common.cpp"
 }
 
 void ConfiguratorWindow::on_actionStatus_triggered()
