@@ -1054,8 +1054,11 @@
    </property>
   </action>
   <action name="actionUsePassword">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
-    <string>Use &amp;Password...</string>
+    <string>Use &amp;Password</string>
    </property>
   </action>
  </widget>
