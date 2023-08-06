@@ -298,6 +298,8 @@ void ConfiguratorWindow::displayConfiguration(const Configuration &config)
     setRemoteWakeUpCapableEnabled(!deviceLocked_);
     displayChipSettings(config.chipsettings);
     setChipSettingsEnabled(!deviceLocked_);
+    displaySPISettings(config.spisettings);
+    setSPISettingsEnabled(!deviceLocked_);
     setWriteEnabled(!deviceLocked_);
 }
 
@@ -311,6 +313,13 @@ void ConfiguratorWindow::displayManufacturer(const QString &manufacturer)
 void ConfiguratorWindow::displayProduct(const QString &product)
 {
     ui->lineEditProduct->setText(product);
+}
+
+// Updates all fields pertaining to SPI settings
+void ConfiguratorWindow::displaySPISettings(const MCP2210::SPISettings &spisettings)
+{
+    ui->doubleSpinBoxBitRate->setValue(spisettings.bitrate / 1000.0);
+    ui->spinBoxSPIMode->setValue(spisettings.mode);
 }
 
 // Updates all fields pertaining to USB parameters
@@ -423,6 +432,13 @@ void ConfiguratorWindow::setProductEnabled(bool value)
 void ConfiguratorWindow::setRemoteWakeUpCapableEnabled(bool value)
 {
     ui->checkBoxRemoteWakeUpCapable->setEnabled(value);
+}
+
+// Enables or disables all fields pertaining to SPI settings
+void ConfiguratorWindow::setSPISettingsEnabled(bool value)
+{
+    ui->doubleSpinBoxBitRate->setEnabled(value);
+    ui->spinBoxSPIMode->setEnabled(value);
 }
 
 // Enables or disables the VID field

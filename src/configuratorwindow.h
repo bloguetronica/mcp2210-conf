@@ -83,6 +83,7 @@ private:
     void displayConfiguration(const Configuration &config);
     void displayManufacturer(const QString &manufacturer);
     void displayProduct(const QString &product);
+    void displaySPISettings(const MCP2210::SPISettings &spisettings);
     void displayUSBParameters(const MCP2210::USBParameters &usbparameters);
     void handleError();
     void opCheck(const QString &op, int errcnt, QString errstr);
@@ -94,6 +95,7 @@ private:
     void setPowerModeEnabled(bool value);
     void setProductEnabled(bool value);
     void setRemoteWakeUpCapableEnabled(bool value);
+    void setSPISettingsEnabled(bool value);
     void setVIDEnabled(bool value);
     void setWriteEnabled(bool value);
 };
