@@ -277,7 +277,7 @@ void ConfiguratorWindow::displayChipSettings(const MCP2210::ChipSettings &chipse
     ui->checkBoxGP6DefaultValue->setChecked((0x40 & chipsettings.gpout) != 0x00);
     ui->comboBoxGP7->setCurrentIndex(chipsettings.gp7 == MCP2210::PCGPIO ? (0x80 & chipsettings.gpdir) == 0x00 : chipsettings.gp7 + 1);
     ui->checkBoxGP7DefaultValue->setChecked((0x80 & chipsettings.gpout) != 0x00);
-    ui->comboBoxGP8->setCurrentIndex(chipsettings.gp8 == MCP2210::PCGPIO ? 0 : 1);
+    ui->comboBoxGP8->setCurrentIndex(chipsettings.gp8);
     ui->comboBoxInterruptMode->setCurrentIndex(chipsettings.intmode);
     ui->checkBoxRemoteWakeUp->setChecked(chipsettings.rmwakeup);
     ui->checkBoxSPIBusCaptive->setChecked(chipsettings.nrelspi);
