@@ -47,6 +47,7 @@ public:
 private slots:
     void on_actionAbout_triggered();
     void on_actionStatus_triggered();
+    void on_actionUnrestrictedMode_toggled(bool checked);
     void on_comboBoxGP0_currentIndexChanged(int index);
     void on_comboBoxGP1_currentIndexChanged(int index);
     void on_comboBoxGP2_currentIndexChanged(int index);

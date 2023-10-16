@@ -1111,7 +1111,7 @@
     <property name="title">
      <string>&amp;Options</string>
     </property>
-    <addaction name="actionUnrestrictedMode_2"/>
+    <addaction name="actionUnrestrictedMode"/>
    </widget>
    <addaction name="menuDevice"/>
    <addaction name="menu_Options"/>
@@ -1144,14 +1144,6 @@
    </property>
   </action>
   <action name="actionUnrestrictedMode">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>&amp;Unrestricted Mode</string>
-   </property>
-  </action>
-  <action name="actionUnrestrictedMode_2">
    <property name="checkable">
     <bool>true</bool>
    </property>

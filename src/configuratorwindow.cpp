@@ -103,44 +103,56 @@ void ConfiguratorWindow::on_actionStatus_triggered()
     }
 }
 
+void ConfiguratorWindow::on_actionUnrestrictedMode_toggled(bool checked)
+{
+    ui->checkBoxGP0DefaultValue->setEnabled((checked || ui->comboBoxGP0->currentIndex() == 1) && !deviceLocked_);
+    ui->checkBoxGP1DefaultValue->setEnabled((checked || ui->comboBoxGP1->currentIndex() == 1) && !deviceLocked_);
+    ui->checkBoxGP2DefaultValue->setEnabled((checked || ui->comboBoxGP2->currentIndex() == 1) && !deviceLocked_);
+    ui->checkBoxGP3DefaultValue->setEnabled((checked || ui->comboBoxGP3->currentIndex() == 1) && !deviceLocked_);
+    ui->checkBoxGP4DefaultValue->setEnabled((checked || ui->comboBoxGP4->currentIndex() == 1) && !deviceLocked_);
+    ui->checkBoxGP5DefaultValue->setEnabled((checked || ui->comboBoxGP5->currentIndex() == 1) && !deviceLocked_);
+    ui->checkBoxGP6DefaultValue->setEnabled((checked || ui->comboBoxGP6->currentIndex() == 1) && !deviceLocked_);
+    ui->checkBoxGP7DefaultValue->setEnabled((checked || ui->comboBoxGP7->currentIndex() == 1) && !deviceLocked_);
+}
+
 void ConfiguratorWindow::on_comboBoxGP0_currentIndexChanged(int index)
 {
-    ui->checkBoxGP0DefaultValue->setEnabled(index == 1 && !deviceLocked_);
+    ui->checkBoxGP0DefaultValue->setEnabled((ui->actionUnrestrictedMode->isChecked() || index == 1) && !deviceLocked_);
 }
 
 void ConfiguratorWindow::on_comboBoxGP1_currentIndexChanged(int index)
 {
-    ui->checkBoxGP1DefaultValue->setEnabled(index == 1 && !deviceLocked_);
+    ui->checkBoxGP1DefaultValue->setEnabled((ui->actionUnrestrictedMode->isChecked() || index == 1) && !deviceLocked_);
 }
 
 void ConfiguratorWindow::on_comboBoxGP2_currentIndexChanged(int index)
 {
-    ui->checkBoxGP2DefaultValue->setEnabled(index == 1 && !deviceLocked_);
+    ui->checkBoxGP2DefaultValue->setEnabled((ui->actionUnrestrictedMode->isChecked() || index == 1) && !deviceLocked_);
 }
 
 void ConfiguratorWindow::on_comboBoxGP3_currentIndexChanged(int index)
 {
-    ui->checkBoxGP3DefaultValue->setEnabled(index == 1 && !deviceLocked_);
+    ui->checkBoxGP3DefaultValue->setEnabled((ui->actionUnrestrictedMode->isChecked() || index == 1) && !deviceLocked_);
 }
 
 void ConfiguratorWindow::on_comboBoxGP4_currentIndexChanged(int index)
 {
-    ui->checkBoxGP4DefaultValue->setEnabled(index == 1 && !deviceLocked_);
+    ui->checkBoxGP4DefaultValue->setEnabled((ui->actionUnrestrictedMode->isChecked() || index == 1) && !deviceLocked_);
 }
 
 void ConfiguratorWindow::on_comboBoxGP5_currentIndexChanged(int index)
 {
-    ui->checkBoxGP5DefaultValue->setEnabled(index == 1 && !deviceLocked_);
+    ui->checkBoxGP5DefaultValue->setEnabled((ui->actionUnrestrictedMode->isChecked() || index == 1) && !deviceLocked_);
 }
 
 void ConfiguratorWindow::on_comboBoxGP6_currentIndexChanged(int index)
 {
-    ui->checkBoxGP6DefaultValue->setEnabled(index == 1 && !deviceLocked_);
+    ui->checkBoxGP6DefaultValue->setEnabled((ui->actionUnrestrictedMode->isChecked() || index == 1) && !deviceLocked_);
 }
 
 void ConfiguratorWindow::on_comboBoxGP7_currentIndexChanged(int index)
 {
-    ui->checkBoxGP7DefaultValue->setEnabled(index == 1 && !deviceLocked_);
+    ui->checkBoxGP7DefaultValue->setEnabled((ui->actionUnrestrictedMode->isChecked() || index == 1) && !deviceLocked_);
 }
 
 void ConfiguratorWindow::on_lineEditManufacturer_textEdited()
