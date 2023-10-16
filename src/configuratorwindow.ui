@@ -1107,14 +1107,14 @@
     </property>
     <addaction name="actionAbout"/>
    </widget>
-   <widget class="QMenu" name="menu_Options">
+   <widget class="QMenu" name="menuOptions">
     <property name="title">
      <string>&amp;Options</string>
     </property>
     <addaction name="actionUnrestrictedMode"/>
    </widget>
    <addaction name="menuDevice"/>
-   <addaction name="menu_Options"/>
+   <addaction name="menuOptions"/>
    <addaction name="menuHelp"/>
   </widget>
   <action name="actionAbout">
