@@ -1107,14 +1107,7 @@
     </property>
     <addaction name="actionAbout"/>
    </widget>
-   <widget class="QMenu" name="menuOptions">
-    <property name="title">
-     <string>&amp;Options</string>
-    </property>
-    <addaction name="actionUnrestrictedMode"/>
-   </widget>
    <addaction name="menuDevice"/>
-   <addaction name="menuOptions"/>
    <addaction name="menuHelp"/>
   </widget>
   <action name="actionAbout">
@@ -1141,14 +1134,6 @@
    </property>
    <property name="text">
     <string>Use &amp;Password...</string>
-   </property>
-  </action>
-  <action name="actionUnrestrictedMode">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>&amp;Unrestricted Mode</string>
    </property>
   </action>
  </widget>

@@ -47,15 +47,6 @@ public:
 private slots:
     void on_actionAbout_triggered();
     void on_actionStatus_triggered();
-    void on_actionUnrestrictedMode_toggled(bool checked);
-    void on_comboBoxGP0_currentIndexChanged(int index);
-    void on_comboBoxGP1_currentIndexChanged(int index);
-    void on_comboBoxGP2_currentIndexChanged(int index);
-    void on_comboBoxGP3_currentIndexChanged(int index);
-    void on_comboBoxGP4_currentIndexChanged(int index);
-    void on_comboBoxGP5_currentIndexChanged(int index);
-    void on_comboBoxGP6_currentIndexChanged(int index);
-    void on_comboBoxGP7_currentIndexChanged(int index);
     void on_lineEditManufacturer_textEdited();
     void on_lineEditMaxPower_editingFinished();
     void on_lineEditMaxPower_textChanged();
@@ -69,6 +60,7 @@ private slots:
     void on_lineEditVID_textChanged();
     void on_lineEditVID_textEdited();
     void on_pushButtonRevert_clicked();
+    void on_pushButtonWrite_clicked();
 
 private:
     Ui::ConfiguratorWindow *ui;
@@ -86,6 +78,7 @@ private:
     void displayProduct(const QString &product);
     void displaySPISettings(const MCP2210::SPISettings &spisettings);
     void displayUSBParameters(const MCP2210::USBParameters &usbparameters);
+    void getEditedConfiguration();
     void handleError();
     void opCheck(const QString &op, int errcnt, QString errstr);
     void readDeviceConfiguration();

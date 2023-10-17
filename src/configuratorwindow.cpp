@@ -103,58 +103,6 @@ void ConfiguratorWindow::on_actionStatus_triggered()
     }
 }
 
-void ConfiguratorWindow::on_actionUnrestrictedMode_toggled(bool checked)
-{
-    ui->checkBoxGP0DefaultValue->setEnabled((checked || ui->comboBoxGP0->currentIndex() == 1) && !deviceLocked_);
-    ui->checkBoxGP1DefaultValue->setEnabled((checked || ui->comboBoxGP1->currentIndex() == 1) && !deviceLocked_);
-    ui->checkBoxGP2DefaultValue->setEnabled((checked || ui->comboBoxGP2->currentIndex() == 1) && !deviceLocked_);
-    ui->checkBoxGP3DefaultValue->setEnabled((checked || ui->comboBoxGP3->currentIndex() == 1) && !deviceLocked_);
-    ui->checkBoxGP4DefaultValue->setEnabled((checked || ui->comboBoxGP4->currentIndex() == 1) && !deviceLocked_);
-    ui->checkBoxGP5DefaultValue->setEnabled((checked || ui->comboBoxGP5->currentIndex() == 1) && !deviceLocked_);
-    ui->checkBoxGP6DefaultValue->setEnabled((checked || ui->comboBoxGP6->currentIndex() == 1) && !deviceLocked_);
-    ui->checkBoxGP7DefaultValue->setEnabled((checked || ui->comboBoxGP7->currentIndex() == 1) && !deviceLocked_);
-}
-
-void ConfiguratorWindow::on_comboBoxGP0_currentIndexChanged(int index)
-{
-    ui->checkBoxGP0DefaultValue->setEnabled((ui->actionUnrestrictedMode->isChecked() || index == 1) && !deviceLocked_);
-}
-
-void ConfiguratorWindow::on_comboBoxGP1_currentIndexChanged(int index)
-{
-    ui->checkBoxGP1DefaultValue->setEnabled((ui->actionUnrestrictedMode->isChecked() || index == 1) && !deviceLocked_);
-}
-
-void ConfiguratorWindow::on_comboBoxGP2_currentIndexChanged(int index)
-{
-    ui->checkBoxGP2DefaultValue->setEnabled((ui->actionUnrestrictedMode->isChecked() || index == 1) && !deviceLocked_);
-}
-
-void ConfiguratorWindow::on_comboBoxGP3_currentIndexChanged(int index)
-{
-    ui->checkBoxGP3DefaultValue->setEnabled((ui->actionUnrestrictedMode->isChecked() || index == 1) && !deviceLocked_);
-}
-
-void ConfiguratorWindow::on_comboBoxGP4_currentIndexChanged(int index)
-{
-    ui->checkBoxGP4DefaultValue->setEnabled((ui->actionUnrestrictedMode->isChecked() || index == 1) && !deviceLocked_);
-}
-
-void ConfiguratorWindow::on_comboBoxGP5_currentIndexChanged(int index)
-{
-    ui->checkBoxGP5DefaultValue->setEnabled((ui->actionUnrestrictedMode->isChecked() || index == 1) && !deviceLocked_);
-}
-
-void ConfiguratorWindow::on_comboBoxGP6_currentIndexChanged(int index)
-{
-    ui->checkBoxGP6DefaultValue->setEnabled((ui->actionUnrestrictedMode->isChecked() || index == 1) && !deviceLocked_);
-}
-
-void ConfiguratorWindow::on_comboBoxGP7_currentIndexChanged(int index)
-{
-    ui->checkBoxGP7DefaultValue->setEnabled((ui->actionUnrestrictedMode->isChecked() || index == 1) && !deviceLocked_);
-}
-
 void ConfiguratorWindow::on_lineEditManufacturer_textEdited()
 {
     int curPosition = ui->lineEditManufacturer->cursorPosition();
@@ -261,6 +209,15 @@ void ConfiguratorWindow::on_pushButtonRevert_clicked()
     displayConfiguration(deviceConfig_);
 }
 
+void ConfiguratorWindow::on_pushButtonWrite_clicked()
+{
+    // Just to simulate!!!!!!
+    getEditedConfiguration();
+    deviceConfig_ = editedConfig_;
+    deviceLocked_ = true;
+    displayConfiguration(deviceConfig_);
+}
+
 // Partially disables configurator window
 void ConfiguratorWindow::disableView()
 {
@@ -345,6 +302,30 @@ void ConfiguratorWindow::displayUSBParameters(const MCP2210::USBParameters &usbp
     ui->checkBoxRemoteWakeUpCapable->setChecked(usbparameters.rmwakeup);
 }
 
+// Retrieves the user set configuration from the fields
+void ConfiguratorWindow::getEditedConfiguration()
+{
+    editedConfig_.manufacturer = ui->lineEditManufacturer->text();
+    editedConfig_.product = ui->lineEditProduct->text();
+    editedConfig_.usbparameters.vid = static_cast<quint16>(ui->lineEditVID->text().toUInt(nullptr, 16));
+    editedConfig_.usbparameters.pid = static_cast<quint16>(ui->lineEditPID->text().toUInt(nullptr, 16));
+    editedConfig_.usbparameters.maxpow = static_cast<quint8>(ui->lineEditMaxPower->text().toUInt() / 2);
+    editedConfig_.usbparameters.powmode = static_cast<quint8>(ui->comboBoxPowerMode->currentIndex());
+    editedConfig_.usbparameters.rmwakeup = ui->checkBoxRemoteWakeUpCapable->isChecked();
+    editedConfig_.chipsettings.gp0 = static_cast<quint8>(ui->comboBoxGP0->currentIndex() > 0 ? ui->comboBoxGP0->currentIndex() - 1 : 0);
+    editedConfig_.chipsettings.gp1 = static_cast<quint8>(ui->comboBoxGP1->currentIndex() > 0 ? ui->comboBoxGP1->currentIndex() - 1 : 0);
+    editedConfig_.chipsettings.gp2 = static_cast<quint8>(ui->comboBoxGP2->currentIndex() > 0 ? ui->comboBoxGP2->currentIndex() - 1 : 0);
+    editedConfig_.chipsettings.gp3 = static_cast<quint8>(ui->comboBoxGP3->currentIndex() > 0 ? ui->comboBoxGP3->currentIndex() - 1 : 0);
+    editedConfig_.chipsettings.gp4 = static_cast<quint8>(ui->comboBoxGP4->currentIndex() > 0 ? ui->comboBoxGP4->currentIndex() - 1 : 0);
+    editedConfig_.chipsettings.gp5 = static_cast<quint8>(ui->comboBoxGP5->currentIndex() > 0 ? ui->comboBoxGP5->currentIndex() - 1 : 0);
+    editedConfig_.chipsettings.gp6 = static_cast<quint8>(ui->comboBoxGP6->currentIndex() > 0 ? ui->comboBoxGP6->currentIndex() - 1 : 0);
+    editedConfig_.chipsettings.gp7 = static_cast<quint8>(ui->comboBoxGP7->currentIndex() > 0 ? ui->comboBoxGP7->currentIndex() - 1 : 0);
+    editedConfig_.chipsettings.gp8 = static_cast<quint8>(ui->comboBoxGP8->currentIndex());
+    editedConfig_.chipsettings.gpdir = static_cast<quint8>((ui->comboBoxGP7->currentIndex() != 1) << 7 | (ui->comboBoxGP6->currentIndex() != 1) << 6 | (ui->comboBoxGP5->currentIndex() != 1) << 5 | (ui->comboBoxGP4->currentIndex() != 1) << 4 | (ui->comboBoxGP3->currentIndex() != 1) << 3 | (ui->comboBoxGP2->currentIndex() != 1) << 2 | (ui->comboBoxGP1->currentIndex() != 1) << 1 | (ui->comboBoxGP0->currentIndex() != 1));  // Default to input direction
+    editedConfig_.chipsettings.gpout = static_cast<quint8>(ui->checkBoxGP7DefaultValue->isChecked() << 7 | ui->checkBoxGP6DefaultValue->isChecked() << 6 | ui->checkBoxGP5DefaultValue->isChecked() << 5 | ui->checkBoxGP4DefaultValue->isChecked() << 4 | ui->checkBoxGP3DefaultValue->isChecked() << 3 | ui->checkBoxGP2DefaultValue->isChecked() << 2 | ui->checkBoxGP1DefaultValue->isChecked() << 1 | ui->checkBoxGP0DefaultValue->isChecked());
+    // To do!
+}
+
 // Determines the type of error and acts accordingly, always showing a message
 void ConfiguratorWindow::handleError()
 {
@@ -396,13 +377,21 @@ void ConfiguratorWindow::readDeviceConfiguration()
 void ConfiguratorWindow::setChipSettingsEnabled(bool value)
 {
     ui->comboBoxGP0->setEnabled(value);
+    ui->checkBoxGP0DefaultValue->setEnabled(value);
     ui->comboBoxGP1->setEnabled(value);
+    ui->checkBoxGP1DefaultValue->setEnabled(value);
     ui->comboBoxGP2->setEnabled(value);
+    ui->checkBoxGP2DefaultValue->setEnabled(value);
     ui->comboBoxGP3->setEnabled(value);
+    ui->checkBoxGP3DefaultValue->setEnabled(value);
     ui->comboBoxGP4->setEnabled(value);
+    ui->checkBoxGP4DefaultValue->setEnabled(value);
     ui->comboBoxGP5->setEnabled(value);
+    ui->checkBoxGP5DefaultValue->setEnabled(value);
     ui->comboBoxGP6->setEnabled(value);
+    ui->checkBoxGP6DefaultValue->setEnabled(value);
     ui->comboBoxGP7->setEnabled(value);
+    ui->checkBoxGP7DefaultValue->setEnabled(value);
     ui->comboBoxGP8->setEnabled(value);
     ui->comboBoxInterruptMode->setEnabled(value);
     ui->checkBoxRemoteWakeUp->setEnabled(value);
