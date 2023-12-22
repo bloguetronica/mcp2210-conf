@@ -1,5 +1,5 @@
 /* MCP2210 Configurator - Version 1.0.0 for Debian Linux
-   Copyright (c) 2023 Samuel Lourenço
+   Copyright (c) 2023-2024 Samuel Lourenço
 
    This program is free software: you can redistribute it and/or modify it
    under the terms of the GNU General Public License as published by the Free
