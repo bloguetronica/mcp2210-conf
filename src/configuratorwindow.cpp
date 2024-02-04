@@ -81,6 +81,11 @@ void ConfiguratorWindow::on_actionAbout_triggered()
     showAboutDialog();  // See "common.h" and "common.cpp"
 }
 
+void ConfiguratorWindow::on_actionReadEEPROM_triggered()
+{
+
+}
+
 void ConfiguratorWindow::on_actionStatus_triggered()
 {
     if (statusDialog_.isNull()) {  // If the dialog is not open
@@ -101,6 +106,16 @@ void ConfiguratorWindow::on_actionStatus_triggered()
         statusDialog_->showNormal();  // Required if the dialog is minimized
         statusDialog_->activateWindow();  // Set focus on the previous dialog (dialog is raised and selected)
     }
+}
+
+void ConfiguratorWindow::on_actionVerifyEEPROM_triggered()
+{
+
+}
+
+void ConfiguratorWindow::on_actionWriteEEPROM_triggered()
+{
+
 }
 
 void ConfiguratorWindow::on_lineEditManufacturer_textEdited()

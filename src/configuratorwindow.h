@@ -46,7 +46,10 @@ public:
 
 private slots:
     void on_actionAbout_triggered();
+    void on_actionReadEEPROM_triggered();
     void on_actionStatus_triggered();
+    void on_actionVerifyEEPROM_triggered();
+    void on_actionWriteEEPROM_triggered();
     void on_lineEditManufacturer_textEdited();
     void on_lineEditMaxPower_editingFinished();
     void on_lineEditMaxPower_textChanged();

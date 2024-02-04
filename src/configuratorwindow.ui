@@ -1095,7 +1095,16 @@
     <property name="title">
      <string>&amp;Device</string>
     </property>
+    <widget class="QMenu" name="menuEEPROM">
+     <property name="title">
+      <string>&amp;EEPROM</string>
+     </property>
+     <addaction name="actionReadEEPROM"/>
+     <addaction name="actionWriteEEPROM"/>
+     <addaction name="actionVerify"/>
+    </widget>
     <addaction name="actionStatus"/>
+    <addaction name="menuEEPROM"/>
     <addaction name="separator"/>
     <addaction name="actionUsePassword"/>
     <addaction name="separator"/>
@@ -1134,6 +1143,21 @@
    </property>
    <property name="text">
     <string>Use &amp;Password...</string>
+   </property>
+  </action>
+  <action name="actionReadEEPROM">
+   <property name="text">
+    <string>&amp;Read...</string>
+   </property>
+  </action>
+  <action name="actionWriteEEPROM">
+   <property name="text">
+    <string>&amp;Write...</string>
+   </property>
+  </action>
+  <action name="actionVerify">
+   <property name="text">
+    <string>&amp;Verify...</string>
    </property>
   </action>
  </widget>
