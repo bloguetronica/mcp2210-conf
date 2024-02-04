@@ -1101,7 +1101,7 @@
      </property>
      <addaction name="actionReadEEPROM"/>
      <addaction name="actionWriteEEPROM"/>
-     <addaction name="actionVerify"/>
+     <addaction name="actionVerifyEEPROM"/>
     </widget>
     <addaction name="actionStatus"/>
     <addaction name="menuEEPROM"/>
@@ -1155,7 +1155,7 @@
     <string>&amp;Write...</string>
    </property>
   </action>
-  <action name="actionVerify">
+  <action name="actionVerifyEEPROM">
    <property name="text">
     <string>&amp;Verify...</string>
    </property>
