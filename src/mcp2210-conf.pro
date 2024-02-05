@@ -27,6 +27,7 @@ SOURCES += \
     common.cpp \
     configuration.cpp \
     configuratorwindow.cpp \
+    eeprom.cpp \
     libusb-extra.c \
     main.cpp \
     mainwindow.cpp \
@@ -38,6 +39,7 @@ HEADERS += \
     common.h \
     configuration.h \
     configuratorwindow.h \
+    eeprom.h \
     libusb-extra.h \
     mainwindow.h \
     mcp2210.h \
