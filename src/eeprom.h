@@ -21,9 +21,17 @@
 #ifndef EEPROM_H
 #define EEPROM_H
 
+// Includes
+#include <QtGlobal>
+
+// Definitions
+static const size_t EEPROM_SIZE = 256;  // EEPROM size
+
 struct EEPROM
 {
+    quint8 bytes[EEPROM_SIZE];
 
+    bool operator ==(const EEPROM &other) const;
 };
 
 #endif  // EEPROM_H
