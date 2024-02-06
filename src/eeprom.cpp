@@ -21,16 +21,13 @@
 // Includes
 #include "eeprom.h"
 
-// "Equal to" operator for PROMConfig
+// "Equal to" operator
 bool EEPROM::operator ==(const EEPROM &other) const
 {
     bool equal = true;
     for (size_t i = 0; i < EEPROM_SIZE; ++i) {
         if (bytes[i] != other.bytes[i]) {
             equal = false;
-            break;
-        }
-        if (!equal) {  // Added in version 2.0.1 in order to fix efficiency issue
             break;
         }
     }
