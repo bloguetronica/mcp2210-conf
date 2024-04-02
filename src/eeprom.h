@@ -22,7 +22,7 @@
 #define EEPROM_H
 
 // Includes
-#include <QtGlobal>
+#include <QDataStream>
 
 // Definitions
 static const size_t EEPROM_SIZE = 256;  // EEPROM size
@@ -32,6 +32,8 @@ struct EEPROM
     quint8 bytes[EEPROM_SIZE];
 
     bool operator ==(const EEPROM &other) const;
+    QDataStream &operator <<(QDataStream &dataStream);
+    QDataStream &operator >>(QDataStream &dataStream);
 };
 
 #endif  // EEPROM_H
