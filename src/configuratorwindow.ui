@@ -427,6 +427,9 @@
        </property>
       </widget>
       <widget class="QPushButton" name="pushButtonRevealNewPassword">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="geometry">
         <rect>
          <x>390</x>
@@ -438,8 +441,15 @@
        <property name="text">
         <string/>
        </property>
+       <property name="icon">
+        <iconset resource="resources.qrc">
+         <normaloff>:/icons/buttons/icons/buttons/password-reveal.png</normaloff>:/icons/buttons/icons/buttons/password-reveal.png</iconset>
+       </property>
       </widget>
       <widget class="QPushButton" name="pushButtonRevealRepeatPassword">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="geometry">
         <rect>
          <x>390</x>
@@ -450,6 +460,10 @@
        </property>
        <property name="text">
         <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="resources.qrc">
+         <normaloff>:/icons/buttons/icons/buttons/password-reveal.png</normaloff>:/icons/buttons/icons/buttons/password-reveal.png</iconset>
        </property>
       </widget>
      </widget>
