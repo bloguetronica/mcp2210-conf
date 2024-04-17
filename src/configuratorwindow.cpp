@@ -180,6 +180,11 @@ void ConfiguratorWindow::on_lineEditMaxPowerHex_textEdited()
     ui->lineEditMaxPower->setText(QString::number(maxPower));
 }
 
+void ConfiguratorWindow::on_lineEditNewPassword_textChanged()
+{
+    ui->pushButtonRevealNewPassword->setEnabled(!ui->lineEditNewPassword->text().isEmpty());
+}
+
 void ConfiguratorWindow::on_lineEditPID_textChanged()
 {
     if (ui->lineEditPID->text().size() < 4 || ui->lineEditPID->text() == "0000") {
@@ -203,6 +208,11 @@ void ConfiguratorWindow::on_lineEditProduct_textEdited()
     ui->lineEditProduct->setCursorPosition(curPosition);
 }
 
+void ConfiguratorWindow::on_lineEditRepeatPassword_textChanged()
+{
+    ui->pushButtonRevealRepeatPassword->setEnabled(!ui->lineEditRepeatPassword->text().isEmpty());
+}
+
 void ConfiguratorWindow::on_lineEditVID_textChanged()
 {
     if (ui->lineEditVID->text().size() < 4 || ui->lineEditVID->text() == "0000") {
@@ -217,6 +227,26 @@ void ConfiguratorWindow::on_lineEditVID_textEdited()
     int curPosition = ui->lineEditVID->cursorPosition();
     ui->lineEditVID->setText(ui->lineEditVID->text().toLower());
     ui->lineEditVID->setCursorPosition(curPosition);
+}
+
+void ConfiguratorWindow::on_pushButtonRevealNewPassword_pressed()
+{
+    ui->lineEditNewPassword->setEchoMode(QLineEdit::Normal);
+}
+
+void ConfiguratorWindow::on_pushButtonRevealNewPassword_released()
+{
+    ui->lineEditNewPassword->setEchoMode(QLineEdit::Password);
+}
+
+void ConfiguratorWindow::on_pushButtonRevealRepeatPassword_pressed()
+{
+    ui->lineEditRepeatPassword->setEchoMode(QLineEdit::Normal);
+}
+
+void ConfiguratorWindow::on_pushButtonRevealRepeatPassword_released()
+{
+    ui->lineEditRepeatPassword->setEchoMode(QLineEdit::Password);
 }
 
 void ConfiguratorWindow::on_pushButtonRevert_clicked()
@@ -280,6 +310,8 @@ void ConfiguratorWindow::displayConfiguration(const Configuration &config)
     setMaxPowerEnabled(!deviceLocked_);
     setPowerModeEnabled(!deviceLocked_);
     setRemoteWakeUpCapableEnabled(!deviceLocked_);
+    // Do treat NVRAM access mode here
+    setNVRAMAccessModeEnabled(!deviceLocked_);
     displayChipSettings(config.chipsettings);
     setChipSettingsEnabled(!deviceLocked_);
     displaySPISettings(config.spisettings);
@@ -424,6 +456,12 @@ void ConfiguratorWindow::setMaxPowerEnabled(bool value)
 {
     ui->lineEditMaxPower->setReadOnly(!value);
     ui->lineEditMaxPowerHex->setReadOnly(!value);
+}
+
+// Enables or disables the set NVRAM access mode group box
+void ConfiguratorWindow::setNVRAMAccessModeEnabled(bool value)
+{
+    ui->groupBoxNVRAMAccess->setEnabled(value);
 }
 
 // Enables or disables the PID field

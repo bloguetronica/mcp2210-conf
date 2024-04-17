@@ -312,6 +312,9 @@
       </property>
      </widget>
      <widget class="QGroupBox" name="groupBoxNVRAMAccess">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -321,7 +324,7 @@
        </rect>
       </property>
       <property name="title">
-       <string>NVRAM Access</string>
+       <string>NVRAM Access Mode</string>
       </property>
       <widget class="QRadioButton" name="radioButtonFullAccess">
        <property name="geometry">
@@ -364,6 +367,9 @@
        <property name="echoMode">
         <enum>QLineEdit::Password</enum>
        </property>
+       <property name="clearButtonEnabled">
+        <bool>true</bool>
+       </property>
       </widget>
       <widget class="QLineEdit" name="lineEditRepeatPassword">
        <property name="geometry">
@@ -379,6 +385,9 @@
        </property>
        <property name="echoMode">
         <enum>QLineEdit::Password</enum>
+       </property>
+       <property name="clearButtonEnabled">
+        <bool>true</bool>
        </property>
       </widget>
       <widget class="QRadioButton" name="radioButtonPermanentlyLocked">

@@ -57,11 +57,17 @@ private slots:
     void on_lineEditMaxPowerHex_editingFinished();
     void on_lineEditMaxPowerHex_textChanged();
     void on_lineEditMaxPowerHex_textEdited();
+    void on_lineEditNewPassword_textChanged();
     void on_lineEditPID_textChanged();
     void on_lineEditPID_textEdited();
     void on_lineEditProduct_textEdited();
+    void on_lineEditRepeatPassword_textChanged();
     void on_lineEditVID_textChanged();
     void on_lineEditVID_textEdited();
+    void on_pushButtonRevealNewPassword_pressed();
+    void on_pushButtonRevealNewPassword_released();
+    void on_pushButtonRevealRepeatPassword_pressed();
+    void on_pushButtonRevealRepeatPassword_released();
     void on_pushButtonRevert_clicked();
     void on_pushButtonWrite_clicked();
 
@@ -88,6 +94,7 @@ private:
     void setChipSettingsEnabled(bool value);
     void setManufacturerEnabled(bool value);
     void setMaxPowerEnabled(bool value);
+    void setNVRAMAccessModeEnabled(bool value);
     void setPIDEnabled(bool value);
     void setPowerModeEnabled(bool value);
     void setProductEnabled(bool value);
