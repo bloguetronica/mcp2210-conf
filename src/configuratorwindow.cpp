@@ -461,7 +461,7 @@ void ConfiguratorWindow::setMaxPowerEnabled(bool value)
 // Enables or disables the set NVRAM access mode group box
 void ConfiguratorWindow::setNVRAMAccessModeEnabled(bool value)
 {
-    ui->groupBoxNVRAMAccess->setEnabled(value);
+    ui->groupBoxNVRAMAccessMode->setEnabled(value);
 }
 
 // Enables or disables the PID field

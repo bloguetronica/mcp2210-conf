@@ -311,7 +311,7 @@
        <string>Remote wake-up capable</string>
       </property>
      </widget>
-     <widget class="QGroupBox" name="groupBoxNVRAMAccess">
+     <widget class="QGroupBox" name="groupBoxNVRAMAccessMode">
       <property name="enabled">
        <bool>false</bool>
       </property>
