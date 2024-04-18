@@ -78,10 +78,12 @@ private:
     MCP2210 mcp2210_;
     QPointer<StatusDialog> statusDialog_;
     QString errmsg_, serialstr_;
+    quint8 accessControlMode_;
     quint16 pid_, vid_;
-    bool deviceLocked_ = true, err_, viewEnabled_ = false;
+    bool err_, viewEnabled_ = false;
 
     void disableView();
+    void displayAccessControlMode();
     void displayChipSettings(const MCP2210::ChipSettings &chipsettings);
     void displayConfiguration(const Configuration &config);
     void displayManufacturer(const QString &manufacturer);

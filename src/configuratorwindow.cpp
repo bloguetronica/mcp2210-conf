@@ -259,7 +259,7 @@ void ConfiguratorWindow::on_pushButtonWrite_clicked()
     // Just to simulate!!!!!!
     getEditedConfiguration();
     deviceConfig_ = editedConfig_;
-    deviceLocked_ = true;
+    accessControlMode_ = MCP2210::ACLOCKED;
     displayConfiguration(deviceConfig_);
 }
 
@@ -276,6 +276,21 @@ void ConfiguratorWindow::disableView()
     ui->actionClose->setText(tr("&Close Window"));
     ui->centralWidget->setEnabled(false);
     viewEnabled_ = false;
+}
+
+// Updates the access control mode area
+void ConfiguratorWindow::displayAccessControlMode()
+{
+    switch (accessControlMode_) {
+        case MCP2210::ACPASSWORD:
+            ui->radioButtonPasswordProtected->setChecked(true);
+            break;
+        case MCP2210::ACLOCKED:
+            ui->radioButtonPermanentlyLocked->setChecked(true);
+            break;
+        default:
+            ui->radioButtonFullAccess->setChecked(true);
+    }
 }
 
 // Updates all fields pertaining to the MCP2210 chip settings
@@ -307,22 +322,22 @@ void ConfiguratorWindow::displayChipSettings(const MCP2210::ChipSettings &chipse
 void ConfiguratorWindow::displayConfiguration(const Configuration &config)
 {
     displayManufacturer(config.manufacturer);
-    setManufacturerEnabled(!deviceLocked_);
+    setManufacturerEnabled(accessControlMode_ != MCP2210::ACLOCKED);
     displayProduct(config.product);
-    setProductEnabled(!deviceLocked_);
+    setProductEnabled(accessControlMode_ != MCP2210::ACLOCKED);
     displayUSBParameters(config.usbparameters);
-    setVIDEnabled(!deviceLocked_);
-    setPIDEnabled(!deviceLocked_);
-    setMaxPowerEnabled(!deviceLocked_);
-    setPowerModeEnabled(!deviceLocked_);
-    setRemoteWakeUpCapableEnabled(!deviceLocked_);
-    // Do treat NVRAM access mode here
-    setNVRAMAccessModeEnabled(!deviceLocked_);
+    setVIDEnabled(accessControlMode_ != MCP2210::ACLOCKED);
+    setPIDEnabled(accessControlMode_ != MCP2210::ACLOCKED);
+    setMaxPowerEnabled(accessControlMode_ != MCP2210::ACLOCKED);
+    setPowerModeEnabled(accessControlMode_ != MCP2210::ACLOCKED);
+    setRemoteWakeUpCapableEnabled(accessControlMode_ != MCP2210::ACLOCKED);
+    displayAccessControlMode();
+    setNVRAMAccessModeEnabled(accessControlMode_ != MCP2210::ACLOCKED);
     displayChipSettings(config.chipsettings);
-    setChipSettingsEnabled(!deviceLocked_);
+    setChipSettingsEnabled(accessControlMode_ != MCP2210::ACLOCKED);
     displaySPISettings(config.spisettings);
-    setSPISettingsEnabled(!deviceLocked_);
-    setWriteEnabled(!deviceLocked_);
+    setSPISettingsEnabled(accessControlMode_ != MCP2210::ACLOCKED);
+    setWriteEnabled(accessControlMode_ != MCP2210::ACLOCKED);
 }
 
 // Updates the manufacturer descriptor field
@@ -413,7 +428,7 @@ void ConfiguratorWindow::readDeviceConfiguration()
     deviceConfig_.usbparameters = mcp2210_.getUSBParameters(errcnt, errstr);
     deviceConfig_.chipsettings = mcp2210_.getNVChipSettings(errcnt, errstr);
     deviceConfig_.spisettings = mcp2210_.getNVSPISettings(errcnt, errstr);
-    deviceLocked_ = mcp2210_.getAccessControlMode(errcnt, errstr) == MCP2210::ACLOCKED;
+    accessControlMode_ = mcp2210_.getAccessControlMode(errcnt, errstr);
     if (errcnt > 0) {
         mcp2210_.close();
         if (mcp2210_.disconnected()) {
