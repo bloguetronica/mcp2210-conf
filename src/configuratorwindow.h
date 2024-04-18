@@ -78,15 +78,15 @@ private:
     MCP2210 mcp2210_;
     QPointer<StatusDialog> statusDialog_;
     QString errmsg_, serialstr_;
-    quint8 accessControlMode_;
+    quint8 accessMode_;
     quint16 pid_, vid_;
     bool err_, viewEnabled_ = false;
 
     void disableView();
-    void displayAccessControlMode();
     void displayChipSettings(const MCP2210::ChipSettings &chipsettings);
     void displayConfiguration(const Configuration &config);
     void displayManufacturer(const QString &manufacturer);
+    void displayNVRAMAccessMode();
     void displayProduct(const QString &product);
     void displaySPISettings(const MCP2210::SPISettings &spisettings);
     void displayUSBParameters(const MCP2210::USBParameters &usbparameters);
@@ -103,6 +103,7 @@ private:
     void setProductEnabled(bool value);
     void setRemoteWakeUpCapableEnabled(bool value);
     void setSPISettingsEnabled(bool value);
+    void setUsePasswordEnabled(bool value);
     void setVIDEnabled(bool value);
     void setWriteEnabled(bool value);
 };
