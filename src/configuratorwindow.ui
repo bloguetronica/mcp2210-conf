@@ -353,6 +353,9 @@
        </property>
       </widget>
       <widget class="QLineEdit" name="lineEditNewPassword">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="geometry">
         <rect>
          <x>220</x>
@@ -372,6 +375,9 @@
        </property>
       </widget>
       <widget class="QLineEdit" name="lineEditRepeatPassword">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="geometry">
         <rect>
          <x>220</x>
@@ -401,6 +407,9 @@
        </property>
        <property name="text">
         <string>Permanently locked</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
        </property>
       </widget>
       <widget class="QLabel" name="labelNewPassword">

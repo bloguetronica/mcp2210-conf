@@ -70,6 +70,7 @@ private slots:
     void on_pushButtonRevealRepeatPassword_released();
     void on_pushButtonRevert_clicked();
     void on_pushButtonWrite_clicked();
+    void on_radioButtonPasswordProtected_toggled(bool checked);
 
 private:
     Ui::ConfiguratorWindow *ui;

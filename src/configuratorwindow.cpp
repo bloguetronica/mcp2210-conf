@@ -263,6 +263,12 @@ void ConfiguratorWindow::on_pushButtonWrite_clicked()
     displayConfiguration(deviceConfig_);
 }
 
+void ConfiguratorWindow::on_radioButtonPasswordProtected_toggled(bool checked)
+{
+    ui->lineEditNewPassword->setEnabled(checked);
+    ui->lineEditRepeatPassword->setEnabled(checked);
+}
+
 // Partially disables configurator window
 void ConfiguratorWindow::disableView()
 {
