@@ -123,13 +123,13 @@ void ConfiguratorWindow::on_checkBoxKeepPassword_stateChanged(int state)
     ui->lineEditNewPassword->setEnabled(state == Qt::Unchecked);
     ui->pushButtonRevealNewPassword->setEnabled(state == Qt::Unchecked && !ui->lineEditNewPassword->text().isEmpty());
     ui->lineEditRepeatPassword->setEnabled(state == Qt::Unchecked);
-    ui->pushButtonRevealNewPassword->setEnabled(state == Qt::Unchecked && !ui->lineEditRepeatPassword->text().isEmpty());
+    ui->pushButtonRevealRepeatPassword->setEnabled(state == Qt::Unchecked && !ui->lineEditRepeatPassword->text().isEmpty());
 }
 
-void ConfiguratorWindow::on_lineEditManufacturer_textEdited()
+void ConfiguratorWindow::on_lineEditManufacturer_textEdited(QString text)  // The variable "text" is passed by value here, because it needs to be modified locally!
 {
     int curPosition = ui->lineEditManufacturer->cursorPosition();
-    ui->lineEditManufacturer->setText(ui->lineEditManufacturer->text().replace('\n', ' '));
+    ui->lineEditManufacturer->setText(text.replace('\n', ' '));
     ui->lineEditManufacturer->setCursorPosition(curPosition);
 }
 
@@ -138,22 +138,21 @@ void ConfiguratorWindow::on_lineEditMaxPower_editingFinished()
     ui->lineEditMaxPower->setText(QString::number(2 * (ui->lineEditMaxPower->text().toInt() / 2)));  // This removes any leading zeros and also rounds to the previous even number, if the value is odd
 }
 
-void ConfiguratorWindow::on_lineEditMaxPower_textChanged()
+void ConfiguratorWindow::on_lineEditMaxPower_textChanged(const QString &text)
 {
-    if (ui->lineEditMaxPower->text().isEmpty()) {
+    if (text.isEmpty()) {
         ui->lineEditMaxPower->setStyleSheet("background: rgb(255, 204, 0);");
     } else {
         ui->lineEditMaxPower->setStyleSheet("");
     }
 }
 
-void ConfiguratorWindow::on_lineEditMaxPower_textEdited()
+void ConfiguratorWindow::on_lineEditMaxPower_textEdited(QString text)  // The variable "text" is passed by value here, because it needs to be modified locally!
 {
-    QString maxPowerStr = ui->lineEditMaxPower->text();
-    int maxPower = maxPowerStr.toInt();
+    int maxPower = text.toInt();
     if (maxPower > POWER_LIMIT) {
-        maxPowerStr.chop(1);
-        ui->lineEditMaxPower->setText(maxPowerStr);
+        text.chop(1);
+        ui->lineEditMaxPower->setText(text);
         maxPower /= 10;
     }
     ui->lineEditMaxPowerHex->setText(QString("%1").arg(maxPower / 2, 2, 16, QChar('0')));  // This will autofill with up to two leading zeros
@@ -166,20 +165,20 @@ void ConfiguratorWindow::on_lineEditMaxPowerHex_editingFinished()
     }
 }
 
-void ConfiguratorWindow::on_lineEditMaxPowerHex_textChanged()
+void ConfiguratorWindow::on_lineEditMaxPowerHex_textChanged(const QString &text)
 {
-    if (ui->lineEditMaxPowerHex->text().isEmpty()) {
+    if (text.isEmpty()) {
         ui->lineEditMaxPowerHex->setStyleSheet("background: rgb(255, 204, 0);");
     } else {
         ui->lineEditMaxPowerHex->setStyleSheet("");
     }
 }
 
-void ConfiguratorWindow::on_lineEditMaxPowerHex_textEdited()
+void ConfiguratorWindow::on_lineEditMaxPowerHex_textEdited(const QString &text)
 {
     int curPosition = ui->lineEditMaxPowerHex->cursorPosition();
-    ui->lineEditMaxPowerHex->setText(ui->lineEditMaxPowerHex->text().toLower());
-    int maxPower = 2 * ui->lineEditMaxPowerHex->text().toInt(nullptr, 16);
+    ui->lineEditMaxPowerHex->setText(text.toLower());
+    int maxPower = 2 * text.toInt(nullptr, 16);
     if (maxPower > POWER_LIMIT) {
         maxPower = POWER_LIMIT;
         ui->lineEditMaxPowerHex->setText(QString("%1").arg(POWER_LIMIT / 2, 2, 16, QChar('0')));  // This will autofill with up to two leading zeros
@@ -188,24 +187,24 @@ void ConfiguratorWindow::on_lineEditMaxPowerHex_textEdited()
     ui->lineEditMaxPower->setText(QString::number(maxPower));
 }
 
-void ConfiguratorWindow::on_lineEditNewPassword_textChanged()
+void ConfiguratorWindow::on_lineEditNewPassword_textChanged(const QString &text)
 {
-    ui->pushButtonRevealNewPassword->setEnabled(!ui->lineEditNewPassword->text().isEmpty());
+    ui->pushButtonRevealNewPassword->setEnabled(!text.isEmpty());
 }
 
-void ConfiguratorWindow::on_lineEditPID_textChanged()
+void ConfiguratorWindow::on_lineEditPID_textChanged(const QString &text)
 {
-    if (ui->lineEditPID->text().size() < 4 || ui->lineEditPID->text() == "0000") {
+    if (text.size() < 4 || text == "0000") {
         ui->lineEditPID->setStyleSheet("background: rgb(255, 204, 0);");
     } else {
         ui->lineEditPID->setStyleSheet("");
     }
 }
 
-void ConfiguratorWindow::on_lineEditPID_textEdited()
+void ConfiguratorWindow::on_lineEditPID_textEdited(const QString &text)
 {
     int curPosition = ui->lineEditPID->cursorPosition();
-    ui->lineEditPID->setText(ui->lineEditPID->text().toLower());
+    ui->lineEditPID->setText(text.toLower());
     ui->lineEditPID->setCursorPosition(curPosition);
 }
 
@@ -216,24 +215,24 @@ void ConfiguratorWindow::on_lineEditProduct_textEdited()
     ui->lineEditProduct->setCursorPosition(curPosition);
 }
 
-void ConfiguratorWindow::on_lineEditRepeatPassword_textChanged()
+void ConfiguratorWindow::on_lineEditRepeatPassword_textChanged(const QString &text)
 {
-    ui->pushButtonRevealRepeatPassword->setEnabled(!ui->lineEditRepeatPassword->text().isEmpty());
+    ui->pushButtonRevealRepeatPassword->setEnabled(!text.isEmpty());
 }
 
-void ConfiguratorWindow::on_lineEditVID_textChanged()
+void ConfiguratorWindow::on_lineEditVID_textChanged(const QString &text)
 {
-    if (ui->lineEditVID->text().size() < 4 || ui->lineEditVID->text() == "0000") {
+    if (text.size() < 4 || text == "0000") {
         ui->lineEditVID->setStyleSheet("background: rgb(255, 204, 0);");
     } else {
         ui->lineEditVID->setStyleSheet("");
     }
 }
 
-void ConfiguratorWindow::on_lineEditVID_textEdited()
+void ConfiguratorWindow::on_lineEditVID_textEdited(const QString &text)
 {
     int curPosition = ui->lineEditVID->cursorPosition();
-    ui->lineEditVID->setText(ui->lineEditVID->text().toLower());
+    ui->lineEditVID->setText(text.toLower());
     ui->lineEditVID->setCursorPosition(curPosition);
 }
 
