@@ -118,6 +118,14 @@ void ConfiguratorWindow::on_actionWriteEEPROM_triggered()
 
 }
 
+void ConfiguratorWindow::on_checkBoxKeepPassword_stateChanged(int state)
+{
+    ui->lineEditNewPassword->setEnabled(state == Qt::Unchecked);
+    ui->pushButtonRevealNewPassword->setEnabled(state == Qt::Unchecked && !ui->lineEditNewPassword->text().isEmpty());
+    ui->lineEditRepeatPassword->setEnabled(state == Qt::Unchecked);
+    ui->pushButtonRevealNewPassword->setEnabled(state == Qt::Unchecked && !ui->lineEditRepeatPassword->text().isEmpty());
+}
+
 void ConfiguratorWindow::on_lineEditManufacturer_textEdited()
 {
     int curPosition = ui->lineEditManufacturer->cursorPosition();
@@ -259,7 +267,7 @@ void ConfiguratorWindow::on_pushButtonWrite_clicked()
     // Just to simulate!!!!!!
     getEditedConfiguration();
     deviceConfig_ = editedConfig_;
-    accessMode_ = MCP2210::ACLOCKED;
+    accessMode_ = MCP2210::ACPASSWORD;
     displayConfiguration(deviceConfig_);
 }
 
@@ -338,6 +346,10 @@ void ConfiguratorWindow::displayNVRAMAccessMode()
     switch (accessMode_) {
         case MCP2210::ACPASSWORD:
             ui->radioButtonPasswordProtected->setChecked(true);
+            ui->checkBoxKeepPassword->setChecked(true);
+            ui->checkBoxKeepPassword->setEnabled(true);
+            ui->lineEditNewPassword->setEnabled(false);
+            ui->lineEditRepeatPassword->setEnabled(false);
             break;
         case MCP2210::ACLOCKED:
             ui->radioButtonPermanentlyLocked->setChecked(true);
