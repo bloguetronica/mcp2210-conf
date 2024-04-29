@@ -484,7 +484,7 @@
          <normaloff>:/icons/buttons/icons/buttons/password-reveal.png</normaloff>:/icons/buttons/icons/buttons/password-reveal.png</iconset>
        </property>
       </widget>
-      <widget class="QCheckBox" name="checkBoxKeepPassword">
+      <widget class="QCheckBox" name="checkBoxDoNotChangePassword">
        <property name="enabled">
         <bool>false</bool>
        </property>
@@ -497,7 +497,7 @@
         </rect>
        </property>
        <property name="text">
-        <string>Keep password</string>
+        <string>Do not change password</string>
        </property>
       </widget>
      </widget>

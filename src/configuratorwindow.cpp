@@ -38,6 +38,8 @@ ConfiguratorWindow::ConfiguratorWindow(QWidget *parent) :
     ui->lineEditPID->setValidator(new QRegExpValidator(QRegExp("[A-Fa-f\\d]+"), this));
     ui->lineEditMaxPower->setValidator(new QRegExpValidator(QRegExp("[\\d]+"), this));
     ui->lineEditMaxPowerHex->setValidator(new QRegExpValidator(QRegExp("[A-Fa-f\\d]+"), this));
+    ui->lineEditNewPassword->setValidator(new QRegExpValidator(QRegExp("[!-~]+"), this));  // All printable ASCII characters except space
+    ui->lineEditRepeatPassword->setValidator(new QRegExpValidator(QRegExp("[!-~]+"), this));  // Same as above
 }
 
 ConfiguratorWindow::~ConfiguratorWindow()
@@ -118,7 +120,7 @@ void ConfiguratorWindow::on_actionWriteEEPROM_triggered()
 
 }
 
-void ConfiguratorWindow::on_checkBoxKeepPassword_stateChanged(int state)
+void ConfiguratorWindow::on_checkBoxDoNotChangePassword_stateChanged(int state)
 {
     ui->lineEditNewPassword->setEnabled(state == Qt::Unchecked);
     ui->pushButtonRevealNewPassword->setEnabled(state == Qt::Unchecked && !ui->lineEditNewPassword->text().isEmpty());
@@ -345,8 +347,8 @@ void ConfiguratorWindow::displayNVRAMAccessMode()
     switch (accessMode_) {
         case MCP2210::ACPASSWORD:
             ui->radioButtonPasswordProtected->setChecked(true);
-            ui->checkBoxKeepPassword->setChecked(true);
-            ui->checkBoxKeepPassword->setEnabled(true);
+            ui->checkBoxDoNotChangePassword->setChecked(true);
+            ui->checkBoxDoNotChangePassword->setEnabled(true);
             ui->lineEditNewPassword->setEnabled(false);
             ui->lineEditRepeatPassword->setEnabled(false);
             break;

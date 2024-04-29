@@ -50,7 +50,7 @@ private slots:
     void on_actionStatus_triggered();
     void on_actionVerifyEEPROM_triggered();
     void on_actionWriteEEPROM_triggered();
-    void on_checkBoxKeepPassword_stateChanged(int state);
+    void on_checkBoxDoNotChangePassword_stateChanged(int state);
     void on_lineEditManufacturer_textEdited(QString text);
     void on_lineEditMaxPower_editingFinished();
     void on_lineEditMaxPower_textChanged(const QString &text);
