@@ -32,6 +32,7 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     mcp2210.cpp \
+    passworddialog.cpp \
     statusdialog.cpp
 
 HEADERS += \
@@ -43,12 +44,14 @@ HEADERS += \
     libusb-extra.h \
     mainwindow.h \
     mcp2210.h \
+    passworddialog.h \
     statusdialog.h
 
 FORMS += \
     aboutdialog.ui \
     configuratorwindow.ui \
     mainwindow.ui \
+    passworddialog.ui \
     statusdialog.ui
 
 TRANSLATIONS += \
