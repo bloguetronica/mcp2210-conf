@@ -36,8 +36,13 @@ public:
     explicit PasswordDialog(QWidget *parent = nullptr);
     ~PasswordDialog();
 
+private slots:
+    void on_lineEditPassword_textChanged(const QString &text);
+    void on_pushButtonRevealPassword_pressed();
+    void on_pushButtonRevealPassword_released();
+
 private:
     Ui::PasswordDialog *ui;
 };
 
-#endif // PASSWORDDIALOG_H
+#endif  // PASSWORDDIALOG_H

@@ -19,6 +19,8 @@
 
 
 // Includes
+#include <QRegExp>
+#include <QRegExpValidator>
 #include "passworddialog.h"
 #include "ui_passworddialog.h"
 
@@ -27,9 +29,25 @@ PasswordDialog::PasswordDialog(QWidget *parent) :
     ui(new Ui::PasswordDialog)
 {
     ui->setupUi(this);
+    ui->lineEditPassword->setValidator(new QRegExpValidator(QRegExp("[!-~]+"), this));  // All printable ASCII characters except space
 }
 
 PasswordDialog::~PasswordDialog()
 {
     delete ui;
+}
+
+void PasswordDialog::on_lineEditPassword_textChanged(const QString &text)
+{
+    ui->pushButtonRevealPassword->setEnabled(!text.isEmpty());
+}
+
+void PasswordDialog::on_pushButtonRevealPassword_pressed()
+{
+    ui->lineEditPassword->setEchoMode(QLineEdit::Normal);
+}
+
+void PasswordDialog::on_pushButtonRevealPassword_released()
+{
+    ui->lineEditPassword->setEchoMode(QLineEdit::Password);
 }

@@ -23,6 +23,7 @@
 #include <QRegExp>
 #include <QRegExpValidator>
 #include "common.h"
+#include "passworddialog.h"
 #include "configuratorwindow.h"
 #include "ui_configuratorwindow.h"
 
@@ -108,6 +109,12 @@ void ConfiguratorWindow::on_actionStatus_triggered()
         statusDialog_->showNormal();  // Required if the dialog is minimized
         statusDialog_->activateWindow();  // Set focus on the previous dialog (dialog is raised and selected)
     }
+}
+
+void ConfiguratorWindow::on_actionUsePassword_triggered()
+{
+    PasswordDialog passwordDialog(this);
+    passwordDialog.exec();
 }
 
 void ConfiguratorWindow::on_actionVerifyEEPROM_triggered()
