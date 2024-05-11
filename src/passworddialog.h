@@ -23,6 +23,7 @@
 
 // Includes
 #include <QDialog>
+#include <QString>
 
 namespace Ui {
 class PasswordDialog;
@@ -35,6 +36,8 @@ class PasswordDialog : public QDialog
 public:
     explicit PasswordDialog(QWidget *parent = nullptr);
     ~PasswordDialog();
+
+    QString passwordLineEditText();
 
 private slots:
     void on_lineEditPassword_textChanged(const QString &text);

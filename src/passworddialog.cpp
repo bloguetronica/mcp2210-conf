@@ -37,6 +37,12 @@ PasswordDialog::~PasswordDialog()
     delete ui;
 }
 
+// Returns the text of "lineEditPassword"
+QString PasswordDialog::passwordLineEditText()
+{
+    return ui->lineEditPassword->text();
+}
+
 void PasswordDialog::on_lineEditPassword_textChanged(const QString &text)
 {
     ui->pushButtonRevealPassword->setEnabled(!text.isEmpty());
