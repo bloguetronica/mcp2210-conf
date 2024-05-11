@@ -122,10 +122,13 @@ void ConfiguratorWindow::on_actionUsePassword_triggered()
         if (err_) {
             handleError();
         } else if (response == MCP2210::COMPLETED) {  // If error check passes and password is verified
+            // Disable "Use Password" action?
             QMessageBox::information(this, tr("Access Granted"), tr("The password was sucessfully entered and full write access to the NVRAM is now granted."));
         } else if (response == MCP2210::BLOCKED) {  // If error check passes and access is blocked
+            // Disable "Write" button?
             QMessageBox::warning(this, tr("Access Blocked"), tr("The password was not accepted and access is temporarily blocked. Please disconnect and reconnect your device, and try again."));
         } else if (response == MCP2210::REJECTED) {  // If error check passes and access is somehow rejected
+            // Disable "Write" button?
             QMessageBox::warning(this, tr("Access Rejected"), tr("Full write access to the NVRAM was rejected for unknown reasons."));
         } else if (response == MCP2210::WRONG_PASSWORD) {  // If error check passes and password is not verified
             QMessageBox::warning(this, tr("Access Denied"), tr("The password was not accepted. Please try again."));
