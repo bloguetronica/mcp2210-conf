@@ -92,6 +92,7 @@ void ConfiguratorWindow::on_actionReadEEPROM_triggered()
 void ConfiguratorWindow::on_actionStatus_triggered()
 {
     if (statusDialog_.isNull()) {  // If the dialog is not open
+        err_ = false;
         int errcnt = 0;
         QString errstr;
         // Obtain information here????
@@ -113,6 +114,7 @@ void ConfiguratorWindow::on_actionStatus_triggered()
 
 void ConfiguratorWindow::on_actionUsePassword_triggered()
 {
+    err_ = false;
     int errcnt = 0;
     QString errstr;
     PasswordDialog passwordDialog(this);
