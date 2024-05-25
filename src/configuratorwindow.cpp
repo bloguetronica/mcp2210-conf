@@ -302,8 +302,11 @@ void ConfiguratorWindow::on_pushButtonWrite_clicked()
 
 void ConfiguratorWindow::on_radioButtonPasswordProtected_toggled(bool checked)
 {
-    ui->lineEditNewPassword->setEnabled(checked);
-    ui->lineEditRepeatPassword->setEnabled(checked);
+    ui->checkBoxDoNotChangePassword->setEnabled(checked && accessMode_ == MCP2210::ACPASSWORD);
+    ui->lineEditNewPassword->setEnabled(checked && !ui->checkBoxDoNotChangePassword->isChecked());
+    ui->pushButtonRevealNewPassword->setEnabled(checked && !ui->checkBoxDoNotChangePassword->isChecked() && !ui->lineEditNewPassword->text().isEmpty());
+    ui->lineEditRepeatPassword->setEnabled(checked && !ui->checkBoxDoNotChangePassword->isChecked());
+    ui->pushButtonRevealRepeatPassword->setEnabled(checked && !ui->checkBoxDoNotChangePassword->isChecked() && !ui->lineEditNewPassword->text().isEmpty());
 }
 
 // Partially disables configurator window
