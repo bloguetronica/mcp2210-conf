@@ -1,5 +1,5 @@
-/* MCP2210 class for Qt - Version 1.2.1
-   Copyright (c) 2022-2023 Samuel Lourenço
+/* MCP2210 class for Qt - Version 1.2.2
+   Copyright (c) 2022-2024 Samuel Lourenço
 
    This library is free software: you can redistribute it and/or modify it
    under the terms of the GNU Lesser General Public License as published by

@@ -1,5 +1,5 @@
-/* MCP2210 class for Qt - Version 1.2.1
-   Copyright (c) 2022-2023 Samuel Lourenço
+/* MCP2210 class for Qt - Version 1.2.2
+   Copyright (c) 2022-2024 Samuel Lourenço
 
    This library is free software: you can redistribute it and/or modify it
    under the terms of the GNU Lesser General Public License as published by
@@ -39,11 +39,11 @@ QString MCP2210::getDescGeneric(quint8 subcomid, int &errcnt, QString &errstr)
     };
     QVector<quint8> response = hidTransfer(command, errcnt, errstr);
     size_t maxSize = 2 * DESC_MAXLEN;  // Maximum size of the descriptor in bytes (the zero padding at the end takes two more bytes)
-    size_t size = response[4] - 2;  // Descriptor actual size, excluding the padding
+    size_t size = response.at(4) - 2;  // Descriptor actual size, excluding the padding
     size = size > maxSize ? maxSize : size;  // This also fixes an erroneous result due to a possible unsigned integer rollover (bug fixed in version 1.2.0)
     QString descriptor;
     for (size_t i = 0; i < size; i += 2) {
-        descriptor += QChar(response[i + PREAMBLE_SIZE + 3] << 8 | response[i + PREAMBLE_SIZE + 2]);  // UTF-16LE conversion as per the USB 2.0 specification
+        descriptor += QChar(response.at(i + PREAMBLE_SIZE + 3) << 8 | response.at(i + PREAMBLE_SIZE + 2));  // UTF-16LE conversion as per the USB 2.0 specification
     }
     return descriptor;
 }
@@ -86,7 +86,7 @@ quint8 MCP2210::writeDescGeneric(const QString &descriptor, quint8 subcomid, int
         command[2 * i + PREAMBLE_SIZE + 3] = static_cast<quint8>(descriptor[i].unicode() >> 8);
     }
     QVector<quint8> response = hidTransfer(command, errcnt, errstr);
-    return response[1];
+    return response.at(1);
 }
 
 // "Equal to" operator for ChipSettings
@@ -169,7 +169,7 @@ quint8 MCP2210::cancelSPITransfer(int &errcnt, QString &errstr)
         CANCEL_SPI_TRANSFER  // Header
     };
     QVector<quint8> response = hidTransfer(command, errcnt, errstr);
-    return response[1];
+    return response.at(1);
 }
 
 // Closes the device safely, if open
@@ -205,7 +205,7 @@ quint8 MCP2210::configureChipSettings(const ChipSettings &settings, int &errcnt,
         static_cast<quint8>(settings.rmwakeup << 4 | (0x07 & settings.intmode) << 1 | settings.nrelspi)  // Other chip settings
     };
     QVector<quint8> response = hidTransfer(command, errcnt, errstr);
-    return response[1];
+    return response.at(1);
 }
 
 // Configures volatile SPI transfer settings
@@ -224,7 +224,7 @@ quint8 MCP2210::configureSPISettings(const SPISettings &settings, int &errcnt, Q
         settings.mode                                                                              // SPI mode
     };
     QVector<quint8> response = hidTransfer(command, errcnt, errstr);
-    return response[1];
+    return response.at(1);
 }
 
 // Retrieves the access control mode from the MCP2210 NVRAM
@@ -234,7 +234,7 @@ quint8 MCP2210::getAccessControlMode(int &errcnt, QString &errstr)
         GET_NVRAM_SETTINGS, NV_CHIP_SETTINGS  // Header
     };
     QVector<quint8> response = hidTransfer(command, errcnt, errstr);
-    return response[18];  // Access control mode corresponds to byte 18
+    return response.at(18);  // Access control mode corresponds to byte 18
 }
 
 // Returns applied chip settings
@@ -245,20 +245,20 @@ MCP2210::ChipSettings MCP2210::getChipSettings(int &errcnt, QString &errstr)
     };
     QVector<quint8> response = hidTransfer(command, errcnt, errstr);
     ChipSettings settings;
-    settings.gp0 = response[4];                                        // GP0 pin configuration corresponds to byte 4
-    settings.gp1 = response[5];                                        // GP1 pin configuration corresponds to byte 5
-    settings.gp2 = response[6];                                        // GP2 pin configuration corresponds to byte 6
-    settings.gp3 = response[7];                                        // GP3 pin configuration corresponds to byte 7
-    settings.gp4 = response[8];                                        // GP4 pin configuration corresponds to byte 8
-    settings.gp5 = response[9];                                        // GP5 pin configuration corresponds to byte 9
-    settings.gp6 = response[10];                                       // GP6 pin configuration corresponds to byte 10
-    settings.gp7 = response[11];                                       // GP7 pin configuration corresponds to byte 11
-    settings.gp8 = response[12];                                       // GP8 pin configuration corresponds to byte 12
-    settings.gpdir = response[15];                                     // Default GPIO directions (GPIO7 to GPIO0) corresponds to byte 15
-    settings.gpout = response[13];                                     // Default GPIO outputs (GPIO7 to GPIO0) corresponds to byte 13
-    settings.rmwakeup = (0x10 & response[17]) != 0x00;                 // Remote wake-up corresponds to bit 4 of byte 17
-    settings.intmode = static_cast<quint8>(0x07 & response[17] >> 1);  // Interrupt counting mode corresponds to bits 3:1 of byte 17
-    settings.nrelspi = (0x01 & response[17]) != 0x00;                  // SPI bus release corresponds to bit 0 of byte 17
+    settings.gp0 = response.at(4);                                        // GP0 pin configuration corresponds to byte 4
+    settings.gp1 = response.at(5);                                        // GP1 pin configuration corresponds to byte 5
+    settings.gp2 = response.at(6);                                        // GP2 pin configuration corresponds to byte 6
+    settings.gp3 = response.at(7);                                        // GP3 pin configuration corresponds to byte 7
+    settings.gp4 = response.at(8);                                        // GP4 pin configuration corresponds to byte 8
+    settings.gp5 = response.at(9);                                        // GP5 pin configuration corresponds to byte 9
+    settings.gp6 = response.at(10);                                       // GP6 pin configuration corresponds to byte 10
+    settings.gp7 = response.at(11);                                       // GP7 pin configuration corresponds to byte 11
+    settings.gp8 = response.at(12);                                       // GP8 pin configuration corresponds to byte 12
+    settings.gpdir = response.at(15);                                     // Default GPIO directions (GPIO7 to GPIO0) corresponds to byte 15
+    settings.gpout = response.at(13);                                     // Default GPIO outputs (GPIO7 to GPIO0) corresponds to byte 13
+    settings.rmwakeup = (0x10 & response.at(17)) != 0x00;                 // Remote wake-up corresponds to bit 4 of byte 17
+    settings.intmode = static_cast<quint8>(0x07 & response.at(17) >> 1);  // Interrupt counting mode corresponds to bits 3:1 of byte 17
+    settings.nrelspi = (0x01 & response.at(17)) != 0x00;                  // SPI bus release corresponds to bit 0 of byte 17
     return settings;
 }
 
@@ -270,10 +270,10 @@ MCP2210::ChipStatus MCP2210::getChipStatus(int &errcnt, QString &errstr)
     };
     QVector<quint8> response = hidTransfer(command, errcnt, errstr);
     ChipStatus status;
-    status.busreq = response[2] != 0x01;  // SPI bus release external request status corresponds to byte 2
-    status.busowner = response[3];        // SPI bus current owner corresponds to byte 3
-    status.pwtries = response[4];         // Number of NVRAM password tries corresponds to byte 4
-    status.pwok = response[5] != 0x00;    // Password validation status corresponds to byte 5
+    status.busreq = response.at(2) != 0x01;  // SPI bus release external request status corresponds to byte 2
+    status.busowner = response.at(3);        // SPI bus current owner corresponds to byte 3
+    status.pwtries = response.at(4);         // Number of NVRAM password tries corresponds to byte 4
+    status.pwok = response.at(5) != 0x00;    // Password validation status corresponds to byte 5
     return status;
 }
 
@@ -285,7 +285,7 @@ quint16 MCP2210::getEventCount(int &errcnt, QString &errstr)
         0x01              // Do not reset the event counter
     };
     QVector<quint8> response = hidTransfer(command, errcnt, errstr);
-    return static_cast<quint16>(response[5] << 8 | response[4]);  // Event count corresponds to bytes 4 and 5 (little-endian conversion)
+    return static_cast<quint16>(response.at(5) << 8 | response.at(4));  // Event count corresponds to bytes 4 and 5 (little-endian conversion)
 }
 
 // Returns the value of a given GPIO pin on the MCP2210
@@ -323,7 +323,7 @@ quint8 MCP2210::getGPIODirections(int &errcnt, QString &errstr)
         GET_GPIO_DIRECTIONS  // Header
     };
     QVector<quint8> response = hidTransfer(command, errcnt, errstr);
-    return response[4];  // GPIO directions (GPIO7 to GPIO0) corresponds to byte 4
+    return response.at(4);  // GPIO directions (GPIO7 to GPIO0) corresponds to byte 4
 }
 
 // Returns the values of all GPIO pins on the MCP2210
@@ -333,7 +333,7 @@ quint16 MCP2210::getGPIOs(int &errcnt, QString &errstr)
         GET_GPIO_VALUES  // Header
     };
     QVector<quint8> response = hidTransfer(command, errcnt, errstr);
-    return static_cast<quint16>((0x01 & response[5]) << 8 | response[4]);  // GPIO values (GPIO8 to GPIO0) corresponds to bytes 4 and 5
+    return static_cast<quint16>((0x01 & response.at(5)) << 8 | response.at(4));  // GPIO values (GPIO8 to GPIO0) corresponds to bytes 4 and 5
 }
 
 // Retrieves the manufacturer descriptor from the MCP2210 NVRAM
@@ -350,20 +350,20 @@ MCP2210::ChipSettings MCP2210::getNVChipSettings(int &errcnt, QString &errstr)
     };
     QVector<quint8> response = hidTransfer(command, errcnt, errstr);
     ChipSettings settings;
-    settings.gp0 = response[4];                                        // GP0 pin configuration corresponds to byte 4
-    settings.gp1 = response[5];                                        // GP1 pin configuration corresponds to byte 5
-    settings.gp2 = response[6];                                        // GP2 pin configuration corresponds to byte 6
-    settings.gp3 = response[7];                                        // GP3 pin configuration corresponds to byte 7
-    settings.gp4 = response[8];                                        // GP4 pin configuration corresponds to byte 8
-    settings.gp5 = response[9];                                        // GP5 pin configuration corresponds to byte 9
-    settings.gp6 = response[10];                                       // GP6 pin configuration corresponds to byte 10
-    settings.gp7 = response[11];                                       // GP7 pin configuration corresponds to byte 11
-    settings.gp8 = response[12];                                       // GP8 pin configuration corresponds to byte 12
-    settings.gpdir = response[15];                                     // Default GPIO directions (GPIO7 to GPIO0) corresponds to byte 15
-    settings.gpout = response[13];                                     // Default GPIO outputs (GPIO7 to GPIO0) corresponds to byte 13
-    settings.rmwakeup = (0x10 & response[17]) != 0x00;                 // Remote wake-up corresponds to bit 4 of byte 17
-    settings.intmode = static_cast<quint8>(0x07 & response[17] >> 1);  // Interrupt counting mode corresponds to bits 3:1 of byte 17
-    settings.nrelspi = (0x01 & response[17]) != 0x00;                  // SPI bus release corresponds to bit 0 of byte 17
+    settings.gp0 = response.at(4);                                        // GP0 pin configuration corresponds to byte 4
+    settings.gp1 = response.at(5);                                        // GP1 pin configuration corresponds to byte 5
+    settings.gp2 = response.at(6);                                        // GP2 pin configuration corresponds to byte 6
+    settings.gp3 = response.at(7);                                        // GP3 pin configuration corresponds to byte 7
+    settings.gp4 = response.at(8);                                        // GP4 pin configuration corresponds to byte 8
+    settings.gp5 = response.at(9);                                        // GP5 pin configuration corresponds to byte 9
+    settings.gp6 = response.at(10);                                       // GP6 pin configuration corresponds to byte 10
+    settings.gp7 = response.at(11);                                       // GP7 pin configuration corresponds to byte 11
+    settings.gp8 = response.at(12);                                       // GP8 pin configuration corresponds to byte 12
+    settings.gpdir = response.at(15);                                     // Default GPIO directions (GPIO7 to GPIO0) corresponds to byte 15
+    settings.gpout = response.at(13);                                     // Default GPIO outputs (GPIO7 to GPIO0) corresponds to byte 13
+    settings.rmwakeup = (0x10 & response.at(17)) != 0x00;                 // Remote wake-up corresponds to bit 4 of byte 17
+    settings.intmode = static_cast<quint8>(0x07 & response.at(17) >> 1);  // Interrupt counting mode corresponds to bits 3:1 of byte 17
+    settings.nrelspi = (0x01 & response.at(17)) != 0x00;                  // SPI bus release corresponds to bit 0 of byte 17
     return settings;
 }
 
@@ -375,14 +375,14 @@ MCP2210::SPISettings MCP2210::getNVSPISettings(int &errcnt, QString &errstr)
     };
     QVector<quint8> response = hidTransfer(command, errcnt, errstr);
     SPISettings settings;
-    settings.nbytes = static_cast<quint16>(response[19] << 8 | response[18]);                                         // Number of bytes per SPI transfer corresponds to bytes 18 and 19 (little-endian conversion)
-    settings.bitrate = static_cast<quint32>(response[7] << 24 | response[6] << 16 | response[5] << 8 | response[4]);  // Bit rate corresponds to bytes 4 to 7 (little-endian conversion)
-    settings.mode = response[20];                                                                                     // SPI mode corresponds to byte 20
-    settings.actcs = response[10];                                                                                    // Active chip select (CS7 to CS0) corresponds to byte 10
-    settings.idlcs = response[8];                                                                                     // Idle chip select (CS7 to CS0) corresponds to byte 8
-    settings.csdtdly = static_cast<quint16>(response[13] << 8 | response[12]);                                        // Chip select to data corresponds to bytes 12 and 13 (little-endian conversion)
-    settings.dtcsdly = static_cast<quint16>(response[15] << 8 | response[14]);                                        // Data to chip select delay corresponds to bytes 14 and 15 (little-endian conversion)
-    settings.itbytdly = static_cast<quint16>(response[17] << 8 | response[16]);                                       // Inter-byte delay corresponds to bytes 16 and 17 (little-endian conversion)
+    settings.nbytes = static_cast<quint16>(response.at(19) << 8 | response.at(18));                                               // Number of bytes per SPI transfer corresponds to bytes 18 and 19 (little-endian conversion)
+    settings.bitrate = static_cast<quint32>(response.at(7) << 24 | response.at(6) << 16 | response.at(5) << 8 | response.at(4));  // Bit rate corresponds to bytes 4 to 7 (little-endian conversion)
+    settings.mode = response.at(20);                                                                                              // SPI mode corresponds to byte 20
+    settings.actcs = response.at(10);                                                                                             // Active chip select (CS7 to CS0) corresponds to byte 10
+    settings.idlcs = response.at(8);                                                                                              // Idle chip select (CS7 to CS0) corresponds to byte 8
+    settings.csdtdly = static_cast<quint16>(response.at(13) << 8 | response.at(12));                                              // Chip select to data corresponds to bytes 12 and 13 (little-endian conversion)
+    settings.dtcsdly = static_cast<quint16>(response.at(15) << 8 | response.at(14));                                              // Data to chip select delay corresponds to bytes 14 and 15 (little-endian conversion)
+    settings.itbytdly = static_cast<quint16>(response.at(17) << 8 | response.at(16));                                             // Inter-byte delay corresponds to bytes 16 and 17 (little-endian conversion)
     return settings;
 }
 
@@ -400,14 +400,14 @@ MCP2210::SPISettings MCP2210::getSPISettings(int &errcnt, QString &errstr)
     };
     QVector<quint8> response = hidTransfer(command, errcnt, errstr);
     SPISettings settings;
-    settings.nbytes = static_cast<quint16>(response[19] << 8 | response[18]);                                         // Number of bytes per SPI transfer corresponds to bytes 18 and 19 (little-endian conversion)
-    settings.bitrate = static_cast<quint32>(response[7] << 24 | response[6] << 16 | response[5] << 8 | response[4]);  // Bit rate corresponds to bytes 4 to 7 (little-endian conversion)
-    settings.mode = response[20];                                                                                     // SPI mode corresponds to byte 20
-    settings.actcs = response[10];                                                                                    // Active chip select (CS7 to CS0) corresponds to byte 10
-    settings.idlcs = response[8];                                                                                     // Idle chip select (CS7 to CS0) corresponds to byte 8
-    settings.csdtdly = static_cast<quint16>(response[13] << 8 | response[12]);                                        // Chip select to data corresponds to bytes 12 and 13 (little-endian conversion)
-    settings.dtcsdly = static_cast<quint16>(response[15] << 8 | response[14]);                                        // Data to chip select delay corresponds to bytes 14 and 15 (little-endian conversion)
-    settings.itbytdly = static_cast<quint16>(response[17] << 8 | response[16]);                                       // Inter-byte delay corresponds to bytes 16 and 17 (little-endian conversion)
+    settings.nbytes = static_cast<quint16>(response.at(19) << 8 | response.at(18));                                               // Number of bytes per SPI transfer corresponds to bytes 18 and 19 (little-endian conversion)
+    settings.bitrate = static_cast<quint32>(response.at(7) << 24 | response.at(6) << 16 | response.at(5) << 8 | response.at(4));  // Bit rate corresponds to bytes 4 to 7 (little-endian conversion)
+    settings.mode = response.at(20);                                                                                              // SPI mode corresponds to byte 20
+    settings.actcs = response.at(10);                                                                                             // Active chip select (CS7 to CS0) corresponds to byte 10
+    settings.idlcs = response.at(8);                                                                                              // Idle chip select (CS7 to CS0) corresponds to byte 8
+    settings.csdtdly = static_cast<quint16>(response.at(13) << 8 | response.at(12));                                              // Chip select to data corresponds to bytes 12 and 13 (little-endian conversion)
+    settings.dtcsdly = static_cast<quint16>(response.at(15) << 8 | response.at(14));                                              // Data to chip select delay corresponds to bytes 14 and 15 (little-endian conversion)
+    settings.itbytdly = static_cast<quint16>(response.at(17) << 8 | response.at(16));                                             // Inter-byte delay corresponds to bytes 16 and 17 (little-endian conversion)
     return settings;
 }
 
@@ -419,11 +419,11 @@ MCP2210::USBParameters MCP2210::getUSBParameters(int &errcnt, QString &errstr)
     };
     QVector<quint8> response = hidTransfer(command, errcnt, errstr);
     USBParameters parameters;
-    parameters.vid = static_cast<quint16>(response[13] << 8 | response[12]);  // Vendor ID corresponds to bytes 12 and 13 (little-endian conversion)
-    parameters.pid = static_cast<quint32>(response[15] << 8 | response[14]);  // Product ID corresponds to bytes 14 and 15 (little-endian conversion)
-    parameters.maxpow = response[30];                                         // Maximum consumption current corresponds to byte 30
-    parameters.powmode = (0x40 & response[29]) != 0x00;                       // Power mode corresponds to bit 6 of byte 29 (bit 7 is redundant)
-    parameters.rmwakeup = (0x20 & response[29]) != 0x00;                      // Remote wake-up capability corresponds to bit 5 of byte 29
+    parameters.vid = static_cast<quint16>(response.at(13) << 8 | response.at(12));  // Vendor ID corresponds to bytes 12 and 13 (little-endian conversion)
+    parameters.pid = static_cast<quint32>(response.at(15) << 8 | response.at(14));  // Product ID corresponds to bytes 14 and 15 (little-endian conversion)
+    parameters.maxpow = response.at(30);                                            // Maximum consumption current corresponds to byte 30
+    parameters.powmode = (0x40 & response.at(29)) != 0x00;                          // Power mode corresponds to bit 6 of byte 29 (bit 7 is redundant)
+    parameters.rmwakeup = (0x20 & response.at(29)) != 0x00;                         // Remote wake-up capability corresponds to bit 5 of byte 29
     return parameters;
 }
 
@@ -507,7 +507,7 @@ quint8 MCP2210::readEEPROMByte(quint8 address, int &errcnt, QString &errstr)
         address       // Address to be read
     };
     QVector<quint8> response = hidTransfer(command, errcnt, errstr);
-    return response[3];
+    return response.at(3);
 }
 
 // Reads the EEPROM within the specified range, returning a vector
@@ -539,7 +539,7 @@ quint8 MCP2210::resetEventCounter(int &errcnt, QString &errstr)
         0x00              // Reset the event counter
     };
     QVector<quint8> response = hidTransfer(command, errcnt, errstr);
-    return response[1];
+    return response.at(1);
 }
 
 // Sets the value of a given GPIO pin on the MCP2210
@@ -602,7 +602,7 @@ quint8 MCP2210::setGPIODirections(quint8 directions, int &errcnt, QString &errst
         directions, 0x01                        // GPIO directions (GPIO7 to GPIO0)
     };
     QVector<quint8> response = hidTransfer(command, errcnt, errstr);
-    return response[1];
+    return response.at(1);
 }
 
 // Sets the values of all GPIO pins on the MCP2210
@@ -613,7 +613,7 @@ quint8 MCP2210::setGPIOs(quint16 values, int &errcnt, QString &errstr)
         static_cast<quint8>(values)         // GPIO values (GPIO7 to GPPIO0 - GPIO8 is an input only pin)
     };
     QVector<quint8> response = hidTransfer(command, errcnt, errstr);
-    return response[1];
+    return response.at(1);
 }
 
 // Performs a basic SPI transfer
@@ -633,15 +633,15 @@ QVector<quint8> MCP2210::spiTransfer(const QVector<quint8> &data, quint8 &status
             command[i + PREAMBLE_SIZE] = data[i];
         }
         QVector<quint8> response = hidTransfer(command, errcnt, errstr);
-        if (response[1] == COMPLETED) {  // If the HID transfer was completed
-            status = response[3];  // The returned status corresponds to the obtained SPI transfer engine status
-            size_t bytesReceived = response[2];
+        if (response.at(1) == COMPLETED) {  // If the HID transfer was completed
+            status = response.at(3);  // The returned status corresponds to the obtained SPI transfer engine status
+            size_t bytesReceived = response.at(2);
             retdata.resize(bytesReceived);
             for (size_t i = 0; i < bytesReceived; ++i) {
-                retdata[i] = response[i + PREAMBLE_SIZE];
+                retdata[i] = response.at(i + PREAMBLE_SIZE);
             }
         } else {
-            status = response[1];  // The returned status corresponds to the obtained HID command response (it can be "BUSY" [0xf7] or "IN_PROGRESS" [0xf8])
+            status = response.at(1);  // The returned status corresponds to the obtained HID command response (it can be "BUSY" [0xf7] or "IN_PROGRESS" [0xf8])
         }
     }
     return retdata;
@@ -695,7 +695,7 @@ quint8 MCP2210::usePassword(const QString &password, int &errcnt, QString &errst
             command[i + PREAMBLE_SIZE] = static_cast<quint8>(passwordLatin1[i]);
         }
         QVector<quint8> response = hidTransfer(command, errcnt, errstr);
-        retval = response[1];
+        retval = response.at(1);
     }
     return retval;
 }
@@ -709,7 +709,7 @@ quint8 MCP2210::writeEEPROMByte(quint8 address, quint8 value, int &errcnt, QStri
         value          // Value
     };
     QVector<quint8> response = hidTransfer(command, errcnt, errstr);
-    return response[1];
+    return response.at(1);
 }
 
 // Writes over the EEPROM, within the specified range and based on the given vector
@@ -795,7 +795,7 @@ quint8 MCP2210::writeNVChipSettings(const ChipSettings &settings, quint8 accessC
             command[i + 19] = static_cast<quint8>(passwordLatin1[i]);
         }
         QVector<quint8> response = hidTransfer(command, errcnt, errstr);
-        retval = response[1];
+        retval = response.at(1);
     }
     return retval;
 }
@@ -823,7 +823,7 @@ quint8 MCP2210::writeNVSPISettings(const SPISettings &settings, int &errcnt, QSt
         settings.mode                                                                              // SPI mode
     };
     QVector<quint8> response = hidTransfer(command, errcnt, errstr);
-    return response[1];
+    return response.at(1);
 }
 
 // Writes the product descriptor to the MCP2210 OTP NVRAM
@@ -851,7 +851,7 @@ quint8 MCP2210::writeUSBParameters(const USBParameters &parameters, int &errcnt,
         parameters.maxpow                                                                                    // Maximum consumption current
     };
     QVector<quint8> response = hidTransfer(command, errcnt, errstr);
-    return response[1];
+    return response.at(1);
 }
 
 // Helper function to list devices
