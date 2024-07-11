@@ -150,14 +150,14 @@ void ConfiguratorWindow::on_actionWriteEEPROM_triggered()
 
 void ConfiguratorWindow::on_checkBoxDoNotChangePassword_stateChanged(int state)
 {
-    ui->lineEditNewPassword->setEnabled(state == Qt::Unchecked);
-    ui->pushButtonRevealNewPassword->setEnabled(state == Qt::Unchecked && !ui->lineEditNewPassword->text().isEmpty());
-    ui->lineEditRepeatPassword->setEnabled(state == Qt::Unchecked);
-    ui->pushButtonRevealRepeatPassword->setEnabled(state == Qt::Unchecked && !ui->lineEditRepeatPassword->text().isEmpty());
     if (state == Qt::Checked) {
         ui->lineEditNewPassword->clear();
         ui->lineEditRepeatPassword->clear();
     }
+    ui->lineEditNewPassword->setEnabled(state == Qt::Unchecked);
+    ui->pushButtonRevealNewPassword->setEnabled(state == Qt::Unchecked && !ui->lineEditNewPassword->text().isEmpty());
+    ui->lineEditRepeatPassword->setEnabled(state == Qt::Unchecked);
+    ui->pushButtonRevealRepeatPassword->setEnabled(state == Qt::Unchecked && !ui->lineEditRepeatPassword->text().isEmpty());
 }
 
 void ConfiguratorWindow::on_lineEditManufacturer_textEdited(QString text)  // The variable "text" is passed by value here, because it needs to be modified locally!
@@ -306,16 +306,16 @@ void ConfiguratorWindow::on_pushButtonWrite_clicked()
 
 void ConfiguratorWindow::on_radioButtonPasswordProtected_toggled(bool checked)
 {
-    ui->checkBoxDoNotChangePassword->setEnabled(checked && accessMode_ == MCP2210::ACPASSWORD);
-    ui->lineEditNewPassword->setEnabled(checked && !ui->checkBoxDoNotChangePassword->isChecked());
-    ui->pushButtonRevealNewPassword->setEnabled(checked && !ui->checkBoxDoNotChangePassword->isChecked() && !ui->lineEditNewPassword->text().isEmpty());
-    ui->lineEditRepeatPassword->setEnabled(checked && !ui->checkBoxDoNotChangePassword->isChecked());
-    ui->pushButtonRevealRepeatPassword->setEnabled(checked && !ui->checkBoxDoNotChangePassword->isChecked() && !ui->lineEditNewPassword->text().isEmpty());
     if (checked == false) {
         ui->checkBoxDoNotChangePassword->setChecked(false);
         ui->lineEditNewPassword->clear();
         ui->lineEditRepeatPassword->clear();
     }
+    ui->checkBoxDoNotChangePassword->setEnabled(checked && accessMode_ == MCP2210::ACPASSWORD);
+    ui->lineEditNewPassword->setEnabled(checked && !ui->checkBoxDoNotChangePassword->isChecked());
+    ui->pushButtonRevealNewPassword->setEnabled(checked && !ui->checkBoxDoNotChangePassword->isChecked() && !ui->lineEditNewPassword->text().isEmpty());
+    ui->lineEditRepeatPassword->setEnabled(checked && !ui->checkBoxDoNotChangePassword->isChecked());
+    ui->pushButtonRevealRepeatPassword->setEnabled(checked && !ui->checkBoxDoNotChangePassword->isChecked() && !ui->lineEditNewPassword->text().isEmpty());
 }
 
 // Partially disables configurator window
