@@ -429,9 +429,9 @@ void ConfiguratorWindow::getEditedConfiguration()
 {
     editedConfig_.manufacturer = ui->lineEditManufacturer->text();
     editedConfig_.product = ui->lineEditProduct->text();
-    editedConfig_.usbparameters.vid = static_cast<quint16>(ui->lineEditVID->text().toUInt(nullptr, 16));
-    editedConfig_.usbparameters.pid = static_cast<quint16>(ui->lineEditPID->text().toUInt(nullptr, 16));
-    editedConfig_.usbparameters.maxpow = static_cast<quint8>(ui->lineEditMaxPowerHex->text().toUInt(nullptr, 16));
+    editedConfig_.usbparameters.vid = static_cast<quint16>(ui->lineEditVID->text().toUShort(nullptr, 16));  // Conversion done for sanity purposes
+    editedConfig_.usbparameters.pid = static_cast<quint16>(ui->lineEditPID->text().toUShort(nullptr, 16));  // Conversion done for sanity purposes
+    editedConfig_.usbparameters.maxpow = static_cast<quint8>(ui->lineEditMaxPowerHex->text().toUShort(nullptr, 16));
     editedConfig_.usbparameters.powmode = static_cast<quint8>(ui->comboBoxPowerMode->currentIndex());
     editedConfig_.usbparameters.rmwakeup = ui->checkBoxRemoteWakeUpCapable->isChecked();
     editedConfig_.chipsettings.gp0 = static_cast<quint8>(ui->comboBoxGP0->currentIndex() > 0 ? ui->comboBoxGP0->currentIndex() - 1 : 0);
