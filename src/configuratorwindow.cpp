@@ -19,6 +19,8 @@
 
 
 // Includes
+#include <QDir>
+#include <QFileDialog>
 #include <QMessageBox>
 #include <QRegExp>
 #include <QRegExpValidator>
@@ -84,9 +86,43 @@ void ConfiguratorWindow::on_actionAbout_triggered()
     showAboutDialog();  // See "common.h" and "common.cpp"
 }
 
+void ConfiguratorWindow::on_actionLoadConfiguration_triggered()
+{
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Load Configuration from File"), filePath, tr("XML files (*.xml);;All files (*)"));
+    if (!fileName.isEmpty()) {  // Note that the previous dialog will return an empty string if the user cancels it
+        QFile file(fileName);
+        if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+            QMessageBox::critical(this, tr("Error"), tr("Could not read from %1.\n\nPlease verify that you have read access to this file.").arg(QDir::toNativeSeparators(fileName)));
+        } else {
+            //loadConfigurationFromFile(file);
+            file.close();
+            filePath = fileName;
+        }
+    }
+}
+
 void ConfiguratorWindow::on_actionReadEEPROM_triggered()
 {
 
+}
+
+void ConfiguratorWindow::on_actionSaveConfiguration_triggered()
+{
+    /*if(showInvalidInput()) {
+        QMessageBox::critical(this, tr("Error"), tr("One or more fields have invalid information.\n\nPlease correct the information in the fields highlighted in red."));
+    } else {
+        QString fileName = QFileDialog::getSaveFileName(this, tr("Save Configuration to File"), filePath, tr("XML files (*.xml);;All files (*)"));
+        if (!fileName.isEmpty()) {  // Note that the previous dialog will return an empty string if the user cancels it
+            QFile file(fileName);
+            if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+                QMessageBox::critical(this, tr("Error"), tr("Could not write to %1.\n\nPlease verify that you have write access to this file.").arg(QDir::toNativeSeparators(fileName)));
+            } else {
+                saveConfigurationToFile(file);
+                file.close();
+                filePath = fileName;
+            }
+        }
+    }*/
 }
 
 void ConfiguratorWindow::on_actionStatus_triggered()
@@ -585,6 +621,7 @@ void ConfiguratorWindow::setVIDEnabled(bool value)
 // Enables or disables editing related buttons
 void ConfiguratorWindow::setWriteEnabled(bool value)
 {
+    ui->actionLoadConfiguration->setEnabled(value);
     ui->pushButtonRevert->setEnabled(value);
     ui->checkBoxApplyImmediately->setEnabled(value);
     ui->pushButtonWrite->setEnabled(value);

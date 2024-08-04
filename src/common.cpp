@@ -19,11 +19,15 @@
 
 
 // Includes
+#include <QDir>
 #include <QPointer>
 #include "aboutdialog.h"
 #include "common.h"
 
-// Definitions
+// Global definitions
+QString filePath = QDir::homePath();
+
+// Local definitions
 QPointer<AboutDialog> aboutDialog_;
 
 // Closes the about dialog

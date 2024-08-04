@@ -1298,6 +1298,9 @@
     <addaction name="separator"/>
     <addaction name="actionUsePassword"/>
     <addaction name="separator"/>
+    <addaction name="actionLoadConfiguration"/>
+    <addaction name="actionSaveConfiguration"/>
+    <addaction name="separator"/>
     <addaction name="actionClose"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
@@ -1348,6 +1351,25 @@
   <action name="actionVerifyEEPROM">
    <property name="text">
     <string>&amp;Verify...</string>
+   </property>
+  </action>
+  <action name="actionLoadConfiguration">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Load Configuration...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
+  </action>
+  <action name="actionSaveConfiguration">
+   <property name="text">
+    <string>&amp;Save Configuration...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
    </property>
   </action>
  </widget>

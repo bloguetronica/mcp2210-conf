@@ -46,7 +46,9 @@ public:
 
 private slots:
     void on_actionAbout_triggered();
+    void on_actionLoadConfiguration_triggered();
     void on_actionReadEEPROM_triggered();
+    void on_actionSaveConfiguration_triggered();
     void on_actionStatus_triggered();
     void on_actionUsePassword_triggered();
     void on_actionVerifyEEPROM_triggered();
