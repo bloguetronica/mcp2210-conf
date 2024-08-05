@@ -19,9 +19,12 @@
 
 
 // Includes
+#include <cstring>
 #include <QDir>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QMetaObject>
+#include <QProgressDialog>
 #include <QRegExp>
 #include <QRegExpValidator>
 #include "common.h"
@@ -103,7 +106,7 @@ void ConfiguratorWindow::on_actionLoadConfiguration_triggered()
 
 void ConfiguratorWindow::on_actionReadEEPROM_triggered()
 {
-
+    // TODO
 }
 
 void ConfiguratorWindow::on_actionSaveConfiguration_triggered()
@@ -160,13 +163,13 @@ void ConfiguratorWindow::on_actionUsePassword_triggered()
         if (err_) {
             handleError();
         } else if (response == MCP2210::COMPLETED) {  // If error check passes and password is verified
-            // Disable "Use Password" action?
+            // TODO Disable "Use Password" action?
             QMessageBox::information(this, tr("Access Granted"), tr("The password was sucessfully entered and full write access to the NVRAM is now granted."));
         } else if (response == MCP2210::BLOCKED) {  // If error check passes and access is blocked
-            // Disable "Write" button?
+            // TODO Disable "Write" button?
             QMessageBox::warning(this, tr("Access Blocked"), tr("The password was not accepted and access is temporarily blocked. Please disconnect and reconnect your device, and try again."));
         } else if (response == MCP2210::REJECTED) {  // If error check passes and access is somehow rejected
-            // Disable "Write" button?
+            // TODO Disable "Write" button?
             QMessageBox::warning(this, tr("Access Rejected"), tr("Full write access to the NVRAM was rejected for unknown reasons."));
         } else if (response == MCP2210::WRONG_PASSWORD) {  // If error check passes and password is not verified
             QMessageBox::warning(this, tr("Access Denied"), tr("The password was not accepted. Please try again."));
@@ -176,12 +179,12 @@ void ConfiguratorWindow::on_actionUsePassword_triggered()
 
 void ConfiguratorWindow::on_actionVerifyEEPROM_triggered()
 {
-
+    // TODO
 }
 
 void ConfiguratorWindow::on_actionWriteEEPROM_triggered()
 {
-
+    // TODO
 }
 
 void ConfiguratorWindow::on_checkBoxDoNotChangePassword_stateChanged(int state)
@@ -354,6 +357,57 @@ void ConfiguratorWindow::on_radioButtonPasswordProtected_toggled(bool checked)
     ui->pushButtonRevealRepeatPassword->setEnabled(checked && !ui->checkBoxDoNotChangePassword->isChecked() && !ui->lineEditNewPassword->text().isEmpty());
 }
 
+// Writes the manufacturer descriptor to the MCP2210 OTP ROM
+void ConfiguratorWindow::writeManufacturerDesc()
+{
+    int errcnt = 0;
+    QString errstr;
+    mcp2210_.writeManufacturerDesc(editedConfig_.manufacturer, errcnt, errstr);
+    opCheck(tr("write-manufacturer-desc-op"), errcnt, errstr);  // The string "write-manufacturer-desc-op" should be translated to "Write manufacturer descriptor"
+}
+
+// Writes the product descriptor to the MCP2210 OTP ROM
+void ConfiguratorWindow::writeProductDesc()
+{
+    int errcnt = 0;
+    QString errstr;
+    mcp2210_.writeProductDesc(editedConfig_.product, errcnt, errstr);
+    opCheck(tr("write-product-desc-op"), errcnt, errstr);  // The string "write-product-desc-op" should be translated to "Write product descriptor"
+}
+
+// This is the main configuration routine, used to configure the MCP2210 OTP ROM according to the tasks in the task list
+void ConfiguratorWindow::configureDevice()
+{
+    err_ = false;
+    QStringList tasks = prepareTaskList();  // Create a new task list
+    int nTasks = tasks.size();
+    QProgressDialog configProgress(tr("Configuring device..."), tr("Abort"), 0, nTasks, this);
+    configProgress.setWindowTitle(tr("Device Configuration"));  // Added in version 1.5
+    configProgress.setWindowModality(Qt::WindowModal);
+    // TODO Does the progress dialog need to be displayed immediately?
+    for (int i = 0; i < nTasks; ++i) {  // Iterate through the newly created task list (refactored in version 1.5)
+        if (configProgress.wasCanceled()) {  // If the user clicks "Abort"
+            break;  // Abort the configuration
+        }
+        QMetaObject::invokeMethod(this, tasks[i].toStdString().c_str());  // The task list entry is converted to a C string
+        if (err_) {  // If an error has occured
+            configProgress.cancel();  // This hides the progress dialog (fix implemented in version 1.1)
+            break;  // Abort the configuration
+        }
+        configProgress.setValue(i + 1);  // Update the progress bar for each task done
+    }
+    if (err_) {  // If an error occured (refactored in version 1.5)
+        handleError();
+        QMessageBox::critical(this, tr("Error"), tr("The device configuration could not be completed."));
+    } else if (configProgress.wasCanceled()) {  // If the device configuration was aborted by the user
+        QMessageBox::information(this, tr("Configuration Aborted"), tr("The device configuration was aborted."));
+    } else if (tasks.contains("verifyConfiguration")) {  // Successul configuration with verification (condition modified in version 3.1)
+        QMessageBox::information(this, tr("Device Configured"), tr("Device was successfully configured and verified."));
+    } else {  // Successul configuration without verification
+        QMessageBox::information(this, tr("Device Configured"), tr("Device was successfully configured."));
+    }
+}
+
 // Partially disables configurator window
 void ConfiguratorWindow::disableView()
 {
@@ -481,7 +535,7 @@ void ConfiguratorWindow::getEditedConfiguration()
     editedConfig_.chipsettings.gp8 = static_cast<quint8>(ui->comboBoxGP8->currentIndex());
     editedConfig_.chipsettings.gpdir = static_cast<quint8>((ui->comboBoxGP7->currentIndex() != 1) << 7 | (ui->comboBoxGP6->currentIndex() != 1) << 6 | (ui->comboBoxGP5->currentIndex() != 1) << 5 | (ui->comboBoxGP4->currentIndex() != 1) << 4 | (ui->comboBoxGP3->currentIndex() != 1) << 3 | (ui->comboBoxGP2->currentIndex() != 1) << 2 | (ui->comboBoxGP1->currentIndex() != 1) << 1 | (ui->comboBoxGP0->currentIndex() != 1));  // All pins have their direction set to input by default, except those pins that are specifically set to be outputs
     editedConfig_.chipsettings.gpout = static_cast<quint8>(ui->checkBoxGP7DefaultValue->isChecked() << 7 | ui->checkBoxGP6DefaultValue->isChecked() << 6 | ui->checkBoxGP5DefaultValue->isChecked() << 5 | ui->checkBoxGP4DefaultValue->isChecked() << 4 | ui->checkBoxGP3DefaultValue->isChecked() << 3 | ui->checkBoxGP2DefaultValue->isChecked() << 2 | ui->checkBoxGP1DefaultValue->isChecked() << 1 | ui->checkBoxGP0DefaultValue->isChecked());
-    // To do!
+    // TODO
 }
 
 // Determines the type of error and acts accordingly, always showing a message
@@ -506,6 +560,20 @@ void ConfiguratorWindow::opCheck(const QString &op, int errcnt, QString errstr)
             errmsg_ = tr("%1 operation returned the following error(s):\n– %2", "", errcnt).arg(op, errstr.replace("\n", "\n– "));
         }
     }
+}
+
+// Prepares the task list, by checking which fields changed, while also setting optional tasks according to the user's requirements
+QStringList ConfiguratorWindow::prepareTaskList()
+{
+    QStringList tasks;
+    if (editedConfig_.manufacturer != deviceConfig_.manufacturer) {
+        tasks += "writeManufacturerDesc";
+    }
+    if (editedConfig_.product != deviceConfig_.product) {
+        tasks += "writeProductDesc";
+    }
+    // TODO
+    return tasks;
 }
 
 // This is the routine that reads the configuration from the MCP2210 NVRAM

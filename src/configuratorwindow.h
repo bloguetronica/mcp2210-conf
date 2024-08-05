@@ -25,6 +25,7 @@
 #include <QMainWindow>
 #include <QPointer>
 #include <QString>
+#include <QStringList>
 #include "configuration.h"
 #include "mcp2210.h"
 #include "statusdialog.h"
@@ -75,6 +76,8 @@ private slots:
     void on_pushButtonRevert_clicked();
     void on_pushButtonWrite_clicked();
     void on_radioButtonPasswordProtected_toggled(bool checked);
+    void writeManufacturerDesc();
+    void writeProductDesc();
 
 private:
     Ui::ConfiguratorWindow *ui;
@@ -86,6 +89,7 @@ private:
     quint16 pid_, vid_;
     bool err_, viewEnabled_ = false;
 
+    void configureDevice();
     void disableView();
     void displayChipSettings(const MCP2210::ChipSettings &chipsettings);
     void displayConfiguration(const Configuration &config);
@@ -97,6 +101,7 @@ private:
     void getEditedConfiguration();
     void handleError();
     void opCheck(const QString &op, int errcnt, QString errstr);
+    QStringList prepareTaskList();
     void readDeviceConfiguration();
     void setChipSettingsEnabled(bool value);
     void setManufacturerEnabled(bool value);
