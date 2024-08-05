@@ -357,7 +357,7 @@ void ConfiguratorWindow::on_radioButtonPasswordProtected_toggled(bool checked)
     ui->pushButtonRevealRepeatPassword->setEnabled(checked && !ui->checkBoxDoNotChangePassword->isChecked() && !ui->lineEditNewPassword->text().isEmpty());
 }
 
-// Writes the manufacturer descriptor to the MCP2210 OTP ROM
+// Writes the manufacturer descriptor to the MCP2210 NVRAM
 void ConfiguratorWindow::writeManufacturerDesc()
 {
     int errcnt = 0;
@@ -366,7 +366,7 @@ void ConfiguratorWindow::writeManufacturerDesc()
     opCheck(tr("write-manufacturer-desc-op"), errcnt, errstr);  // The string "write-manufacturer-desc-op" should be translated to "Write manufacturer descriptor"
 }
 
-// Writes the product descriptor to the MCP2210 OTP ROM
+// Writes the product descriptor to the MCP2210 NVRAM
 void ConfiguratorWindow::writeProductDesc()
 {
     int errcnt = 0;
@@ -375,7 +375,7 @@ void ConfiguratorWindow::writeProductDesc()
     opCheck(tr("write-product-desc-op"), errcnt, errstr);  // The string "write-product-desc-op" should be translated to "Write product descriptor"
 }
 
-// This is the main configuration routine, used to configure the MCP2210 OTP ROM according to the tasks in the task list
+// This is the main configuration routine, used to configure the MCP2210 NVRAM according to the tasks in the task list
 void ConfiguratorWindow::configureDevice()
 {
     err_ = false;
