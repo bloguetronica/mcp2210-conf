@@ -22,6 +22,7 @@
 #define CONFIGURATORWINDOW_H
 
 // Includes
+#include <QFile>
 #include <QMainWindow>
 #include <QPointer>
 #include <QString>
@@ -100,9 +101,11 @@ private:
     void displayUSBParameters(const MCP2210::USBParameters &usbparameters);
     void getEditedConfiguration();
     void handleError();
+    void loadConfigurationFromFile(QFile &file);
     void opCheck(const QString &op, int errcnt, QString errstr);
     QStringList prepareTaskList();
     void readDeviceConfiguration();
+    void saveConfigurationToFile(QFile &file);
     void setChipSettingsEnabled(bool value);
     void setManufacturerEnabled(bool value);
     void setMaxPowerEnabled(bool value);
@@ -115,6 +118,7 @@ private:
     void setUsePasswordEnabled(bool value);
     void setVIDEnabled(bool value);
     void setWriteEnabled(bool value);
+    bool showInvalidInput();
 };
 
 #endif  // CONFIGURATORWINDOW_H

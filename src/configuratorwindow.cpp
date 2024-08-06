@@ -97,7 +97,7 @@ void ConfiguratorWindow::on_actionLoadConfiguration_triggered()
         if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
             QMessageBox::critical(this, tr("Error"), tr("Could not read from %1.\n\nPlease verify that you have read access to this file.").arg(QDir::toNativeSeparators(fileName)));
         } else {
-            //loadConfigurationFromFile(file);
+            loadConfigurationFromFile(file);
             file.close();
             filePath = fileName;
         }
@@ -111,7 +111,7 @@ void ConfiguratorWindow::on_actionReadEEPROM_triggered()
 
 void ConfiguratorWindow::on_actionSaveConfiguration_triggered()
 {
-    /*if(showInvalidInput()) {
+    if(showInvalidInput()) {
         QMessageBox::critical(this, tr("Error"), tr("One or more fields have invalid information.\n\nPlease correct the information in the fields highlighted in red."));
     } else {
         QString fileName = QFileDialog::getSaveFileName(this, tr("Save Configuration to File"), filePath, tr("XML files (*.xml);;All files (*)"));
@@ -125,7 +125,7 @@ void ConfiguratorWindow::on_actionSaveConfiguration_triggered()
                 filePath = fileName;
             }
         }
-    }*/
+    }
 }
 
 void ConfiguratorWindow::on_actionStatus_triggered()
@@ -336,11 +336,21 @@ void ConfiguratorWindow::on_pushButtonRevert_clicked()
 
 void ConfiguratorWindow::on_pushButtonWrite_clicked()
 {
-    // Just to simulate!!!!!!
-    getEditedConfiguration();
-    deviceConfig_ = editedConfig_;
-    accessMode_ = MCP2210::ACPASSWORD;
-    displayConfiguration(deviceConfig_);
+    if (mcp2210_.isOpen()) {  // It is important to check if the device is open, since resetDevice() is non-blocking (a device reset could still be underway)
+        if(showInvalidInput()) {
+            QMessageBox::critical(this, tr("Error"), tr("One or more fields have invalid information.\n\nPlease correct the information in the fields highlighted in red."));
+        } else {
+            getEditedConfiguration();
+            if (editedConfig_ == deviceConfig_) {
+                QMessageBox::information(this, tr("No Changes Done"), tr("No changes were effected, because no values were modified."));
+            } else {
+                int qmret = QMessageBox::question(this, tr("Write Configuration?"), tr("This will write the changes to the OTP ROM of your device. These changes will be permanent.\n\nDo you wish to proceed?"), QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+                if (qmret == QMessageBox::Yes) {
+                    configureDevice();
+                }
+            }
+        }
+    }
 }
 
 void ConfiguratorWindow::on_radioButtonPasswordProtected_toggled(bool checked)
@@ -382,26 +392,26 @@ void ConfiguratorWindow::configureDevice()
     QStringList tasks = prepareTaskList();  // Create a new task list
     int nTasks = tasks.size();
     QProgressDialog configProgress(tr("Configuring device..."), tr("Abort"), 0, nTasks, this);
-    configProgress.setWindowTitle(tr("Device Configuration"));  // Added in version 1.5
+    configProgress.setWindowTitle(tr("Device Configuration"));
     configProgress.setWindowModality(Qt::WindowModal);
     // TODO Does the progress dialog need to be displayed immediately?
-    for (int i = 0; i < nTasks; ++i) {  // Iterate through the newly created task list (refactored in version 1.5)
+    for (int i = 0; i < nTasks; ++i) {  // Iterate through the newly created task list
         if (configProgress.wasCanceled()) {  // If the user clicks "Abort"
             break;  // Abort the configuration
         }
         QMetaObject::invokeMethod(this, tasks[i].toStdString().c_str());  // The task list entry is converted to a C string
         if (err_) {  // If an error has occured
-            configProgress.cancel();  // This hides the progress dialog (fix implemented in version 1.1)
+            configProgress.cancel();  // This hides the progress dialog
             break;  // Abort the configuration
         }
         configProgress.setValue(i + 1);  // Update the progress bar for each task done
     }
-    if (err_) {  // If an error occured (refactored in version 1.5)
+    if (err_) {  // If an error occured
         handleError();
         QMessageBox::critical(this, tr("Error"), tr("The device configuration could not be completed."));
     } else if (configProgress.wasCanceled()) {  // If the device configuration was aborted by the user
         QMessageBox::information(this, tr("Configuration Aborted"), tr("The device configuration was aborted."));
-    } else if (tasks.contains("verifyConfiguration")) {  // Successul configuration with verification (condition modified in version 3.1)
+    } else if (tasks.contains("verifyConfiguration")) {  // Successul configuration with verification
         QMessageBox::information(this, tr("Device Configured"), tr("Device was successfully configured and verified."));
     } else {  // Successul configuration without verification
         QMessageBox::information(this, tr("Device Configured"), tr("Device was successfully configured."));
@@ -548,6 +558,13 @@ void ConfiguratorWindow::handleError()
     QMessageBox::critical(this, tr("Error"), errmsg_);
 }
 
+// Loads the configuration from a given file
+void ConfiguratorWindow::loadConfigurationFromFile(QFile &file)
+{
+    getEditedConfiguration();
+    //TODO
+}
+
 // Checks for errors and validates device operations
 void ConfiguratorWindow::opCheck(const QString &op, int errcnt, QString errstr)
 {
@@ -597,6 +614,13 @@ void ConfiguratorWindow::readDeviceConfiguration()
         }
         this->deleteLater();  // In a context where the window is already visible, it has the same effect as this->close()
     }
+}
+
+// Saves the current configuration to a given file
+void ConfiguratorWindow::saveConfigurationToFile(QFile &file)
+{
+    getEditedConfiguration();
+    //TODO
 }
 
 // Enables or disables all fields pertaining to the MCP2210 chip settings
@@ -694,3 +718,27 @@ void ConfiguratorWindow::setWriteEnabled(bool value)
     ui->checkBoxApplyImmediately->setEnabled(value);
     ui->pushButtonWrite->setEnabled(value);
 }
+
+// Checks user input, returning false if it is valid, or true otherwise, while also highlighting invalid fields
+bool ConfiguratorWindow::showInvalidInput()
+{
+    bool retval = false;
+    if (ui->lineEditVID->text().size() < 4 || ui->lineEditVID->text() == "0000") {
+        ui->lineEditVID->setStyleSheet("background: rgb(255, 102, 102);");
+        retval = true;
+    }
+    if (ui->lineEditPID->text().size() < 4 || ui->lineEditPID->text() == "0000") {
+        ui->lineEditPID->setStyleSheet("background: rgb(255, 102, 102);");
+        retval = true;
+    }
+    if (ui->lineEditMaxPower->text().isEmpty()) {
+        ui->lineEditMaxPower->setStyleSheet("background: rgb(255, 102, 102);");
+        retval = true;
+    }
+    if (ui->lineEditMaxPowerHex->text().isEmpty()) {
+        ui->lineEditMaxPowerHex->setStyleSheet("background: rgb(255, 102, 102);");
+        retval = true;
+    }
+    return retval;
+}
+
