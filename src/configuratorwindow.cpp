@@ -28,6 +28,8 @@
 #include <QRegExp>
 #include <QRegExpValidator>
 #include "common.h"
+#include "configurationreader.h"
+#include "configurationwriter.h"
 #include "passworddialog.h"
 #include "configuratorwindow.h"
 #include "ui_configuratorwindow.h"
@@ -587,7 +589,12 @@ void ConfiguratorWindow::handleError()
 void ConfiguratorWindow::loadConfigurationFromFile(QFile &file)
 {
     getEditedConfiguration();
-    //TODO
+    ConfigurationReader configReader(editedConfig_);
+    if (!configReader.readFrom(&file)) {
+        QMessageBox::critical(this, tr("Error"), configReader.errorString());
+    } else {
+        displayConfiguration(editedConfig_);
+    }
 }
 
 // Checks for errors and validates device operations
@@ -645,7 +652,8 @@ void ConfiguratorWindow::readDeviceConfiguration()
 void ConfiguratorWindow::saveConfigurationToFile(QFile &file)
 {
     getEditedConfiguration();
-    //TODO
+    ConfigurationWriter configWriter(editedConfig_);
+    configWriter.writeTo(&file);
 }
 
 // Enables or disables all fields pertaining to the MCP2210 chip settings

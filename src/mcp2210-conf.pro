@@ -26,6 +26,8 @@ SOURCES += \
     aboutdialog.cpp \
     common.cpp \
     configuration.cpp \
+    configurationreader.cpp \
+    configurationwriter.cpp \
     configuratorwindow.cpp \
     eeprom.cpp \
     libusb-extra.c \
@@ -39,6 +41,8 @@ HEADERS += \
     aboutdialog.h \
     common.h \
     configuration.h \
+    configurationreader.h \
+    configurationwriter.h \
     configuratorwindow.h \
     eeprom.h \
     libusb-extra.h \
