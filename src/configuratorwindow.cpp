@@ -529,8 +529,8 @@ void ConfiguratorWindow::getEditedConfiguration()
 {
     editedConfig_.manufacturer = ui->lineEditManufacturer->text();
     editedConfig_.product = ui->lineEditProduct->text();
-    editedConfig_.usbparameters.vid = static_cast<quint16>(ui->lineEditVID->text().toUShort(nullptr, 16));  // Conversion done for sanity purposes
-    editedConfig_.usbparameters.pid = static_cast<quint16>(ui->lineEditPID->text().toUShort(nullptr, 16));  // Conversion done for sanity purposes
+    editedConfig_.usbparameters.vid = static_cast<quint16>(ui->lineEditVID->text().toUShort(nullptr, 16));  // Cast done for sanity purposes
+    editedConfig_.usbparameters.pid = static_cast<quint16>(ui->lineEditPID->text().toUShort(nullptr, 16));  // Cast done for sanity purposes
     editedConfig_.usbparameters.maxpow = static_cast<quint8>(ui->lineEditMaxPowerHex->text().toUShort(nullptr, 16));
     editedConfig_.usbparameters.powmode = static_cast<quint8>(ui->comboBoxPowerMode->currentIndex());
     editedConfig_.usbparameters.rmwakeup = ui->checkBoxRemoteWakeUpCapable->isChecked();
@@ -543,9 +543,34 @@ void ConfiguratorWindow::getEditedConfiguration()
     editedConfig_.chipsettings.gp6 = static_cast<quint8>(ui->comboBoxGP6->currentIndex() > 0 ? ui->comboBoxGP6->currentIndex() - 1 : 0);
     editedConfig_.chipsettings.gp7 = static_cast<quint8>(ui->comboBoxGP7->currentIndex() > 0 ? ui->comboBoxGP7->currentIndex() - 1 : 0);
     editedConfig_.chipsettings.gp8 = static_cast<quint8>(ui->comboBoxGP8->currentIndex());
-    editedConfig_.chipsettings.gpdir = static_cast<quint8>((ui->comboBoxGP7->currentIndex() != 1) << 7 | (ui->comboBoxGP6->currentIndex() != 1) << 6 | (ui->comboBoxGP5->currentIndex() != 1) << 5 | (ui->comboBoxGP4->currentIndex() != 1) << 4 | (ui->comboBoxGP3->currentIndex() != 1) << 3 | (ui->comboBoxGP2->currentIndex() != 1) << 2 | (ui->comboBoxGP1->currentIndex() != 1) << 1 | (ui->comboBoxGP0->currentIndex() != 1));  // All pins have their direction set to input by default, except those pins that are specifically set to be outputs
-    editedConfig_.chipsettings.gpout = static_cast<quint8>(ui->checkBoxGP7DefaultValue->isChecked() << 7 | ui->checkBoxGP6DefaultValue->isChecked() << 6 | ui->checkBoxGP5DefaultValue->isChecked() << 5 | ui->checkBoxGP4DefaultValue->isChecked() << 4 | ui->checkBoxGP3DefaultValue->isChecked() << 3 | ui->checkBoxGP2DefaultValue->isChecked() << 2 | ui->checkBoxGP1DefaultValue->isChecked() << 1 | ui->checkBoxGP0DefaultValue->isChecked());
+    editedConfig_.chipsettings.gpdir = static_cast<quint8>((ui->comboBoxGP7->currentIndex() != 1) << 7 |  // All pins have their direction set to input by default, except those pins that are specifically set to be outputs
+                                                           (ui->comboBoxGP6->currentIndex() != 1) << 6 |
+                                                           (ui->comboBoxGP5->currentIndex() != 1) << 5 |
+                                                           (ui->comboBoxGP4->currentIndex() != 1) << 4 |
+                                                           (ui->comboBoxGP3->currentIndex() != 1) << 3 |
+                                                           (ui->comboBoxGP2->currentIndex() != 1) << 2 |
+                                                           (ui->comboBoxGP1->currentIndex() != 1) << 1 |
+                                                           (ui->comboBoxGP0->currentIndex() != 1));
+    editedConfig_.chipsettings.gpout = static_cast<quint8>(ui->checkBoxGP7DefaultValue->isChecked() << 7 |
+                                                           ui->checkBoxGP6DefaultValue->isChecked() << 6 |
+                                                           ui->checkBoxGP5DefaultValue->isChecked() << 5 |
+                                                           ui->checkBoxGP4DefaultValue->isChecked() << 4 |
+                                                           ui->checkBoxGP3DefaultValue->isChecked() << 3 |
+                                                           ui->checkBoxGP2DefaultValue->isChecked() << 2 |
+                                                           ui->checkBoxGP1DefaultValue->isChecked() << 1 |
+                                                           ui->checkBoxGP0DefaultValue->isChecked());
+    editedConfig_.chipsettings.rmwakeup = ui->checkBoxRemoteWakeUp->isChecked();
+    editedConfig_.chipsettings.intmode = static_cast<quint8>(ui->comboBoxInterruptMode->currentIndex());
+    editedConfig_.chipsettings.nrelspi = ui->checkBoxSPIBusCaptive->isChecked();
     // TODO
+    editedConfig_.spisettings.nbytes = deviceConfig_.spisettings.nbytes;  // TODO To delete
+    editedConfig_.spisettings.bitrate = deviceConfig_.spisettings.bitrate;  // TODO To delete
+    editedConfig_.spisettings.mode = deviceConfig_.spisettings.mode;  // TODO To delete
+    editedConfig_.spisettings.actcs = deviceConfig_.spisettings.actcs;  // TODO To delete
+    editedConfig_.spisettings.idlcs = deviceConfig_.spisettings.idlcs;  // TODO To delete
+    editedConfig_.spisettings.csdtdly = deviceConfig_.spisettings.csdtdly;  // TODO To delete
+    editedConfig_.spisettings.dtcsdly = deviceConfig_.spisettings.dtcsdly;  // TODO To delete
+    editedConfig_.spisettings.itbytdly = deviceConfig_.spisettings.itbytdly;  // TODO To delete
 }
 
 // Determines the type of error and acts accordingly, always showing a message
