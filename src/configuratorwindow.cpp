@@ -767,7 +767,7 @@ void ConfiguratorWindow::setWriteEnabled(bool value)
 {
     ui->actionLoadConfiguration->setEnabled(value);
     ui->pushButtonRevert->setEnabled(value);
-    ui->checkBoxApplyToVolatile->setEnabled(value);
+    ui->checkBoxApplyToRAM->setEnabled(value);
     ui->pushButtonWrite->setEnabled(value);
 }
 
