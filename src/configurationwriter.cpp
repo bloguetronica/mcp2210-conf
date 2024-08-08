@@ -26,6 +26,9 @@ void ConfigurationWriter::writeConfiguration()
 {
     writeDescriptor("manufacturer", configuration_.manufacturer);
     writeDescriptor("product", configuration_.product);
+    writeWordGeneric("vid", configuration_.usbparameters.vid);
+    writeWordGeneric("pid", configuration_.usbparameters.pid);
+    writePower();
     // TODO
 }
 
@@ -34,6 +37,23 @@ void ConfigurationWriter::writeDescriptor(QString name, QString value)
 {
     xmlWriter_.writeStartElement(name);
     xmlWriter_.writeAttribute("string", value);
+    xmlWriter_.writeEndElement();
+}
+
+// Writes "power" element
+void ConfigurationWriter::writePower()
+{
+    xmlWriter_.writeStartElement("power");
+    xmlWriter_.writeAttribute("maximum", QString::number(configuration_.usbparameters.maxpow, 16));
+    xmlWriter_.writeAttribute("self-powered", (configuration_.usbparameters.powmode ? "true" : "false"));
+    xmlWriter_.writeEndElement();
+}
+
+// Generic procedure to write a named element with a word value in hexadecimal as its attribute (used for VID and PID)
+void ConfigurationWriter::writeWordGeneric(QString name, quint16 value)
+{
+    xmlWriter_.writeStartElement(name);
+    xmlWriter_.writeAttribute("value", QString::number(value, 16));
     xmlWriter_.writeEndElement();
 }
 

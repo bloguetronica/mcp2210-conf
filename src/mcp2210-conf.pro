@@ -48,6 +48,7 @@ HEADERS += \
     libusb-extra.h \
     mainwindow.h \
     mcp2210.h \
+    mcp2210limits.h \
     passworddialog.h \
     statusdialog.h
 

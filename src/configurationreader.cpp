@@ -21,6 +21,7 @@
 // Includes
 #include <QObject>
 #include "mcp2210.h"
+#include "mcp2210limits.h"
 #include "configurationreader.h"
 
 // Reads the sub-elements of "mcp2210config" element, which is the root element
@@ -33,6 +34,12 @@ void ConfigurationReader::readConfiguration()
             readDescriptor("manufacturer", configuration_.manufacturer);
         } else if (xmlReader_.name() == QLatin1String("product")) {
             readDescriptor("product", configuration_.product);
+        } else if (xmlReader_.name() == QLatin1String("vid")) {
+            readWordGeneric("vid", configuration_.usbparameters.vid, MCP2210Limits::VID_MIN, MCP2210Limits::VID_MAX);
+        } else if (xmlReader_.name() == QLatin1String("pid")) {
+            readWordGeneric("pid", configuration_.usbparameters.pid, MCP2210Limits::PID_MIN, MCP2210Limits::PID_MAX);
+        } else if (xmlReader_.name() == QLatin1String("power")) {
+            readPower();
         }
         // TODO
     }
@@ -51,6 +58,53 @@ void ConfigurationReader::readDescriptor(QString name, QString &toVariable)
                 xmlReader_.raiseError(QObject::tr("In \"%1\" element, the \"string\" attribute contains an invalid value. It should contain a valid manufacturer string, having no more than %2 characters.").arg(name).arg(MCP2210::DESC_MAXLEN));
             } else {
                 toVariable = descriptor;
+            }
+        }
+    }
+    xmlReader_.skipCurrentElement();
+}
+
+// Reads "power" element
+void ConfigurationReader::readPower()
+{
+    Q_ASSERT(xmlReader_.isStartElement() && xmlReader_.name() == QLatin1String("power"));
+
+    const QXmlStreamAttributes attrs = xmlReader_.attributes();
+    for (const QXmlStreamAttribute &attr : attrs) {
+        if (attr.name().toString() == "maximum") {
+            bool ok;
+            ushort maxpow = attr.value().toUShort(&ok, 16);
+            if (!ok || maxpow > MCP2210Limits::MAXPOW_MAX) {
+                xmlReader_.raiseError(QObject::tr("In \"power\" element, the \"maximum\" attribute contains an invalid value. It should be an hexadecimal integer between 0 and %1.").arg(MCP2210Limits::MAXPOW_MAX, 0, 16));
+            } else {
+                configuration_.usbparameters.maxpow = static_cast<quint8>(maxpow);
+            }
+        } else if (attr.name().toString() == "self-powered") {
+            QString selfpow = attr.value().toString();
+            if (selfpow != "true" && selfpow != "false" && selfpow != "1" && selfpow != "0") {
+                xmlReader_.raiseError(QObject::tr("In \"power\" element, the \"self-powered\" attribute contains an invalid value. It should be \"true\", \"false\", \"1\" or \"0\"."));
+            } else {
+                configuration_.usbparameters.powmode = selfpow == "true" || selfpow == "1";
+            }
+        }
+    }
+    xmlReader_.skipCurrentElement();
+}
+
+// Generic procedure to read a named element with a word value in hexadecimal as it's attribute (used for VID and PID)
+void ConfigurationReader::readWordGeneric(QString name, quint16 &toVariable, quint16 min, quint16 max)
+{
+    Q_ASSERT(xmlReader_.isStartElement() && xmlReader_.name() == name);
+
+    const QXmlStreamAttributes attrs = xmlReader_.attributes();
+    for (const QXmlStreamAttribute &attr : attrs) {
+        if (attr.name().toString() == "value") {
+            bool ok;
+            quint16 word = static_cast<quint16>(attr.value().toUShort(&ok, 16));  // Cast done for sanity purposes
+            if (!ok || word > max || word < min) {
+                xmlReader_.raiseError(QObject::tr("In \"%1\" element, the \"value\" attribute contains an invalid value. It should be an hexadecimal integer between %2 and %3.").arg(name).arg(min, 0, 16).arg(max, 0, 16));
+            } else {
+                toVariable = word;
             }
         }
     }

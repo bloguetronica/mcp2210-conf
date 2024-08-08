@@ -77,6 +77,7 @@ private slots:
     void on_pushButtonRevert_clicked();
     void on_pushButtonWrite_clicked();
     void on_radioButtonPasswordProtected_toggled(bool checked);
+    void verifyConfiguration();
     void writeManufacturerDesc();
     void writeProductDesc();
 

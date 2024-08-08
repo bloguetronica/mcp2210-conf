@@ -35,6 +35,8 @@ private:
 
     void writeConfiguration();
     void writeDescriptor(QString name, QString value);
+    void writePower();
+    void writeWordGeneric(QString name, quint16 value);
 
 public:
     ConfigurationWriter(const Configuration &configuration);
@@ -42,4 +44,4 @@ public:
     void writeTo(QIODevice *device);
 };
 
-#endif // CONFIGURATIONWRITER_H
+#endif  // CONFIGURATIONWRITER_H

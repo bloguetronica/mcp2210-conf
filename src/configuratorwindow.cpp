@@ -70,9 +70,14 @@ void ConfiguratorWindow::openDevice(quint16 vid, quint16 pid, const QString &ser
         pid_ = pid;  // and PID
         serialstr_ = serialstr;  // and the serial number as well
         readDeviceConfiguration();
-        this->setWindowTitle(tr("MCP2210 Device (S/N: %1)").arg(serialstr_));
-        displayConfiguration(deviceConfig_);
-        viewEnabled_ = true;
+        if (err_) {
+            handleError();
+            this->deleteLater();  // Close window after the subsequent show() call
+        } else {
+            this->setWindowTitle(tr("MCP2210 Device (S/N: %1)").arg(serialstr_));
+            displayConfiguration(deviceConfig_);
+            viewEnabled_ = true;
+        }
     } else if (err == MCP2210::ERROR_INIT) {  // Failed to initialize libusb
         QMessageBox::critical(this, tr("Critical Error"), tr("Could not initialize libusb.\n\nThis is a critical error and execution will be aborted."));
         exit(EXIT_FAILURE);  // This error is critical because libusb failed to initialize
@@ -369,6 +374,19 @@ void ConfiguratorWindow::on_radioButtonPasswordProtected_toggled(bool checked)
     ui->pushButtonRevealRepeatPassword->setEnabled(checked && !ui->checkBoxDoNotChangePassword->isChecked() && !ui->lineEditNewPassword->text().isEmpty());
 }
 
+// Verifies the MCP2210 configuration against the input configuration
+void ConfiguratorWindow::verifyConfiguration()
+{
+    readDeviceConfiguration();
+    if (!err_) {
+        displayConfiguration(deviceConfig_);
+        if (deviceConfig_ != editedConfig_) {
+            err_ = true;
+            errmsg_ = tr("Failed verification.");
+        }
+    }
+}
+
 // Writes the manufacturer descriptor to the MCP2210 NVRAM
 void ConfiguratorWindow::writeManufacturerDesc()
 {
@@ -423,6 +441,7 @@ void ConfiguratorWindow::configureDevice()
 void ConfiguratorWindow::disableView()
 {
     ui->actionStatus->setEnabled(false);
+    ui->actionLoadConfiguration->setEnabled(false);
     ui->actionClose->setText(tr("&Close Window"));
     ui->centralWidget->setEnabled(false);
     viewEnabled_ = false;
@@ -621,6 +640,7 @@ QStringList ConfiguratorWindow::prepareTaskList()
         tasks += "writeProductDesc";
     }
     // TODO
+    tasks += "verifyConfiguration";
     return tasks;
 }
 
@@ -635,16 +655,7 @@ void ConfiguratorWindow::readDeviceConfiguration()
     deviceConfig_.chipsettings = mcp2210_.getNVChipSettings(errcnt, errstr);
     deviceConfig_.spisettings = mcp2210_.getNVSPISettings(errcnt, errstr);
     accessMode_ = mcp2210_.getAccessControlMode(errcnt, errstr);
-    if (errcnt > 0) {
-        mcp2210_.close();
-        if (mcp2210_.disconnected()) {
-            QMessageBox::critical(this, tr("Error"), tr("Device disconnected.\n\nPlease reconnect it and try again."));
-        } else {
-            errstr.chop(1);  // Remove the last character, which is always a newline
-            QMessageBox::critical(this, tr("Error"), tr("Read operation returned the following error(s):\n– %1\n\nPlease try accessing the device again.", "", errcnt).arg(errstr.replace("\n", "\n– ")));
-        }
-        this->deleteLater();  // In a context where the window is already visible, it has the same effect as this->close()
-    }
+    opCheck(tr("read-op"), errcnt, errstr);  // The string "read-op" should be translated to "Read"
 }
 
 // Saves the current configuration to a given file
@@ -773,4 +784,3 @@ bool ConfiguratorWindow::showInvalidInput()
     }
     return retval;
 }
-

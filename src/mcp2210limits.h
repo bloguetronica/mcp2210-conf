@@ -18,32 +18,20 @@
    Please feel free to contact me via e-mail: samuel.fmlourenco@gmail.com */
 
 
-#ifndef CONFIGURATIONREADER_H
-#define CONFIGURATIONREADER_H
+#ifndef MCP2210LIMITS_H
+#define MCP2210LIMITS_H
 
 // Includes
-#include <QIODevice>
-#include <QString>
-#include <QXmlStreamReader>
-#include "configuration.h"
+#include <QtGlobal>
+#include "mcp2210.h"
 
-class ConfigurationReader
+namespace MCP2210Limits
 {
-private:
-    Configuration &configuration_;
-    QXmlStreamReader xmlReader_;
+const quint8 MAXPOW_MAX = 0xfa;
+const quint16 PID_MAX = 0xffff;
+const quint16 PID_MIN = 0x0001;
+const quint16 VID_MAX = 0xffff;
+const quint16 VID_MIN = 0x0001;
+}
 
-    void readConfiguration();
-    void readDescriptor(QString name, QString &toVariable);
-    void readPower();
-    void readWordGeneric(QString name, quint16 &toVariable, quint16 min, quint16 max);
-
-public:
-    ConfigurationReader(Configuration &configuration);
-
-    QString errorString() const;
-
-    bool readFrom(QIODevice *device);
-};
-
-#endif  // CONFIGURATIONREADER_H
+#endif  // MCP2210LIMITS_H
