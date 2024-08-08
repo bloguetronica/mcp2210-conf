@@ -1255,7 +1255,7 @@
      <string>Write</string>
     </property>
    </widget>
-   <widget class="QCheckBox" name="checkBoxApplyImmediately">
+   <widget class="QCheckBox" name="checkBoxApplyToVolatile">
     <property name="enabled">
      <bool>false</bool>
     </property>
@@ -1268,7 +1268,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Apply immediately</string>
+     <string>Apply to volatile</string>
     </property>
    </widget>
   </widget>

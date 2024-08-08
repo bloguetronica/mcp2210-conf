@@ -30,12 +30,10 @@
 #include "common.h"
 #include "configurationreader.h"
 #include "configurationwriter.h"
+#include "mcp2210limits.h"
 #include "passworddialog.h"
 #include "configuratorwindow.h"
 #include "ui_configuratorwindow.h"
-
-// Definitions
-const int POWER_LIMIT = 500;  // Maximum current consumption limit, as per the USB 2.0 specification
 
 ConfiguratorWindow::ConfiguratorWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -66,9 +64,8 @@ void ConfiguratorWindow::openDevice(quint16 vid, quint16 pid, const QString &ser
 {
     int err = mcp2210_.open(vid, pid, serialstr);
     if (err == MCP2210::SUCCESS) {  // Device was successfully opened
-        vid_ = vid;  // Pass VID
-        pid_ = pid;  // and PID
-        serialstr_ = serialstr;  // and the serial number as well
+        err_ = false;
+        serialstr_ = serialstr;  // Pass the serial number
         readDeviceConfiguration();
         if (err_) {
             handleError();
@@ -160,11 +157,11 @@ void ConfiguratorWindow::on_actionStatus_triggered()
 
 void ConfiguratorWindow::on_actionUsePassword_triggered()
 {
-    err_ = false;
-    int errcnt = 0;
-    QString errstr;
     PasswordDialog passwordDialog(this);
     if (passwordDialog.exec() == QDialog::Accepted) {
+        err_ = false;
+        int errcnt = 0;
+        QString errstr;
         quint8 response = mcp2210_.usePassword(passwordDialog.passwordLineEditText(), errcnt, errstr);
         opCheck(tr("use-password-op"), errcnt, errstr);  // The string "use-password-op" should be translated to "Use password"
         if (err_) {
@@ -230,7 +227,7 @@ void ConfiguratorWindow::on_lineEditMaxPower_textChanged(const QString &text)
 void ConfiguratorWindow::on_lineEditMaxPower_textEdited(QString text)  // The variable "text" is passed by value here, because it needs to be modified locally!
 {
     int maxPower = text.toInt();
-    if (maxPower > POWER_LIMIT) {
+    if (maxPower > 2 * MCP2210Limits::MAXPOW_MAX) {
         text.chop(1);
         ui->lineEditMaxPower->setText(text);
         maxPower /= 10;
@@ -258,13 +255,13 @@ void ConfiguratorWindow::on_lineEditMaxPowerHex_textEdited(const QString &text)
 {
     int curPosition = ui->lineEditMaxPowerHex->cursorPosition();
     ui->lineEditMaxPowerHex->setText(text.toLower());
-    int maxPower = 2 * text.toInt(nullptr, 16);
-    if (maxPower > POWER_LIMIT) {
-        maxPower = POWER_LIMIT;
-        ui->lineEditMaxPowerHex->setText(QString("%1").arg(POWER_LIMIT / 2, 2, 16, QChar('0')));  // This will autofill with up to two leading zeros
+    int maxPowerHex = text.toInt(nullptr, 16);
+    if (maxPowerHex > MCP2210Limits::MAXPOW_MAX) {
+        maxPowerHex = MCP2210Limits::MAXPOW_MAX;
+        ui->lineEditMaxPowerHex->setText(QString("%1").arg(MCP2210Limits::MAXPOW_MAX, 2, 16, QChar('0')));  // This will autofill with up to two leading zeros
     }
     ui->lineEditMaxPowerHex->setCursorPosition(curPosition);
-    ui->lineEditMaxPower->setText(QString::number(maxPower));
+    ui->lineEditMaxPower->setText(QString::number(2 * maxPowerHex));
 }
 
 void ConfiguratorWindow::on_lineEditNewPassword_textChanged(const QString &text)
@@ -403,6 +400,15 @@ void ConfiguratorWindow::writeProductDesc()
     QString errstr;
     mcp2210_.writeProductDesc(editedConfig_.product, errcnt, errstr);
     opCheck(tr("write-product-desc-op"), errcnt, errstr);  // The string "write-product-desc-op" should be translated to "Write product descriptor"
+}
+
+// Writes the USB parameters to the MCP2210 NVRAM
+void ConfiguratorWindow::writeUSBParameters()
+{
+    int errcnt = 0;
+    QString errstr;
+    mcp2210_.writeUSBParameters(editedConfig_.usbparameters, errcnt, errstr);
+    opCheck(tr("write-usb-parameters-op"), errcnt, errstr);  // The string "write-usb-parameters-op" should be translated to "Write USB parameters"
 }
 
 // This is the main configuration routine, used to configure the MCP2210 NVRAM according to the tasks in the task list
@@ -639,6 +645,9 @@ QStringList ConfiguratorWindow::prepareTaskList()
     if (editedConfig_.product != deviceConfig_.product) {
         tasks += "writeProductDesc";
     }
+    if (editedConfig_.usbparameters != deviceConfig_.usbparameters) {
+        tasks += "writeUSBParameters";
+    }
     // TODO
     tasks += "verifyConfiguration";
     return tasks;
@@ -753,12 +762,12 @@ void ConfiguratorWindow::setVIDEnabled(bool value)
     ui->lineEditVID->setReadOnly(!value);
 }
 
-// Enables or disables editing related buttons
+// Enables or disables editing related actions, buttons and checkboxes
 void ConfiguratorWindow::setWriteEnabled(bool value)
 {
     ui->actionLoadConfiguration->setEnabled(value);
     ui->pushButtonRevert->setEnabled(value);
-    ui->checkBoxApplyImmediately->setEnabled(value);
+    ui->checkBoxApplyToVolatile->setEnabled(value);
     ui->pushButtonWrite->setEnabled(value);
 }
 

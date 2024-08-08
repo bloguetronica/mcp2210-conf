@@ -80,6 +80,7 @@ private slots:
     void verifyConfiguration();
     void writeManufacturerDesc();
     void writeProductDesc();
+    void writeUSBParameters();
 
 private:
     Ui::ConfiguratorWindow *ui;
@@ -88,7 +89,6 @@ private:
     QPointer<StatusDialog> statusDialog_;
     QString errmsg_, serialstr_;
     quint8 accessMode_;
-    quint16 pid_, vid_;
     bool err_, viewEnabled_ = false;
 
     void configureDevice();
