@@ -45,7 +45,7 @@ void ConfigurationWriter::writePower()
 {
     xmlWriter_.writeStartElement("power");
     xmlWriter_.writeAttribute("maximum", QString::number(configuration_.usbparameters.maxpow, 16));
-    xmlWriter_.writeAttribute("self-powered", (configuration_.usbparameters.powmode ? "true" : "false"));
+    xmlWriter_.writeAttribute("self", (configuration_.usbparameters.powmode ? "true" : "false"));
     xmlWriter_.writeEndElement();
 }
 
