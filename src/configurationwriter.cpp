@@ -19,6 +19,7 @@
 
 
 // Includes
+#include "mcp2210.h"
 #include "configurationwriter.h"
 
 // Writes the sub-elements of "mcp2210config" element, which is the root element
@@ -30,6 +31,7 @@ void ConfigurationWriter::writeConfiguration()
     writeWordGeneric("pid", configuration_.usbparameters.pid);
     writePower();
     writeRemoteWakeup();
+    writePins();
     // TODO
 }
 
@@ -38,6 +40,42 @@ void ConfigurationWriter::writeDescriptor(QString name, QString value)
 {
     xmlWriter_.writeStartElement(name);
     xmlWriter_.writeAttribute("string", value);
+    xmlWriter_.writeEndElement();
+}
+
+// Writes GPIO element
+void ConfigurationWriter::writeGPIO(int number, int mode, bool high)
+{
+    xmlWriter_.writeStartElement(QString("gpio%1").arg(number));
+    xmlWriter_.writeAttribute("mode", QString::number(mode));
+    if (number < MCP2210::GPIO8) {
+        xmlWriter_.writeAttribute("high", (high ? "true" : "false"));
+    }
+    xmlWriter_.writeEndElement();
+}
+
+// Writes "pins" element
+void ConfigurationWriter::writePins()
+{
+    xmlWriter_.writeStartElement("pins");
+    QVector<quint8> pinModes{
+        configuration_.chipsettings.gp0,
+        configuration_.chipsettings.gp1,
+        configuration_.chipsettings.gp2,
+        configuration_.chipsettings.gp3,
+        configuration_.chipsettings.gp4,
+        configuration_.chipsettings.gp5,
+        configuration_.chipsettings.gp6,
+        configuration_.chipsettings.gp7,
+        configuration_.chipsettings.gp8
+    };
+    int numberOfPins = pinModes.size();
+    for (int i = 0; i < numberOfPins; ++i) {
+        quint8 mask = static_cast<quint8>(0x01 << i);
+        int mode = i < MCP2210::GPIO8 ? (pinModes.at(i) == MCP2210::PCGPIO ? (mask & configuration_.chipsettings.gpdir) == 0x00 : pinModes.at(i) + 1) : pinModes.at(i);
+        bool high = (mask & configuration_.chipsettings.gpout) != 0x00;
+        writeGPIO(i, mode, high);
+    }
     xmlWriter_.writeEndElement();
 }
 
@@ -55,6 +93,7 @@ void ConfigurationWriter::writeRemoteWakeup()
 {
     xmlWriter_.writeStartElement("remotewakeup");
     xmlWriter_.writeAttribute("capable", (configuration_.usbparameters.rmwakeup ? "true" : "false"));
+    xmlWriter_.writeAttribute("enabled", (configuration_.chipsettings.rmwakeup ? "true" : "false"));
     xmlWriter_.writeEndElement();
 }
 

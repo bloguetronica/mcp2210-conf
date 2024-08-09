@@ -101,11 +101,18 @@ void ConfigurationReader::readRemoteWakeup()
     const QXmlStreamAttributes attrs = xmlReader_.attributes();
     for (const QXmlStreamAttribute &attr : attrs) {
         if (attr.name().toString() == "capable") {
-            QString capable = attr.value().toString();
-            if (capable != "true" && capable != "false" && capable != "1" && capable != "0") {
+            QString rmcapable = attr.value().toString();
+            if (rmcapable != "true" && rmcapable != "false" && rmcapable != "1" && rmcapable != "0") {
                 xmlReader_.raiseError(QObject::tr("In \"remotewakeup\" element, the \"capable\" attribute contains an invalid value. It should be \"true\", \"false\", \"1\" or \"0\"."));
             } else {
-                configuration_.usbparameters.rmwakeup = capable == "true" || capable == "1";
+                configuration_.usbparameters.rmwakeup = rmcapable == "true" || rmcapable == "1";
+            }
+        } else if (attr.name().toString() == "enabled") {
+            QString rmenabled = attr.value().toString();
+            if (rmenabled != "true" && rmenabled != "false" && rmenabled != "1" && rmenabled != "0") {
+                xmlReader_.raiseError(QObject::tr("In \"remotewakeup\" element, the \"enabled\" attribute contains an invalid value. It should be \"true\", \"false\", \"1\" or \"0\"."));
+            } else {
+                configuration_.chipsettings.rmwakeup = rmenabled == "true" || rmenabled == "1";
             }
         }
     }

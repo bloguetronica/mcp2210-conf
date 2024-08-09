@@ -35,6 +35,8 @@ private:
 
     void writeConfiguration();
     void writeDescriptor(QString name, QString value);
+    void writeGPIO(int number, int mode, bool high);
+    void writePins();
     void writePower();
     void writeRemoteWakeup();
     void writeWordGeneric(QString name, quint16 value);
