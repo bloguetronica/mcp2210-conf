@@ -82,11 +82,11 @@ void ConfigurationReader::readPower()
                 configuration_.usbparameters.maxpow = static_cast<quint8>(maxpow);
             }
         } else if (attr.name().toString() == "self") {
-            QString self = attr.value().toString();
-            if (self != "true" && self != "false" && self != "1" && self != "0") {
+            QString selfpow = attr.value().toString();
+            if (selfpow != "true" && selfpow != "false" && selfpow != "1" && selfpow != "0") {
                 xmlReader_.raiseError(QObject::tr("In \"power\" element, the \"self\" attribute contains an invalid value. It should be \"true\", \"false\", \"1\" or \"0\"."));
             } else {
-                configuration_.usbparameters.powmode = self == "true" || self == "1";
+                configuration_.usbparameters.powmode = selfpow == "true" || selfpow == "1";
             }
         }
     }
