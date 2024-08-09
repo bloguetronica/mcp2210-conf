@@ -1261,14 +1261,14 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>190</x>
+      <x>140</x>
       <y>545</y>
-      <width>161</width>
+      <width>211</width>
       <height>21</height>
      </rect>
     </property>
     <property name="text">
-     <string>Apply immediately</string>
+     <string>Apply settings immediately</string>
     </property>
    </widget>
   </widget>
