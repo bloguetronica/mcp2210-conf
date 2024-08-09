@@ -1255,20 +1255,20 @@
      <string>Write</string>
     </property>
    </widget>
-   <widget class="QCheckBox" name="checkBoxApplyToRAM">
+   <widget class="QCheckBox" name="checkBoxApplyImmediately">
     <property name="enabled">
      <bool>false</bool>
     </property>
     <property name="geometry">
      <rect>
-      <x>210</x>
+      <x>190</x>
       <y>545</y>
-      <width>141</width>
+      <width>161</width>
       <height>21</height>
      </rect>
     </property>
     <property name="text">
-     <string>Apply to RAM</string>
+     <string>Apply immediately</string>
     </property>
    </widget>
   </widget>

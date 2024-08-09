@@ -36,6 +36,7 @@ private:
     void writeConfiguration();
     void writeDescriptor(QString name, QString value);
     void writePower();
+    void writeRemoteWakeup();
     void writeWordGeneric(QString name, quint16 value);
 
 public:

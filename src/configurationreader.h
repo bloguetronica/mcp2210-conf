@@ -36,6 +36,7 @@ private:
     void readConfiguration();
     void readDescriptor(QString name, QString &toVariable);
     void readPower();
+    void readRemoteWakeup();
     void readWordGeneric(QString name, quint16 &toVariable, quint16 min, quint16 max);
 
 public:

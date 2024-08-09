@@ -40,6 +40,8 @@ void ConfigurationReader::readConfiguration()
             readWordGeneric("pid", configuration_.usbparameters.pid, MCP2210Limits::PID_MIN, MCP2210Limits::PID_MAX);
         } else if (xmlReader_.name() == QLatin1String("power")) {
             readPower();
+        } else if (xmlReader_.name() == QLatin1String("remotewakeup")) {
+            readRemoteWakeup();
         }
         // TODO
     }
@@ -85,6 +87,25 @@ void ConfigurationReader::readPower()
                 xmlReader_.raiseError(QObject::tr("In \"power\" element, the \"self\" attribute contains an invalid value. It should be \"true\", \"false\", \"1\" or \"0\"."));
             } else {
                 configuration_.usbparameters.powmode = selfpow == "true" || selfpow == "1";
+            }
+        }
+    }
+    xmlReader_.skipCurrentElement();
+}
+
+// Reads "remotewakeup" element
+void ConfigurationReader::readRemoteWakeup()
+{
+    Q_ASSERT(xmlReader_.isStartElement() && xmlReader_.name() == QLatin1String("remotewakeup"));
+
+    const QXmlStreamAttributes attrs = xmlReader_.attributes();
+    for (const QXmlStreamAttribute &attr : attrs) {
+        if (attr.name().toString() == "capable") {
+            QString selfpow = attr.value().toString();
+            if (selfpow != "true" && selfpow != "false" && selfpow != "1" && selfpow != "0") {
+                xmlReader_.raiseError(QObject::tr("In \"remotewakeup\" element, the \"capable\" attribute contains an invalid value. It should be \"true\", \"false\", \"1\" or \"0\"."));
+            } else {
+                configuration_.usbparameters.rmwakeup = selfpow == "true" || selfpow == "1";
             }
         }
     }

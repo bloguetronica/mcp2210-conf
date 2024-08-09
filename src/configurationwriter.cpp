@@ -29,6 +29,7 @@ void ConfigurationWriter::writeConfiguration()
     writeWordGeneric("vid", configuration_.usbparameters.vid);
     writeWordGeneric("pid", configuration_.usbparameters.pid);
     writePower();
+    writeRemoteWakeup();
     // TODO
 }
 
@@ -46,6 +47,14 @@ void ConfigurationWriter::writePower()
     xmlWriter_.writeStartElement("power");
     xmlWriter_.writeAttribute("maximum", QString::number(configuration_.usbparameters.maxpow, 16));
     xmlWriter_.writeAttribute("self", (configuration_.usbparameters.powmode ? "true" : "false"));
+    xmlWriter_.writeEndElement();
+}
+
+// Writes "remotewakeup" element
+void ConfigurationWriter::writeRemoteWakeup()
+{
+    xmlWriter_.writeStartElement("remotewakeup");
+    xmlWriter_.writeAttribute("capable", (configuration_.usbparameters.rmwakeup ? "true" : "false"));
     xmlWriter_.writeEndElement();
 }
 

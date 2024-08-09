@@ -24,7 +24,6 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QMetaObject>
-#include <QProgressDialog>
 #include <QRegExp>
 #include <QRegExpValidator>
 #include "common.h"
@@ -417,30 +416,18 @@ void ConfiguratorWindow::configureDevice()
     err_ = false;
     QStringList tasks = prepareTaskList();  // Create a new task list
     int nTasks = tasks.size();
-    QProgressDialog configProgress(tr("Configuring device..."), tr("Abort"), 0, nTasks, this);
-    configProgress.setWindowTitle(tr("Device Configuration"));
-    configProgress.setWindowModality(Qt::WindowModal);
-    // TODO Does the progress dialog need to be displayed immediately?
     for (int i = 0; i < nTasks; ++i) {  // Iterate through the newly created task list
-        if (configProgress.wasCanceled()) {  // If the user clicks "Abort"
-            break;  // Abort the configuration
-        }
         QMetaObject::invokeMethod(this, tasks[i].toStdString().c_str());  // The task list entry is converted to a C string
         if (err_) {  // If an error has occured
-            configProgress.cancel();  // This hides the progress dialog
             break;  // Abort the configuration
         }
-        configProgress.setValue(i + 1);  // Update the progress bar for each task done
     }
     if (err_) {  // If an error occured
         handleError();
         QMessageBox::critical(this, tr("Error"), tr("The device configuration could not be completed."));
-    } else if (configProgress.wasCanceled()) {  // If the device configuration was aborted by the user
-        QMessageBox::information(this, tr("Configuration Aborted"), tr("The device configuration was aborted."));
     } else {  // Successul configuration
         QMessageBox::information(this, tr("Device Configured"), tr("Device was successfully configured."));
     }
-    // TODO Verification has to be done somewhere - deviceConfig_ needs to be updated!
 }
 
 // Partially disables configurator window
@@ -767,7 +754,7 @@ void ConfiguratorWindow::setWriteEnabled(bool value)
 {
     ui->actionLoadConfiguration->setEnabled(value);
     ui->pushButtonRevert->setEnabled(value);
-    ui->checkBoxApplyToRAM->setEnabled(value);
+    ui->checkBoxApplyImmediately->setEnabled(value);
     ui->pushButtonWrite->setEnabled(value);
 }
 
