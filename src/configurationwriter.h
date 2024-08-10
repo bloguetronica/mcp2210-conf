@@ -33,12 +33,15 @@ private:
     const Configuration &configuration_;
     QXmlStreamWriter xmlWriter_;
 
+    void writeByteGeneric(QString name, quint8 value);
     void writeConfiguration();
     void writeDescriptor(QString name, QString value);
-    void writeGPIO(int number, int mode, bool high);
+    void writeGP(int number, quint8 mode);
+    void writeInterrupt();
     void writePins();
     void writePower();
     void writeRemoteWakeup();
+    void writeSPIBus();
     void writeWordGeneric(QString name, quint16 value);
 
 public:

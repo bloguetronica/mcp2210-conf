@@ -108,16 +108,9 @@ private:
     void readDeviceConfiguration();
     void saveConfigurationToFile(QFile &file);
     void setChipSettingsEnabled(bool value);
-    void setManufacturerEnabled(bool value);
-    void setMaxPowerEnabled(bool value);
-    void setNVRAMAccessModeEnabled(bool value);
-    void setPIDEnabled(bool value);
-    void setPowerModeEnabled(bool value);
-    void setProductEnabled(bool value);
-    void setRemoteWakeUpCapableEnabled(bool value);
+    void setGeneralSettingsEnabled(bool value);
     void setSPISettingsEnabled(bool value);
     void setUsePasswordEnabled(bool value);
-    void setVIDEnabled(bool value);
     void setWriteEnabled(bool value);
     bool showInvalidInput();
 };

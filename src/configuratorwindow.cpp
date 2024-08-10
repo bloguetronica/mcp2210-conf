@@ -470,17 +470,10 @@ void ConfiguratorWindow::displayConfiguration(const Configuration &config)
 {
     setUsePasswordEnabled(accessMode_ == MCP2210::ACPASSWORD);
     displayManufacturer(config.manufacturer);
-    setManufacturerEnabled(accessMode_ != MCP2210::ACLOCKED);
     displayProduct(config.product);
-    setProductEnabled(accessMode_ != MCP2210::ACLOCKED);
     displayUSBParameters(config.usbparameters);
-    setVIDEnabled(accessMode_ != MCP2210::ACLOCKED);
-    setPIDEnabled(accessMode_ != MCP2210::ACLOCKED);
-    setMaxPowerEnabled(accessMode_ != MCP2210::ACLOCKED);
-    setPowerModeEnabled(accessMode_ != MCP2210::ACLOCKED);
-    setRemoteWakeUpCapableEnabled(accessMode_ != MCP2210::ACLOCKED);
     displayNVRAMAccessMode();
-    setNVRAMAccessModeEnabled(accessMode_ != MCP2210::ACLOCKED);
+    setGeneralSettingsEnabled(accessMode_ != MCP2210::ACLOCKED);
     displayChipSettings(config.chipsettings);
     setChipSettingsEnabled(accessMode_ != MCP2210::ACLOCKED);
     displaySPISettings(config.spisettings);
@@ -687,47 +680,18 @@ void ConfiguratorWindow::setChipSettingsEnabled(bool value)
     ui->checkBoxSPIBusCaptive->setEnabled(value);
 }
 
-// Enables or disables the manufacturer descriptor field
-void ConfiguratorWindow::setManufacturerEnabled(bool value)
+// Enables or disables all fields pertaining to general settings
+void ConfiguratorWindow::setGeneralSettingsEnabled(bool value)
 {
     ui->lineEditManufacturer->setReadOnly(!value);
-}
-
-// Enables or disables the maximum power consuption configuration fields
-void ConfiguratorWindow::setMaxPowerEnabled(bool value)
-{
+    ui->lineEditProduct->setReadOnly(!value);
+    ui->lineEditVID->setReadOnly(!value);
+    ui->lineEditPID->setReadOnly(!value);
     ui->lineEditMaxPower->setReadOnly(!value);
     ui->lineEditMaxPowerHex->setReadOnly(!value);
-}
-
-// Enables or disables the "NVRAM Access Mode" group box
-void ConfiguratorWindow::setNVRAMAccessModeEnabled(bool value)
-{
-    ui->groupBoxNVRAMAccessMode->setEnabled(value);
-}
-
-// Enables or disables the PID field
-void ConfiguratorWindow::setPIDEnabled(bool value)
-{
-    ui->lineEditPID->setReadOnly(!value);
-}
-
-// Enables or disables the power mode configuration combo box
-void ConfiguratorWindow::setPowerModeEnabled(bool value)
-{
     ui->comboBoxPowerMode->setEnabled(value);
-}
-
-// Enables or disables the product descriptor field
-void ConfiguratorWindow::setProductEnabled(bool value)
-{
-    ui->lineEditProduct->setReadOnly(!value);
-}
-
-// Enables or disables the remote wake-up capability check box
-void ConfiguratorWindow::setRemoteWakeUpCapableEnabled(bool value)
-{
     ui->checkBoxRemoteWakeUpCapable->setEnabled(value);
+    ui->groupBoxNVRAMAccessMode->setEnabled(value);
 }
 
 // Enables or disables all fields pertaining to SPI settings
@@ -741,12 +705,6 @@ void ConfiguratorWindow::setSPISettingsEnabled(bool value)
 void ConfiguratorWindow::setUsePasswordEnabled(bool value)
 {
     ui->actionUsePassword->setEnabled(value);
-}
-
-// Enables or disables the VID field
-void ConfiguratorWindow::setVIDEnabled(bool value)
-{
-    ui->lineEditVID->setReadOnly(!value);
 }
 
 // Enables or disables editing related actions, buttons and checkboxes

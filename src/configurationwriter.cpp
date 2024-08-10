@@ -22,6 +22,12 @@
 #include "mcp2210.h"
 #include "configurationwriter.h"
 
+// Generic procedure to write a named element with a byte value in hexadecimal as its attribute (used for pin configurations)
+void ConfigurationWriter::writeByteGeneric(QString name, quint8 value)
+{
+    writeWordGeneric(name, value);
+}
+
 // Writes the sub-elements of "mcp2210config" element, which is the root element
 void ConfigurationWriter::writeConfiguration()
 {
@@ -32,6 +38,8 @@ void ConfigurationWriter::writeConfiguration()
     writePower();
     writeRemoteWakeup();
     writePins();
+    writeInterrupt();
+    writeSPIBus();
     // TODO
 }
 
@@ -43,14 +51,19 @@ void ConfigurationWriter::writeDescriptor(QString name, QString value)
     xmlWriter_.writeEndElement();
 }
 
-// Writes GPIO element
-void ConfigurationWriter::writeGPIO(int number, int mode, bool high)
+// Writes GP element
+void ConfigurationWriter::writeGP(int number, quint8 mode)
 {
-    xmlWriter_.writeStartElement(QString("gpio%1").arg(number));
+    xmlWriter_.writeStartElement(QString("gp%1").arg(number));
     xmlWriter_.writeAttribute("mode", QString::number(mode));
-    if (number < MCP2210::GPIO8) {
-        xmlWriter_.writeAttribute("high", (high ? "true" : "false"));
-    }
+    xmlWriter_.writeEndElement();
+}
+
+// Writes "interrupt" element
+void ConfigurationWriter::writeInterrupt()
+{
+    xmlWriter_.writeStartElement("interrupt");
+    xmlWriter_.writeAttribute("mode", QString::number(configuration_.chipsettings.intmode));
     xmlWriter_.writeEndElement();
 }
 
@@ -71,12 +84,10 @@ void ConfigurationWriter::writePins()
     };
     int numberOfPins = pinModes.size();
     for (int i = 0; i < numberOfPins; ++i) {
-        quint8 mask = static_cast<quint8>(0x01 << i);
-        int mode = i < MCP2210::GPIO8 ? (pinModes.at(i) == MCP2210::PCGPIO ? (mask & configuration_.chipsettings.gpdir) == 0x00 : pinModes.at(i) + 1)
-                                      : (pinModes.at(i) == MCP2210::PCGPIO ? 0 : 1);
-        bool high = (mask & configuration_.chipsettings.gpout) != 0x00;
-        writeGPIO(i, mode, high);
+        writeGP(i, pinModes.at(i));
     }
+    writeByteGeneric("gpdir", configuration_.chipsettings.gpdir);
+    writeByteGeneric("gpout", configuration_.chipsettings.gpout);
     xmlWriter_.writeEndElement();
 }
 
@@ -95,6 +106,14 @@ void ConfigurationWriter::writeRemoteWakeup()
     xmlWriter_.writeStartElement("remotewakeup");
     xmlWriter_.writeAttribute("capable", (configuration_.usbparameters.rmwakeup ? "true" : "false"));
     xmlWriter_.writeAttribute("enabled", (configuration_.chipsettings.rmwakeup ? "true" : "false"));
+    xmlWriter_.writeEndElement();
+}
+
+// Writes "spibus" element
+void ConfigurationWriter::writeSPIBus()
+{
+    xmlWriter_.writeStartElement("spibus");
+    xmlWriter_.writeAttribute("captive", (configuration_.chipsettings.nrelspi ? "true" : "false"));
     xmlWriter_.writeEndElement();
 }
 

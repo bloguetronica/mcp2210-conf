@@ -24,6 +24,26 @@
 #include "mcp2210limits.h"
 #include "configurationreader.h"
 
+// Generic procedure to read a named element with a byte value in hexadecimal as it's attribute (used for pin configurations)
+void ConfigurationReader::readByteGeneric(QString name, quint8 &toVariable, quint8 min, quint8 max)
+{
+    Q_ASSERT(xmlReader_.isStartElement() && xmlReader_.name() == name);
+
+    const QXmlStreamAttributes attrs = xmlReader_.attributes();
+    for (const QXmlStreamAttribute &attr : attrs) {
+        if (attr.name().toString() == "value") {
+            bool ok;
+            ushort value = attr.value().toUShort(&ok, 16);
+            if (!ok || value > max || value < min) {
+                xmlReader_.raiseError(QObject::tr("In \"%1\" element, the \"value\" attribute contains an invalid value. It should be an hexadecimal integer between %2 and %3.").arg(name).arg(min, 0, 16).arg(max, 0, 16));
+            } else {
+                toVariable = static_cast<quint8>(value);
+            }
+        }
+    }
+    xmlReader_.skipCurrentElement();
+}
+
 // Reads the sub-elements of "mcp2210config" element, which is the root element
 void ConfigurationReader::readConfiguration()
 {
@@ -42,6 +62,12 @@ void ConfigurationReader::readConfiguration()
             readPower();
         } else if (xmlReader_.name() == QLatin1String("remotewakeup")) {
             readRemoteWakeup();
+        } else if (xmlReader_.name() == QLatin1String("pins")) {
+            readPins();
+        } else if (xmlReader_.name() == QLatin1String("interrupt")) {
+            readInterrupt();
+        } else if (xmlReader_.name() == QLatin1String("spibus")) {
+            readSPIBus();
         }
         // TODO
     }
@@ -64,6 +90,80 @@ void ConfigurationReader::readDescriptor(QString name, QString &toVariable)
         }
     }
     xmlReader_.skipCurrentElement();
+}
+
+// Reads GP element
+void ConfigurationReader::readGP(int number, quint8 &toVariable, quint8 max)
+{
+    Q_ASSERT(xmlReader_.isStartElement() && xmlReader_.name() == QString("gp%1").arg(number));
+
+    const QXmlStreamAttributes attrs = xmlReader_.attributes();
+    for (const QXmlStreamAttribute &attr : attrs) {
+        if (attr.name().toString() == "mode") {
+            bool ok;
+            ushort gpio = attr.value().toUShort(&ok);
+            if (!ok || gpio > max) {
+                xmlReader_.raiseError(QObject::tr("In \"gp%1\" element, the \"mode\" attribute contains an invalid value. It should be an integer between 0 and %2.").arg(number).arg(max));
+            } else {
+                toVariable = static_cast<quint8>(gpio);
+            }
+        }
+    }
+    xmlReader_.skipCurrentElement();
+}
+
+// Reads "interrupt" element
+void ConfigurationReader::readInterrupt()
+{
+    Q_ASSERT(xmlReader_.isStartElement() && xmlReader_.name() == QLatin1String("interrupt"));
+
+    const QXmlStreamAttributes attrs = xmlReader_.attributes();
+    for (const QXmlStreamAttribute &attr : attrs) {
+        if (attr.name().toString() == "mode") {
+            bool ok;
+            ushort intmode = attr.value().toUShort(&ok);
+            if (!ok || intmode > MCP2210Limits::INTMODE_MAX) {
+                xmlReader_.raiseError(QObject::tr("In \"interrupt\" element, the \"mode\" attribute contains an invalid value. It should be an integer between 0 and %1.").arg(MCP2210Limits::INTMODE_MAX));
+            } else {
+                configuration_.chipsettings.intmode = static_cast<quint8>(intmode);
+            }
+        }
+    }
+    xmlReader_.skipCurrentElement();
+}
+
+// Reads the sub-elements of "pins" element
+void ConfigurationReader::readPins()
+{
+    Q_ASSERT(xmlReader_.isStartElement() && xmlReader_.name() == QLatin1String("pins"));
+
+    while (xmlReader_.readNextStartElement()) {
+        if (xmlReader_.name() == QLatin1String("gp0")) {
+            readGP(0, configuration_.chipsettings.gp0, MCP2210Limits::GP0_MAX);
+        } else if (xmlReader_.name() == QLatin1String("gp1")) {
+            readGP(1, configuration_.chipsettings.gp1, MCP2210Limits::GP1_MAX);
+        } else if (xmlReader_.name() == QLatin1String("gp2")) {
+            readGP(2, configuration_.chipsettings.gp2, MCP2210Limits::GP2_MAX);
+        } else if (xmlReader_.name() == QLatin1String("gp3")) {
+            readGP(3, configuration_.chipsettings.gp3, MCP2210Limits::GP3_MAX);
+        } else if (xmlReader_.name() == QLatin1String("gp4")) {
+            readGP(4, configuration_.chipsettings.gp4, MCP2210Limits::GP4_MAX);
+        } else if (xmlReader_.name() == QLatin1String("gp5")) {
+            readGP(5, configuration_.chipsettings.gp5, MCP2210Limits::GP5_MAX);
+        } else if (xmlReader_.name() == QLatin1String("gp6")) {
+            readGP(6, configuration_.chipsettings.gp6, MCP2210Limits::GP6_MAX);
+        } else if (xmlReader_.name() == QLatin1String("gp7")) {
+            readGP(7, configuration_.chipsettings.gp7, MCP2210Limits::GP7_MAX);
+        } else if (xmlReader_.name() == QLatin1String("gp8")) {
+            readGP(8, configuration_.chipsettings.gp8, MCP2210Limits::GP8_MAX);
+        } else if (xmlReader_.name() == QLatin1String("gpdir")) {
+            readByteGeneric("gpdir", configuration_.chipsettings.gpdir, 0x00, MCP2210Limits::GPDIR_MAX);
+        } else if (xmlReader_.name() == QLatin1String("gpout")) {
+            readByteGeneric("gpout", configuration_.chipsettings.gpout, 0x00, MCP2210Limits::GPOUT_MAX);
+        } else {
+            xmlReader_.skipCurrentElement();
+        }
+    }
 }
 
 // Reads "power" element
@@ -119,6 +219,25 @@ void ConfigurationReader::readRemoteWakeup()
     xmlReader_.skipCurrentElement();
 }
 
+// Reads "spibus" element
+void ConfigurationReader::readSPIBus()
+{
+    Q_ASSERT(xmlReader_.isStartElement() && xmlReader_.name() == QLatin1String("spibus"));
+
+    const QXmlStreamAttributes attrs = xmlReader_.attributes();
+    for (const QXmlStreamAttribute &attr : attrs) {
+        if (attr.name().toString() == "captive") {
+            QString spicaptive = attr.value().toString();
+            if (spicaptive != "true" && spicaptive != "false" && spicaptive != "1" && spicaptive != "0") {
+                xmlReader_.raiseError(QObject::tr("In \"spibus\" element, the \"captive\" attribute contains an invalid value. It should be \"true\", \"false\", \"1\" or \"0\"."));
+            } else {
+                configuration_.chipsettings.nrelspi = spicaptive == "true" || spicaptive == "1";
+            }
+        }
+    }
+    xmlReader_.skipCurrentElement();
+}
+
 // Generic procedure to read a named element with a word value in hexadecimal as it's attribute (used for VID and PID)
 void ConfigurationReader::readWordGeneric(QString name, quint16 &toVariable, quint16 min, quint16 max)
 {
@@ -128,11 +247,11 @@ void ConfigurationReader::readWordGeneric(QString name, quint16 &toVariable, qui
     for (const QXmlStreamAttribute &attr : attrs) {
         if (attr.name().toString() == "value") {
             bool ok;
-            quint16 word = static_cast<quint16>(attr.value().toUShort(&ok, 16));  // Cast done for sanity purposes
-            if (!ok || word > max || word < min) {
+            quint16 value = static_cast<quint16>(attr.value().toUShort(&ok, 16));  // Cast done for sanity purposes
+            if (!ok || value > max || value < min) {
                 xmlReader_.raiseError(QObject::tr("In \"%1\" element, the \"value\" attribute contains an invalid value. It should be an hexadecimal integer between %2 and %3.").arg(name).arg(min, 0, 16).arg(max, 0, 16));
             } else {
-                toVariable = word;
+                toVariable = value;
             }
         }
     }
