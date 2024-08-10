@@ -459,7 +459,7 @@ void ConfiguratorWindow::displayChipSettings(const MCP2210::ChipSettings &chipse
     ui->checkBoxGP6DefaultValue->setChecked((0x40 & chipsettings.gpout) != 0x00);
     ui->comboBoxGP7->setCurrentIndex(chipsettings.gp7 == MCP2210::PCGPIO ? (0x80 & chipsettings.gpdir) == 0x00 : chipsettings.gp7 + 1);
     ui->checkBoxGP7DefaultValue->setChecked((0x80 & chipsettings.gpout) != 0x00);
-    ui->comboBoxGP8->setCurrentIndex(chipsettings.gp8);
+    ui->comboBoxGP8->setCurrentIndex(chipsettings.gp8 == MCP2210::PCGPIO ? 0 : 1);
     ui->comboBoxInterruptMode->setCurrentIndex(chipsettings.intmode);
     ui->checkBoxRemoteWakeUp->setChecked(chipsettings.rmwakeup);
     ui->checkBoxSPIBusCaptive->setChecked(chipsettings.nrelspi);
@@ -547,15 +547,15 @@ void ConfiguratorWindow::getEditedConfiguration()
     editedConfig_.usbparameters.maxpow = static_cast<quint8>(ui->lineEditMaxPowerHex->text().toUShort(nullptr, 16));
     editedConfig_.usbparameters.powmode = static_cast<quint8>(ui->comboBoxPowerMode->currentIndex());
     editedConfig_.usbparameters.rmwakeup = ui->checkBoxRemoteWakeUpCapable->isChecked();
-    editedConfig_.chipsettings.gp0 = static_cast<quint8>(ui->comboBoxGP0->currentIndex() > 0 ? ui->comboBoxGP0->currentIndex() - 1 : 0);
-    editedConfig_.chipsettings.gp1 = static_cast<quint8>(ui->comboBoxGP1->currentIndex() > 0 ? ui->comboBoxGP1->currentIndex() - 1 : 0);
-    editedConfig_.chipsettings.gp2 = static_cast<quint8>(ui->comboBoxGP2->currentIndex() > 0 ? ui->comboBoxGP2->currentIndex() - 1 : 0);
-    editedConfig_.chipsettings.gp3 = static_cast<quint8>(ui->comboBoxGP3->currentIndex() > 0 ? ui->comboBoxGP3->currentIndex() - 1 : 0);
-    editedConfig_.chipsettings.gp4 = static_cast<quint8>(ui->comboBoxGP4->currentIndex() > 0 ? ui->comboBoxGP4->currentIndex() - 1 : 0);
-    editedConfig_.chipsettings.gp5 = static_cast<quint8>(ui->comboBoxGP5->currentIndex() > 0 ? ui->comboBoxGP5->currentIndex() - 1 : 0);
-    editedConfig_.chipsettings.gp6 = static_cast<quint8>(ui->comboBoxGP6->currentIndex() > 0 ? ui->comboBoxGP6->currentIndex() - 1 : 0);
-    editedConfig_.chipsettings.gp7 = static_cast<quint8>(ui->comboBoxGP7->currentIndex() > 0 ? ui->comboBoxGP7->currentIndex() - 1 : 0);
-    editedConfig_.chipsettings.gp8 = static_cast<quint8>(ui->comboBoxGP8->currentIndex());
+    editedConfig_.chipsettings.gp0 = static_cast<quint8>(ui->comboBoxGP0->currentIndex() > 0 ? ui->comboBoxGP0->currentIndex() - 1 : MCP2210::PCGPIO);
+    editedConfig_.chipsettings.gp1 = static_cast<quint8>(ui->comboBoxGP1->currentIndex() > 0 ? ui->comboBoxGP1->currentIndex() - 1 : MCP2210::PCGPIO);
+    editedConfig_.chipsettings.gp2 = static_cast<quint8>(ui->comboBoxGP2->currentIndex() > 0 ? ui->comboBoxGP2->currentIndex() - 1 : MCP2210::PCGPIO);
+    editedConfig_.chipsettings.gp3 = static_cast<quint8>(ui->comboBoxGP3->currentIndex() > 0 ? ui->comboBoxGP3->currentIndex() - 1 : MCP2210::PCGPIO);
+    editedConfig_.chipsettings.gp4 = static_cast<quint8>(ui->comboBoxGP4->currentIndex() > 0 ? ui->comboBoxGP4->currentIndex() - 1 : MCP2210::PCGPIO);
+    editedConfig_.chipsettings.gp5 = static_cast<quint8>(ui->comboBoxGP5->currentIndex() > 0 ? ui->comboBoxGP5->currentIndex() - 1 : MCP2210::PCGPIO);
+    editedConfig_.chipsettings.gp6 = static_cast<quint8>(ui->comboBoxGP6->currentIndex() > 0 ? ui->comboBoxGP6->currentIndex() - 1 : MCP2210::PCGPIO);
+    editedConfig_.chipsettings.gp7 = static_cast<quint8>(ui->comboBoxGP7->currentIndex() > 0 ? ui->comboBoxGP7->currentIndex() - 1 : MCP2210::PCGPIO);
+    editedConfig_.chipsettings.gp8 = static_cast<quint8>(ui->comboBoxGP8->currentIndex() == 0 ? MCP2210::PCGPIO : MCP2210::PCFUNC);
     editedConfig_.chipsettings.gpdir = static_cast<quint8>((ui->comboBoxGP7->currentIndex() != 1) << 7 |  // All pins have their direction set to input by default, except those pins that are specifically set to be outputs
                                                            (ui->comboBoxGP6->currentIndex() != 1) << 6 |
                                                            (ui->comboBoxGP5->currentIndex() != 1) << 5 |

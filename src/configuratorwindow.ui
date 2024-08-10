@@ -954,11 +954,6 @@
       </item>
       <item>
        <property name="text">
-        <string>Chip select</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
         <string>SPI bus release REQ</string>
        </property>
       </item>

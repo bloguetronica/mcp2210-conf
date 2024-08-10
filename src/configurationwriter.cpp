@@ -72,7 +72,8 @@ void ConfigurationWriter::writePins()
     int numberOfPins = pinModes.size();
     for (int i = 0; i < numberOfPins; ++i) {
         quint8 mask = static_cast<quint8>(0x01 << i);
-        int mode = i < MCP2210::GPIO8 ? (pinModes.at(i) == MCP2210::PCGPIO ? (mask & configuration_.chipsettings.gpdir) == 0x00 : pinModes.at(i) + 1) : pinModes.at(i);
+        int mode = i < MCP2210::GPIO8 ? (pinModes.at(i) == MCP2210::PCGPIO ? (mask & configuration_.chipsettings.gpdir) == 0x00 : pinModes.at(i) + 1)
+                                      : (pinModes.at(i) == MCP2210::PCGPIO ? 0 : 1);
         bool high = (mask & configuration_.chipsettings.gpout) != 0x00;
         writeGPIO(i, mode, high);
     }
