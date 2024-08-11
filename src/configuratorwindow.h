@@ -47,6 +47,7 @@ public:
     void openDevice(quint16 vid, quint16 pid, const QString &serialstr);
 
 private slots:
+    void applyChipSettings();
     void on_actionAbout_triggered();
     void on_actionLoadConfiguration_triggered();
     void on_actionReadEEPROM_triggered();
@@ -78,6 +79,7 @@ private slots:
     void on_pushButtonWrite_clicked();
     void on_radioButtonPasswordProtected_toggled(bool checked);
     void verifyConfiguration();
+    void writeChipSettings();
     void writeManufacturerDesc();
     void writeProductDesc();
     void writeUSBParameters();
