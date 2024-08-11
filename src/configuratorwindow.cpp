@@ -87,13 +87,22 @@ void ConfiguratorWindow::openDevice(quint16 vid, quint16 pid, const QString &ser
     }
 }
 
-// Applies the chip settings to the MCP2210 RAM
+// Applies the chip settings to the MCP2210 volatile memory area
 void ConfiguratorWindow::applyChipSettings()
 {
     int errcnt = 0;
     QString errstr;
     mcp2210_.configureChipSettings(editedConfig_.chipsettings, errcnt, errstr);
     opCheck(tr("apply chip settings"), errcnt, errstr);
+}
+
+// Applies the SPI settings to the MCP2210 volatile memory area
+void ConfiguratorWindow::applySPISettings()
+{
+    int errcnt = 0;
+    QString errstr;
+    mcp2210_.configureSPISettings(editedConfig_.spisettings, errcnt, errstr);
+    opCheck(tr("apply SPI settings"), errcnt, errstr);
 }
 
 void ConfiguratorWindow::on_actionAbout_triggered()
@@ -656,7 +665,9 @@ QStringList ConfiguratorWindow::prepareTaskList()
         if (editedConfig_.chipsettings != deviceConfig_.chipsettings) {
             tasks += "applyChipSettings";
         }
-        // TODO
+        if (editedConfig_.spisettings != deviceConfig_.spisettings) {
+            tasks += "applySPISettings";
+        }
     }
     return tasks;
 }

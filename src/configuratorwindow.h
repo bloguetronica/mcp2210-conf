@@ -48,6 +48,7 @@ public:
 
 private slots:
     void applyChipSettings();
+    void applySPISettings();
     void on_actionAbout_triggered();
     void on_actionLoadConfiguration_triggered();
     void on_actionReadEEPROM_triggered();
