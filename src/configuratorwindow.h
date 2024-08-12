@@ -106,7 +106,7 @@ private:
     void getEditedConfiguration();
     void handleError();
     void loadConfigurationFromFile(QFile &file);
-    void opCheck(const QString &op, int errcnt, QString errstr);
+    void operationCheck(const QString &operation, int errcnt, QString errstr);
     QStringList prepareTaskList();
     void readDeviceConfiguration();
     void saveConfigurationToFile(QFile &file);

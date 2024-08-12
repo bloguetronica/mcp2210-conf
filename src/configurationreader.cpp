@@ -25,7 +25,7 @@
 #include "configurationreader.h"
 
 // Generic procedure to read a named element with a byte value in hexadecimal as it's attribute (used for pin configurations)
-void ConfigurationReader::readByteGeneric(QString name, quint8 &toVariable, quint8 min, quint8 max)
+void ConfigurationReader::readByteGeneric(const QString &name, quint8 &toVariable, quint8 min, quint8 max)
 {
     Q_ASSERT(xmlReader_.isStartElement() && xmlReader_.name() == name);
 
@@ -74,7 +74,7 @@ void ConfigurationReader::readConfiguration()
 }
 
 // Reads descriptor element (used for manufacturer and product descriptors)
-void ConfigurationReader::readDescriptor(QString name, QString &toVariable)
+void ConfigurationReader::readDescriptor(const QString &name, QString &toVariable)
 {
     Q_ASSERT(xmlReader_.isStartElement() && xmlReader_.name() == name);
 
@@ -239,7 +239,7 @@ void ConfigurationReader::readSPIBus()
 }
 
 // Generic procedure to read a named element with a word value in hexadecimal as it's attribute (used for VID and PID)
-void ConfigurationReader::readWordGeneric(QString name, quint16 &toVariable, quint16 min, quint16 max)
+void ConfigurationReader::readWordGeneric(const QString &name, quint16 &toVariable, quint16 min, quint16 max)
 {
     Q_ASSERT(xmlReader_.isStartElement() && xmlReader_.name() == name);
 

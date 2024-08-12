@@ -93,7 +93,7 @@ void ConfiguratorWindow::applyChipSettings()
     int errcnt = 0;
     QString errstr;
     mcp2210_.configureChipSettings(editedConfig_.chipsettings, errcnt, errstr);
-    opCheck(tr("apply chip settings"), errcnt, errstr);
+    operationCheck(tr("apply chip settings"), errcnt, errstr);
 }
 
 // Applies the SPI settings to the MCP2210 volatile memory area
@@ -102,7 +102,7 @@ void ConfiguratorWindow::applySPISettings()
     int errcnt = 0;
     QString errstr;
     mcp2210_.configureSPISettings(editedConfig_.spisettings, errcnt, errstr);
-    opCheck(tr("apply SPI settings"), errcnt, errstr);
+    operationCheck(tr("apply SPI settings"), errcnt, errstr);
 }
 
 void ConfiguratorWindow::on_actionAbout_triggered()
@@ -156,7 +156,7 @@ void ConfiguratorWindow::on_actionStatus_triggered()
         int errcnt = 0;
         QString errstr;
         // Obtain information here????
-        opCheck(tr("retrieve device status"), errcnt, errstr);
+        operationCheck(tr("retrieve device status"), errcnt, errstr);
         if (err_) {
             handleError();
         } else {  // If error check passes
@@ -180,7 +180,7 @@ void ConfiguratorWindow::on_actionUsePassword_triggered()
         int errcnt = 0;
         QString errstr;
         quint8 response = mcp2210_.usePassword(passwordDialog.passwordLineEditText(), errcnt, errstr);
-        opCheck(tr("use password"), errcnt, errstr);
+        operationCheck(tr("use password"), errcnt, errstr);
         if (err_) {
             handleError();
         } else if (response == MCP2210::COMPLETED) {  // If error check passes and password is verified
@@ -407,7 +407,7 @@ void ConfiguratorWindow::writeChipSettings()
     int errcnt = 0;
     QString errstr;
     mcp2210_.writeNVChipSettings(editedConfig_.chipsettings, MCP2210::ACNONE, "", errcnt, errstr);  // TODO Implement password protection
-    opCheck(tr("write chip settings"), errcnt, errstr);
+    operationCheck(tr("write chip settings"), errcnt, errstr);
 }
 
 // Writes the manufacturer descriptor to the MCP2210 NVRAM
@@ -416,7 +416,7 @@ void ConfiguratorWindow::writeManufacturerDesc()
     int errcnt = 0;
     QString errstr;
     mcp2210_.writeManufacturerDesc(editedConfig_.manufacturer, errcnt, errstr);
-    opCheck(tr("write manufacturer desc"), errcnt, errstr);
+    operationCheck(tr("write manufacturer desc"), errcnt, errstr);
 }
 
 // Writes the product descriptor to the MCP2210 NVRAM
@@ -425,7 +425,7 @@ void ConfiguratorWindow::writeProductDesc()
     int errcnt = 0;
     QString errstr;
     mcp2210_.writeProductDesc(editedConfig_.product, errcnt, errstr);
-    opCheck(tr("write product desc"), errcnt, errstr);
+    operationCheck(tr("write product desc"), errcnt, errstr);
 }
 
 // Writes the USB parameters to the MCP2210 NVRAM
@@ -434,7 +434,7 @@ void ConfiguratorWindow::writeUSBParameters()
     int errcnt = 0;
     QString errstr;
     mcp2210_.writeUSBParameters(editedConfig_.usbparameters, errcnt, errstr);
-    opCheck(tr("write USB parameters"), errcnt, errstr);
+    operationCheck(tr("write USB parameters"), errcnt, errstr);
 }
 
 // This is the main configuration routine, used to configure the MCP2210 NVRAM according to the tasks in the task list
@@ -630,7 +630,7 @@ void ConfiguratorWindow::loadConfigurationFromFile(QFile &file)
 }
 
 // Checks for errors and validates device operations
-void ConfiguratorWindow::opCheck(const QString &op, int errcnt, QString errstr)
+void ConfiguratorWindow::operationCheck(const QString &operation, int errcnt, QString errstr)
 {
     if (errcnt > 0) {
         err_ = true;
@@ -638,7 +638,7 @@ void ConfiguratorWindow::opCheck(const QString &op, int errcnt, QString errstr)
             errmsg_ = tr("Device disconnected.\n\nPlease reconnect it and try again.");
         } else {
             errstr.chop(1);  // Remove the last character, which is always a newline
-            errmsg_ = tr("Failed to %1. The operation returned the following error(s):\n– %2", "", errcnt).arg(op, errstr.replace("\n", "\n– "));
+            errmsg_ = tr("Failed to %1. The operation returned the following error(s):\n– %2", "", errcnt).arg(operation, errstr.replace("\n", "\n– "));
         }
     }
 }
@@ -683,7 +683,7 @@ void ConfiguratorWindow::readDeviceConfiguration()
     deviceConfig_.chipsettings = mcp2210_.getNVChipSettings(errcnt, errstr);
     deviceConfig_.spisettings = mcp2210_.getNVSPISettings(errcnt, errstr);
     accessMode_ = mcp2210_.getAccessControlMode(errcnt, errstr);
-    opCheck(tr("read device configuration"), errcnt, errstr);
+    operationCheck(tr("read device configuration"), errcnt, errstr);
 }
 
 // Saves the current configuration to a given file

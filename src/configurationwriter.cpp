@@ -23,7 +23,7 @@
 #include "configurationwriter.h"
 
 // Generic procedure to write a named element with a byte value in hexadecimal as its attribute (used for pin configurations)
-void ConfigurationWriter::writeByteGeneric(QString name, quint8 value)
+void ConfigurationWriter::writeByteGeneric(const QString &name, quint8 value)
 {
     writeWordGeneric(name, value);
 }
@@ -44,7 +44,7 @@ void ConfigurationWriter::writeConfiguration()
 }
 
 // Writes descriptor element (used for manufacturer and product descriptors)
-void ConfigurationWriter::writeDescriptor(QString name, QString value)
+void ConfigurationWriter::writeDescriptor(const QString &name, QString value)
 {
     xmlWriter_.writeStartElement(name);
     xmlWriter_.writeAttribute("string", value);
@@ -118,7 +118,7 @@ void ConfigurationWriter::writeSPIBus()
 }
 
 // Generic procedure to write a named element with a word value in hexadecimal as its attribute (used for VID and PID)
-void ConfigurationWriter::writeWordGeneric(QString name, quint16 value)
+void ConfigurationWriter::writeWordGeneric(const QString &name, quint16 value)
 {
     xmlWriter_.writeStartElement(name);
     xmlWriter_.writeAttribute("value", QString::number(value, 16));
