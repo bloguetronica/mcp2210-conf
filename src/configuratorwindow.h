@@ -106,7 +106,6 @@ private:
     void getEditedConfiguration();
     void handleError();
     void loadConfigurationFromFile(QFile &file);
-    void operationCheck(const QString &operation, int errcnt, QString errstr);
     QStringList prepareTaskList();
     void readDeviceConfiguration();
     void saveConfigurationToFile(QFile &file);
@@ -116,6 +115,7 @@ private:
     void setUsePasswordEnabled(bool value);
     void setWriteEnabled(bool value);
     bool showInvalidInput();
+    void validateOperation(const QString &operation, int errcnt, QString errstr);
 };
 
 #endif  // CONFIGURATORWINDOW_H
