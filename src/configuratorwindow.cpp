@@ -766,7 +766,7 @@ bool ConfiguratorWindow::showInvalidInput()
 }
 
 // Checks for errors and validates device operations
-void ConfiguratorWindow::validateOperation(const QString &operation, int errcnt, QString errstr)
+void ConfiguratorWindow::validateOperation(const QString &operation, int errcnt, QString errstr)  // The variable "errstr" is passed by value here, because it needs to be modified locally!
 {
     if (errcnt > 0) {
         err_ = true;
