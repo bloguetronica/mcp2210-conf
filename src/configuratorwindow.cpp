@@ -284,6 +284,13 @@ void ConfiguratorWindow::on_lineEditMaxPowerHex_textEdited(const QString &text)
 void ConfiguratorWindow::on_lineEditNewPassword_textChanged(const QString &text)
 {
     ui->pushButtonRevealNewPassword->setEnabled(!text.isEmpty());
+    if (ui->lineEditNewPassword->text() != ui->lineEditRepeatPassword->text()) {
+        ui->lineEditNewPassword->setStyleSheet("background: rgb(255, 204, 0);");
+        ui->lineEditRepeatPassword->setStyleSheet("background: rgb(255, 204, 0);");
+    } else {
+        ui->lineEditNewPassword->setStyleSheet("");
+        ui->lineEditRepeatPassword->setStyleSheet("");
+    }
 }
 
 void ConfiguratorWindow::on_lineEditPID_textChanged(const QString &text)
@@ -312,6 +319,13 @@ void ConfiguratorWindow::on_lineEditProduct_textEdited()
 void ConfiguratorWindow::on_lineEditRepeatPassword_textChanged(const QString &text)
 {
     ui->pushButtonRevealRepeatPassword->setEnabled(!text.isEmpty());
+    if (ui->lineEditNewPassword->text() != ui->lineEditRepeatPassword->text()) {
+        ui->lineEditNewPassword->setStyleSheet("background: rgb(255, 204, 0);");
+        ui->lineEditRepeatPassword->setStyleSheet("background: rgb(255, 204, 0);");
+    } else {
+        ui->lineEditNewPassword->setStyleSheet("");
+        ui->lineEditRepeatPassword->setStyleSheet("");
+    }
 }
 
 void ConfiguratorWindow::on_lineEditVID_textChanged(const QString &text)
@@ -760,6 +774,11 @@ bool ConfiguratorWindow::showInvalidInput()
     }
     if (ui->lineEditMaxPowerHex->text().isEmpty()) {
         ui->lineEditMaxPowerHex->setStyleSheet("background: rgb(255, 102, 102);");
+        retval = true;
+    }
+    if (ui->lineEditNewPassword->text() != ui->lineEditRepeatPassword->text()) {
+        ui->lineEditNewPassword->setStyleSheet("background: rgb(255, 102, 102);");
+        ui->lineEditRepeatPassword->setStyleSheet("background: rgb(255, 102, 102);");
         retval = true;
     }
     return retval;
