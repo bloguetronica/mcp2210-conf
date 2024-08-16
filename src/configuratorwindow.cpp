@@ -220,6 +220,11 @@ void ConfiguratorWindow::on_checkBoxDoNotChangePassword_stateChanged(int state)
     ui->pushButtonRevealRepeatPassword->setEnabled(state == Qt::Unchecked && !ui->lineEditRepeatPassword->text().isEmpty());
 }
 
+void ConfiguratorWindow::on_doubleSpinBoxBitRate_editingFinished()
+{
+    // TODO Set safer value
+}
+
 void ConfiguratorWindow::on_lineEditManufacturer_textEdited(QString text)  // The variable "text" is passed by value here, because it needs to be modified locally!
 {
     int curPosition = ui->lineEditManufacturer->cursorPosition();
