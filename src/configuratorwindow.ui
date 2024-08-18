@@ -1216,7 +1216,7 @@
        <double>12000.000000000000000</double>
       </property>
      </widget>
-     <widget class="QLabel" name="labelSPIMode">
+     <widget class="QLabel" name="labelMode">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -1226,13 +1226,13 @@
        </rect>
       </property>
       <property name="text">
-       <string>SPI mode:</string>
+       <string>Mode:</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
       </property>
      </widget>
-     <widget class="QSpinBox" name="spinBoxSPIMode">
+     <widget class="QSpinBox" name="spinBoxMode">
       <property name="enabled">
        <bool>false</bool>
       </property>

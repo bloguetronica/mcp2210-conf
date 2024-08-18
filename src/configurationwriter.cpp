@@ -22,6 +22,14 @@
 #include "mcp2210.h"
 #include "configurationwriter.h"
 
+//
+void ConfigurationWriter::writeBitRate()
+{
+    xmlWriter_.writeStartElement("bitrate");
+    xmlWriter_.writeAttribute("value", QString::number(configuration_.spiSettings.bitrate));
+    xmlWriter_.writeEndElement();
+}
+
 // Generic procedure to write a named element with a byte value in hexadecimal as its attribute (used for pin configurations)
 void ConfigurationWriter::writeByteGeneric(const QString &name, quint8 value)
 {
@@ -40,7 +48,7 @@ void ConfigurationWriter::writeConfiguration()
     writePins();
     writeInterrupt();
     writeSPIBus();
-    // TODO
+    writeSPISettings();
 }
 
 // Writes descriptor element (used for manufacturer and product descriptors)
@@ -64,6 +72,22 @@ void ConfigurationWriter::writeInterrupt()
 {
     xmlWriter_.writeStartElement("interrupt");
     xmlWriter_.writeAttribute("mode", QString::number(configuration_.chipSettings.intmode));
+    xmlWriter_.writeEndElement();
+}
+
+// Writes "mode" element
+void ConfigurationWriter::writeMode()
+{
+    xmlWriter_.writeStartElement("mode");
+    xmlWriter_.writeAttribute("value", QString::number(configuration_.spiSettings.mode));
+    xmlWriter_.writeEndElement();
+}
+
+// Writes "nbytes" element
+void ConfigurationWriter::writeNBytes()
+{
+    xmlWriter_.writeStartElement("nbytes");
+    xmlWriter_.writeAttribute("value", QString::number(configuration_.spiSettings.nbytes));
     xmlWriter_.writeEndElement();
 }
 
@@ -114,6 +138,17 @@ void ConfigurationWriter::writeSPIBus()
 {
     xmlWriter_.writeStartElement("spibus");
     xmlWriter_.writeAttribute("captive", (configuration_.chipSettings.nrelspi ? "true" : "false"));
+    xmlWriter_.writeEndElement();
+}
+
+// Writes "spisettings" element
+void ConfigurationWriter::writeSPISettings()
+{
+    xmlWriter_.writeStartElement("spisettings");
+    writeNBytes();
+    writeBitRate();
+    writeMode();
+    // TODO
     xmlWriter_.writeEndElement();
 }
 

@@ -33,15 +33,19 @@ private:
     Configuration &configuration_;
     QXmlStreamReader xmlReader_;
 
+    void readBitRate();
     void readByteGeneric(const QString &name, quint8 &toVariable, quint8 min, quint8 max);
     void readConfiguration();
     void readDescriptor(const QString &name, QString &toVariable);
     void readGP(int number, quint8 &toVariable, quint8 max);
     void readInterrupt();
+    void readMode();
+    void readNBytes();
     void readPins();
     void readPower();
     void readRemoteWakeup();
     void readSPIBus();
+    void readSPISettings();
     void readWordGeneric(const QString &name, quint16 &toVariable, quint16 min, quint16 max);
 
 public:

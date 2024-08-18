@@ -80,6 +80,9 @@ private slots:
     void on_pushButtonRevert_clicked();
     void on_pushButtonWrite_clicked();
     void on_radioButtonPasswordProtected_toggled(bool checked);
+    void on_spinBoxCPHA_valueChanged(int i);
+    void on_spinBoxCPOL_valueChanged(int i);
+    void on_spinBoxMode_valueChanged(int i);
     void verifyConfiguration();
     void writeChipSettings();
     void writeManufacturerDesc();

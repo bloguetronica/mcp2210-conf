@@ -222,11 +222,9 @@ void ConfiguratorWindow::on_checkBoxDoNotChangePassword_stateChanged(int state)
 
 void ConfiguratorWindow::on_doubleSpinBoxBitRate_editingFinished()
 {
-    float nearestBitrate = getNearestCompatibleBitRate(static_cast<quint32>(1000 * ui->doubleSpinBoxBitRate->value())) / 1000.0;
+    ui->doubleSpinBoxBitRate->setValue(getNearestCompatibleBitRate(static_cast<quint32>(1000 * ui->doubleSpinBoxBitRate->value())) / 1000.0);  // Note that getNearestCompatibleBitRate() is guaranteed to return a valid bit rate value
     if (err_) {
         handleError();
-    } else {
-        ui->doubleSpinBoxBitRate->setValue(nearestBitrate);
     }
 }
 
@@ -412,6 +410,23 @@ void ConfiguratorWindow::on_radioButtonPasswordProtected_toggled(bool checked)
     ui->pushButtonRevealRepeatPassword->setEnabled(checked && !ui->checkBoxDoNotChangePassword->isChecked() && !ui->lineEditNewPassword->text().isEmpty());
 }
 
+void ConfiguratorWindow::on_spinBoxCPHA_valueChanged(int i)
+{
+    ui->spinBoxMode->setValue(2 * ui->spinBoxCPOL->value() + i);
+}
+
+void ConfiguratorWindow::on_spinBoxCPOL_valueChanged(int i)
+{
+    ui->spinBoxMode->setValue(2 * i + ui->spinBoxCPHA->value());
+}
+
+void ConfiguratorWindow::on_spinBoxMode_valueChanged(int i)
+{
+    ui->spinBoxCPOL->setValue(i / 2);
+    ui->spinBoxCPHA->setValue(i % 2);
+}
+
+
 // Verifies the MCP2210 configuration against the input configuration
 void ConfiguratorWindow::verifyConfiguration()
 {
@@ -577,7 +592,7 @@ void ConfiguratorWindow::displaySPISettings(const MCP2210::SPISettings &spiSetti
 {
     ui->spinBoxBytesPerTransaction->setValue(spiSettings.nbytes);
     ui->doubleSpinBoxBitRate->setValue(spiSettings.bitrate / 1000.0);
-    ui->spinBoxSPIMode->setValue(spiSettings.mode);
+    ui->spinBoxMode->setValue(spiSettings.mode);
     // TODO
 }
 
@@ -632,7 +647,7 @@ void ConfiguratorWindow::getEditedConfiguration()
     editedConfiguration_.chipSettings.nrelspi = ui->checkBoxSPIBusCaptive->isChecked();
     editedConfiguration_.spiSettings.nbytes = static_cast<quint16>(ui->spinBoxBytesPerTransaction->value());
     editedConfiguration_.spiSettings.bitrate = static_cast<quint32>(1000 * ui->doubleSpinBoxBitRate->value());
-    editedConfiguration_.spiSettings.mode = static_cast<quint8>(ui->spinBoxSPIMode->value());
+    editedConfiguration_.spiSettings.mode = static_cast<quint8>(ui->spinBoxMode->value());
     // TODO
     editedConfiguration_.spiSettings.actcs = deviceConfiguration_.spiSettings.actcs;  // TODO To delete
     editedConfiguration_.spiSettings.idlcs = deviceConfiguration_.spiSettings.idlcs;  // TODO To delete
@@ -669,7 +684,7 @@ quint32 ConfiguratorWindow::getNearestCompatibleBitRate(quint32 bitrate)
         }
     }
     mcp2210_.configureSPISettings(currentSPISettings, errcnt, errstr);  // Restore the previously kept volatile SPI settings
-    validateOperation(tr("get bit rate"), errcnt, errstr);
+    validateOperation(tr("get nearest compatible bit rate"), errcnt, errstr);
     if (nearestGreaterOrEqualBitrate - bitrate < bitrate - nearestLesserOrEqualBitrate) {
         retval = nearestGreaterOrEqualBitrate;
     } else {
@@ -696,6 +711,10 @@ void ConfiguratorWindow::loadConfigurationFromFile(QFile &file)
     if (!configReader.readFrom(&file)) {
         QMessageBox::critical(this, tr("Error"), configReader.errorString());
     } else {
+        editedConfiguration_.spiSettings.bitrate = getNearestCompatibleBitRate(editedConfiguration_.spiSettings.bitrate);  // Note that getNearestCompatibleBitRate() is guaranteed to return a valid bit rate value
+        if (err_) {
+            handleError();
+        }
         displayConfiguration(editedConfiguration_);
     }
 }
@@ -797,7 +816,7 @@ void ConfiguratorWindow::setSPISettingsEnabled(bool value)
 {
     ui->spinBoxBytesPerTransaction->setEnabled(value);
     ui->doubleSpinBoxBitRate->setEnabled(value);
-    ui->spinBoxSPIMode->setEnabled(value);
+    ui->spinBoxMode->setEnabled(value);
     ui->spinBoxCPOL->setEnabled(value);
     ui->spinBoxCPHA->setEnabled(value);
     // TODO

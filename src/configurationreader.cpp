@@ -24,6 +24,26 @@
 #include "mcp2210limits.h"
 #include "configurationreader.h"
 
+// Reads "bitrate" element
+void ConfigurationReader::readBitRate()
+{
+    Q_ASSERT(xmlReader_.isStartElement() && xmlReader_.name() == QLatin1String("bitrate"));
+
+    const QXmlStreamAttributes attrs = xmlReader_.attributes();
+    for (const QXmlStreamAttribute &attr : attrs) {
+        if (attr.name().toString() == "value") {
+            bool ok;
+            quint32 bitrate = static_cast<quint32>(attr.value().toUInt(&ok));  // Cast done for sanity purposes
+            if (!ok) {
+                xmlReader_.raiseError(QObject::tr("In \"bitrate\" element, the \"value\" attribute contains an invalid value. It should be an integer between %1 and %2.").arg(MCP2210Limits::BITRATE_MIN).arg(MCP2210Limits::BITRATE_MAX));
+            } else {
+                configuration_.spiSettings.bitrate = bitrate;
+            }
+        }
+    }
+    xmlReader_.skipCurrentElement();
+}
+
 // Generic procedure to read a named element with a byte value in hexadecimal as it's attribute (used for pin configurations)
 void ConfigurationReader::readByteGeneric(const QString &name, quint8 &toVariable, quint8 min, quint8 max)
 {
@@ -68,8 +88,9 @@ void ConfigurationReader::readConfiguration()
             readInterrupt();
         } else if (xmlReader_.name() == QLatin1String("spibus")) {
             readSPIBus();
+        } else if (xmlReader_.name() == QLatin1String("spisettings")) {
+            readSPISettings();
         }
-        // TODO
     }
 }
 
@@ -126,6 +147,46 @@ void ConfigurationReader::readInterrupt()
                 xmlReader_.raiseError(QObject::tr("In \"interrupt\" element, the \"mode\" attribute contains an invalid value. It should be an integer between 0 and %1.").arg(MCP2210Limits::INTMODE_MAX));
             } else {
                 configuration_.chipSettings.intmode = static_cast<quint8>(intmode);
+            }
+        }
+    }
+    xmlReader_.skipCurrentElement();
+}
+
+// Reads "mode" element
+void ConfigurationReader::readMode()
+{
+    Q_ASSERT(xmlReader_.isStartElement() && xmlReader_.name() == QLatin1String("mode"));
+
+    const QXmlStreamAttributes attrs = xmlReader_.attributes();
+    for (const QXmlStreamAttribute &attr : attrs) {
+        if (attr.name().toString() == "value") {
+            bool ok;
+            ushort mode = static_cast<quint16>(attr.value().toUShort(&ok));  // Cast done for sanity purposes
+            if (!ok || mode > MCP2210Limits::SPIMODE_MAX) {
+                xmlReader_.raiseError(QObject::tr("In \"mode\" element, the \"value\" attribute contains an invalid value. It should be an integer between 0 and %1.").arg(MCP2210Limits::SPIMODE_MAX));
+            } else {
+                configuration_.spiSettings.mode = static_cast<quint8>(mode);
+            }
+        }
+    }
+    xmlReader_.skipCurrentElement();
+}
+
+// Reads "nbytes" element
+void ConfigurationReader::readNBytes()
+{
+    Q_ASSERT(xmlReader_.isStartElement() && xmlReader_.name() == QLatin1String("nbytes"));
+
+    const QXmlStreamAttributes attrs = xmlReader_.attributes();
+    for (const QXmlStreamAttribute &attr : attrs) {
+        if (attr.name().toString() == "value") {
+            bool ok;
+            quint16 nbytes = static_cast<quint16>(attr.value().toUShort(&ok));  // Cast done for sanity purposes
+            if (!ok) {
+                xmlReader_.raiseError(QObject::tr("In \"nbytes\" element, the \"value\" attribute contains an invalid value. It should be an integer between 0 and %1.").arg(MCP2210Limits::NBYTES_MAX));
+            } else {
+                configuration_.spiSettings.nbytes = nbytes;
             }
         }
     }
@@ -236,6 +297,24 @@ void ConfigurationReader::readSPIBus()
         }
     }
     xmlReader_.skipCurrentElement();
+}
+
+// Reads "spisettings" element
+void ConfigurationReader::readSPISettings()
+{
+    Q_ASSERT(xmlReader_.isStartElement() && xmlReader_.name() == QLatin1String("spisettings"));
+
+    while (xmlReader_.readNextStartElement()) {
+        if (xmlReader_.name() == QLatin1String("nbytes")) {
+            readNBytes();
+        } else if (xmlReader_.name() == QLatin1String("bitrate")) {
+            readBitRate();
+        } else if (xmlReader_.name() == QLatin1String("mode")) {
+            readMode();
+        } else {  // TODO
+            xmlReader_.skipCurrentElement();
+        }
+    }
 }
 
 // Generic procedure to read a named element with a word value in hexadecimal as it's attribute (used for VID and PID)

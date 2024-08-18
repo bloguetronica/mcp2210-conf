@@ -42,8 +42,10 @@ const quint8 GPDIR_MAX = 0xff;
 const quint8 GPOUT_MAX = 0xff;
 const quint8 INTMODE_MAX = MCP2210::IMCNTHP;
 const quint8 MAXPOW_MAX = 0xfa;
+const quint16 NBYTES_MAX = 65535;
 const quint16 PID_MAX = 0xffff;
 const quint16 PID_MIN = 0x0001;
+const quint8 SPIMODE_MAX = MCP2210::SPIMODE3;
 const quint16 VID_MAX = 0xffff;
 const quint16 VID_MIN = 0x0001;
 }
