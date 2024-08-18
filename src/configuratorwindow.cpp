@@ -575,6 +575,7 @@ void ConfiguratorWindow::displayProduct(const QString &product)
 // Updates all fields pertaining to SPI settings
 void ConfiguratorWindow::displaySPISettings(const MCP2210::SPISettings &spiSettings)
 {
+    ui->spinBoxBytesPerTransaction->setValue(spiSettings.nbytes);
     ui->doubleSpinBoxBitRate->setValue(spiSettings.bitrate / 1000.0);
     ui->spinBoxSPIMode->setValue(spiSettings.mode);
     // TODO
@@ -629,11 +630,10 @@ void ConfiguratorWindow::getEditedConfiguration()
     editedConfiguration_.chipSettings.rmwakeup = ui->checkBoxRemoteWakeUp->isChecked();
     editedConfiguration_.chipSettings.intmode = static_cast<quint8>(ui->comboBoxInterruptMode->currentIndex());
     editedConfiguration_.chipSettings.nrelspi = ui->checkBoxSPIBusCaptive->isChecked();
-    // TODO Get number of bytes from UI
+    editedConfiguration_.spiSettings.nbytes = static_cast<quint16>(ui->spinBoxBytesPerTransaction->value());
     editedConfiguration_.spiSettings.bitrate = static_cast<quint32>(1000 * ui->doubleSpinBoxBitRate->value());
     editedConfiguration_.spiSettings.mode = static_cast<quint8>(ui->spinBoxSPIMode->value());
     // TODO
-    editedConfiguration_.spiSettings.nbytes = deviceConfiguration_.spiSettings.nbytes;  // TODO To delete
     editedConfiguration_.spiSettings.actcs = deviceConfiguration_.spiSettings.actcs;  // TODO To delete
     editedConfiguration_.spiSettings.idlcs = deviceConfiguration_.spiSettings.idlcs;  // TODO To delete
     editedConfiguration_.spiSettings.csdtdly = deviceConfiguration_.spiSettings.csdtdly;  // TODO To delete
@@ -795,8 +795,11 @@ void ConfiguratorWindow::setGeneralSettingsEnabled(bool value)
 // Enables or disables all fields pertaining to SPI settings
 void ConfiguratorWindow::setSPISettingsEnabled(bool value)
 {
+    ui->spinBoxBytesPerTransaction->setEnabled(value);
     ui->doubleSpinBoxBitRate->setEnabled(value);
     ui->spinBoxSPIMode->setEnabled(value);
+    ui->spinBoxCPOL->setEnabled(value);
+    ui->spinBoxCPHA->setEnabled(value);
     // TODO
 }
 
