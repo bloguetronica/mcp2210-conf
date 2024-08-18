@@ -66,10 +66,10 @@ void ConfiguratorWindow::openDevice(quint16 vid, quint16 pid, const QString &ser
         err_ = false;
         serialstr_ = serialstr;  // Pass the serial number
         readDeviceConfiguration();
-        if (err_) {
+        if (err_) {  // If an error has occured
             handleError();
             this->deleteLater();  // Close window after the subsequent show() call
-        } else {
+        } else {  // Device is now open
             this->setWindowTitle(tr("MCP2210 Device (S/N: %1)").arg(serialstr_));
             displayConfiguration(deviceConfiguration_);
             viewEnabled_ = true;
@@ -157,9 +157,9 @@ void ConfiguratorWindow::on_actionStatus_triggered()
         QString errstr;
         // TODO Obtain information here????
         validateOperation(tr("retrieve device status"), errcnt, errstr);
-        if (err_) {
+        if (err_) {  // If an error has occured
             handleError();
-        } else {  // If error check passes
+        } else {  // Success
             statusDialog_ = new StatusDialog(this);
             statusDialog_->setAttribute(Qt::WA_DeleteOnClose);  // It is important to delete the dialog in memory once closed, in order to force the application to retrieve the device status if the window is opened again???
             statusDialog_->setWindowTitle(tr("Device Status (S/N: %1)").arg(serialstr_));
@@ -181,7 +181,7 @@ void ConfiguratorWindow::on_actionUsePassword_triggered()
         QString errstr;
         quint8 response = mcp2210_.usePassword(passwordDialog.passwordLineEditText(), errcnt, errstr);
         validateOperation(tr("use password"), errcnt, errstr);
-        if (err_) {
+        if (err_) {  // If an error has occured
             handleError();
         } else if (response == MCP2210::COMPLETED) {  // If error check passes and password is verified
             // TODO Disable "Use Password" action?
@@ -224,7 +224,7 @@ void ConfiguratorWindow::on_doubleSpinBoxBitRate_editingFinished()
 {
     err_ = false;
     ui->doubleSpinBoxBitRate->setValue(getNearestCompatibleBitRate(static_cast<quint32>(1000 * ui->doubleSpinBoxBitRate->value())) / 1000.0);  // Note that getNearestCompatibleBitRate() is guaranteed to return a valid bit rate value
-    if (err_) {
+    if (err_) {  // If an error has occured
         handleError();
     }
 }
@@ -501,7 +501,7 @@ void ConfiguratorWindow::configureDevice()
     if (err_) {  // If an error occured
         handleError();
         QMessageBox::critical(this, tr("Error"), tr("The device configuration could not be completed."));
-    } else {  // Successul configuration
+    } else {  // Successful configuration
         QMessageBox::information(this, tr("Device Configured"), tr("Device was successfully configured."));
     }
 }
@@ -707,14 +707,14 @@ void ConfiguratorWindow::handleError()
 // Loads the configuration from a given file
 void ConfiguratorWindow::loadConfigurationFromFile(QFile &file)
 {
-    err_ = false;
     getEditedConfiguration();
     ConfigurationReader configReader(editedConfiguration_);
     if (!configReader.readFrom(&file)) {
         QMessageBox::critical(this, tr("Error"), configReader.errorString());
     } else {
+        err_ = false;
         editedConfiguration_.spiSettings.bitrate = getNearestCompatibleBitRate(editedConfiguration_.spiSettings.bitrate);  // Note that getNearestCompatibleBitRate() is guaranteed to return a valid bit rate value
-        if (err_) {
+        if (err_) {  // If an error has occured
             handleError();
         }
         displayConfiguration(editedConfiguration_);
