@@ -665,30 +665,30 @@ quint32 ConfiguratorWindow::getNearestCompatibleBitRate(quint32 bitrate)
     MCP2210::SPISettings currentSPISettings = mcp2210_.getSPISettings(errcnt, errstr);  // Keep the current volatile SPI settings
     MCP2210::SPISettings testSPISettings = currentSPISettings;  // Settings used to test bitrate values
     quint32 testBitrate = 4 * bitrate;  // Variable used for testing and finding compatible bit rates
-    quint32 nearestGreaterOrEqualBitrate = MCP2210Limits::BITRATE_MAX, nearestLesserOrEqualBitrate = MCP2210Limits::BITRATE_MIN;  // These variables are assigned here for correctness
+    quint32 nearestLowerBitrate = MCP2210Limits::BITRATE_MIN, nearestUpperBitrate = MCP2210Limits::BITRATE_MAX;  // These variables are assigned here for correctness
     while (errcnt == 0) {
         testSPISettings.bitrate = testBitrate;
         mcp2210_.configureSPISettings(testSPISettings, errcnt, errstr);
         quint32 returnedBitrate = mcp2210_.getSPISettings(errcnt, errstr).bitrate;
         if (returnedBitrate == testBitrate) {
             if (testBitrate >= bitrate) {
-                nearestGreaterOrEqualBitrate = testBitrate;
+                nearestUpperBitrate = testBitrate;  // Can get to be equal to the input value, if the latter is found to be a compatible bit rate
             }
             if (testBitrate <= bitrate) {
-                nearestLesserOrEqualBitrate = testBitrate;
+                nearestLowerBitrate = testBitrate;  // Again, get to be equal to the input value, if the latter is found to be a compatible bit rate
                 break;
             }
             --testBitrate;
-        } else {  // Incidentally, "returnedBitrate" is expected to be lesser than "testBitrate"
+        } else {  // Incidentally, "returnedBitrate" is expected to be less than "testBitrate"
             testBitrate = returnedBitrate;
         }
     }
     mcp2210_.configureSPISettings(currentSPISettings, errcnt, errstr);  // Restore the previously kept volatile SPI settings
     validateOperation(tr("get nearest compatible bit rate"), errcnt, errstr);
-    if (nearestGreaterOrEqualBitrate - bitrate < bitrate - nearestLesserOrEqualBitrate) {
-        retval = nearestGreaterOrEqualBitrate;
+    if (nearestUpperBitrate - bitrate > bitrate - nearestLowerBitrate) {  // Half-way cases are approximated to the nearest upper bit rate
+        retval = nearestLowerBitrate;
     } else {
-        retval = nearestLesserOrEqualBitrate;
+        retval = nearestUpperBitrate;
     }
     return retval;
 }
