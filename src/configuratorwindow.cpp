@@ -672,10 +672,10 @@ quint32 ConfiguratorWindow::getNearestCompatibleBitRate(quint32 bitrate)
         quint32 returnedBitrate = mcp2210_.getSPISettings(errcnt, errstr).bitrate;
         if (returnedBitrate == testBitrate) {
             if (testBitrate >= bitrate) {
-                nearestUpperBitrate = testBitrate;  // Can get to be equal to the input value, if the latter is found to be a compatible bit rate
+                nearestUpperBitrate = testBitrate;  // Can be equal to the input value, if the latter is found to be a compatible bit rate
             }
             if (testBitrate <= bitrate) {
-                nearestLowerBitrate = testBitrate;  // Again, get to be equal to the input value, if the latter is found to be a compatible bit rate
+                nearestLowerBitrate = testBitrate;  // Again, can be equal to the input value, if the latter is found to be a compatible bit rate
                 break;
             }
             --testBitrate;
