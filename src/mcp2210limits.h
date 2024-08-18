@@ -27,6 +27,8 @@
 
 namespace MCP2210Limits
 {
+const quint32 BITRATE_MAX = MCP2210::BRT12M;
+const quint32 BITRATE_MIN = MCP2210::BRT1K464;
 const quint8 GP0_MAX = MCP2210::PCCS;
 const quint8 GP1_MAX = MCP2210::PCCS;
 const quint8 GP2_MAX = MCP2210::PCFUNC;

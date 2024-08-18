@@ -88,7 +88,7 @@ private slots:
 
 private:
     Ui::ConfiguratorWindow *ui;
-    Configuration deviceConfig_, editedConfig_;
+    Configuration deviceConfiguration_, editedConfiguration_;
     MCP2210 mcp2210_;
     QPointer<StatusDialog> statusDialog_;
     QString errmsg_, serialstr_;
@@ -97,14 +97,15 @@ private:
 
     void configureDevice();
     void disableView();
-    void displayChipSettings(const MCP2210::ChipSettings &chipsettings);
-    void displayConfiguration(const Configuration &config);
+    void displayChipSettings(const MCP2210::ChipSettings &chipSettings);
+    void displayConfiguration(const Configuration &configuration);
     void displayManufacturer(const QString &manufacturer);
     void displayNVRAMAccessMode();
     void displayProduct(const QString &product);
-    void displaySPISettings(const MCP2210::SPISettings &spisettings);
-    void displayUSBParameters(const MCP2210::USBParameters &usbparameters);
+    void displaySPISettings(const MCP2210::SPISettings &spiSettings);
+    void displayUSBParameters(const MCP2210::USBParameters &usbParameters);
     void getEditedConfiguration();
+    quint32 getNearestCompatibleBitRate(quint32 bitrate);
     void handleError();
     void loadConfigurationFromFile(QFile &file);
     QStringList prepareTaskList();

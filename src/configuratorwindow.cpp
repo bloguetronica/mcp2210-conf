@@ -71,7 +71,7 @@ void ConfiguratorWindow::openDevice(quint16 vid, quint16 pid, const QString &ser
             this->deleteLater();  // Close window after the subsequent show() call
         } else {
             this->setWindowTitle(tr("MCP2210 Device (S/N: %1)").arg(serialstr_));
-            displayConfiguration(deviceConfig_);
+            displayConfiguration(deviceConfiguration_);
             viewEnabled_ = true;
         }
     } else if (err == MCP2210::ERROR_INIT) {  // Failed to initialize libusb
@@ -92,7 +92,7 @@ void ConfiguratorWindow::applyChipSettings()
 {
     int errcnt = 0;
     QString errstr;
-    mcp2210_.configureChipSettings(editedConfig_.chipsettings, errcnt, errstr);
+    mcp2210_.configureChipSettings(editedConfiguration_.chipSettings, errcnt, errstr);
     validateOperation(tr("apply chip settings"), errcnt, errstr);
 }
 
@@ -101,7 +101,7 @@ void ConfiguratorWindow::applySPISettings()
 {
     int errcnt = 0;
     QString errstr;
-    mcp2210_.configureSPISettings(editedConfig_.spisettings, errcnt, errstr);
+    mcp2210_.configureSPISettings(editedConfiguration_.spiSettings, errcnt, errstr);
     validateOperation(tr("apply SPI settings"), errcnt, errstr);
 }
 
@@ -222,7 +222,12 @@ void ConfiguratorWindow::on_checkBoxDoNotChangePassword_stateChanged(int state)
 
 void ConfiguratorWindow::on_doubleSpinBoxBitRate_editingFinished()
 {
-    // TODO Set safer value
+    float nearestBitrate = getNearestCompatibleBitRate(static_cast<quint32>(1000 * ui->doubleSpinBoxBitRate->value())) / 1000.0;
+    if (err_) {
+        handleError();
+    } else {
+        ui->doubleSpinBoxBitRate->setValue(nearestBitrate);
+    }
 }
 
 void ConfiguratorWindow::on_lineEditManufacturer_textEdited(QString text)  // The variable "text" is passed by value here, because it needs to be modified locally!
@@ -371,7 +376,7 @@ void ConfiguratorWindow::on_pushButtonRevealRepeatPassword_released()
 
 void ConfiguratorWindow::on_pushButtonRevert_clicked()
 {
-    displayConfiguration(deviceConfig_);
+    displayConfiguration(deviceConfiguration_);
 }
 
 void ConfiguratorWindow::on_pushButtonWrite_clicked()
@@ -381,7 +386,7 @@ void ConfiguratorWindow::on_pushButtonWrite_clicked()
             QMessageBox::critical(this, tr("Error"), tr("One or more fields have invalid information.\n\nPlease correct the information in the fields highlighted in red."));
         } else {
             getEditedConfiguration();
-            if (editedConfig_ == deviceConfig_) {
+            if (editedConfiguration_ == deviceConfiguration_) {
                 QMessageBox::information(this, tr("No Changes Done"), tr("No changes were effected, because no values were modified."));
             } else {
                 int qmret = QMessageBox::question(this, tr("Write Configuration?"), tr("This will write the changes to the OTP ROM of your device. These changes will be permanent.\n\nDo you wish to proceed?"), QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
@@ -412,8 +417,8 @@ void ConfiguratorWindow::verifyConfiguration()
 {
     readDeviceConfiguration();
     if (!err_) {
-        displayConfiguration(deviceConfig_);
-        if (deviceConfig_ != editedConfig_) {
+        displayConfiguration(deviceConfiguration_);
+        if (deviceConfiguration_ != editedConfiguration_) {
             err_ = true;
             errmsg_ = tr("Failed verification.");
         }
@@ -425,7 +430,7 @@ void ConfiguratorWindow::writeChipSettings()
 {
     int errcnt = 0;
     QString errstr;
-    mcp2210_.writeNVChipSettings(editedConfig_.chipsettings, MCP2210::ACNONE, "", errcnt, errstr);  // TODO Implement password protection
+    mcp2210_.writeNVChipSettings(editedConfiguration_.chipSettings, MCP2210::ACNONE, "", errcnt, errstr);  // TODO Implement password protection
     validateOperation(tr("write chip settings"), errcnt, errstr);
 }
 
@@ -434,7 +439,7 @@ void ConfiguratorWindow::writeManufacturerDesc()
 {
     int errcnt = 0;
     QString errstr;
-    mcp2210_.writeManufacturerDesc(editedConfig_.manufacturer, errcnt, errstr);
+    mcp2210_.writeManufacturerDesc(editedConfiguration_.manufacturer, errcnt, errstr);
     validateOperation(tr("write manufacturer desc"), errcnt, errstr);
 }
 
@@ -443,7 +448,7 @@ void ConfiguratorWindow::writeProductDesc()
 {
     int errcnt = 0;
     QString errstr;
-    mcp2210_.writeProductDesc(editedConfig_.product, errcnt, errstr);
+    mcp2210_.writeProductDesc(editedConfiguration_.product, errcnt, errstr);
     validateOperation(tr("write product desc"), errcnt, errstr);
 }
 
@@ -452,7 +457,7 @@ void ConfiguratorWindow::writeUSBParameters()
 {
     int errcnt = 0;
     QString errstr;
-    mcp2210_.writeUSBParameters(editedConfig_.usbparameters, errcnt, errstr);
+    mcp2210_.writeUSBParameters(editedConfiguration_.usbParameters, errcnt, errstr);
     validateOperation(tr("write USB parameters"), errcnt, errstr);
 }
 
@@ -487,42 +492,42 @@ void ConfiguratorWindow::disableView()
 }
 
 // Updates all fields pertaining to the MCP2210 chip settings
-void ConfiguratorWindow::displayChipSettings(const MCP2210::ChipSettings &chipsettings)
+void ConfiguratorWindow::displayChipSettings(const MCP2210::ChipSettings &chipSettings)
 {
-    ui->comboBoxGP0->setCurrentIndex(chipsettings.gp0 == MCP2210::PCGPIO ? (0x01 & chipsettings.gpdir) == 0x00 : chipsettings.gp0 + 1);
-    ui->checkBoxGP0DefaultValue->setChecked((0x01 & chipsettings.gpout) != 0x00);
-    ui->comboBoxGP1->setCurrentIndex(chipsettings.gp1 == MCP2210::PCGPIO ? (0x02 & chipsettings.gpdir) == 0x00 : chipsettings.gp1 + 1);
-    ui->checkBoxGP1DefaultValue->setChecked((0x02 & chipsettings.gpout) != 0x00);
-    ui->comboBoxGP2->setCurrentIndex(chipsettings.gp2 == MCP2210::PCGPIO ? (0x04 & chipsettings.gpdir) == 0x00 : chipsettings.gp2 + 1);
-    ui->checkBoxGP2DefaultValue->setChecked((0x04 & chipsettings.gpout) != 0x00);
-    ui->comboBoxGP3->setCurrentIndex(chipsettings.gp3 == MCP2210::PCGPIO ? (0x08 & chipsettings.gpdir) == 0x00 : chipsettings.gp3 + 1);
-    ui->checkBoxGP3DefaultValue->setChecked((0x08 & chipsettings.gpout) != 0x00);
-    ui->comboBoxGP4->setCurrentIndex(chipsettings.gp4 == MCP2210::PCGPIO ? (0x10 & chipsettings.gpdir) == 0x00 : chipsettings.gp4 + 1);
-    ui->checkBoxGP4DefaultValue->setChecked((0x10 & chipsettings.gpout) != 0x00);
-    ui->comboBoxGP5->setCurrentIndex(chipsettings.gp5 == MCP2210::PCGPIO ? (0x20 & chipsettings.gpdir) == 0x00 : chipsettings.gp5 + 1);
-    ui->checkBoxGP5DefaultValue->setChecked((0x20 & chipsettings.gpout) != 0x00);
-    ui->comboBoxGP6->setCurrentIndex(chipsettings.gp6 == MCP2210::PCGPIO ? (0x40 & chipsettings.gpdir) == 0x00 : chipsettings.gp6 + 1);
-    ui->checkBoxGP6DefaultValue->setChecked((0x40 & chipsettings.gpout) != 0x00);
-    ui->comboBoxGP7->setCurrentIndex(chipsettings.gp7 == MCP2210::PCGPIO ? (0x80 & chipsettings.gpdir) == 0x00 : chipsettings.gp7 + 1);
-    ui->checkBoxGP7DefaultValue->setChecked((0x80 & chipsettings.gpout) != 0x00);
-    ui->comboBoxGP8->setCurrentIndex(chipsettings.gp8 == MCP2210::PCGPIO ? 0 : 1);
-    ui->comboBoxInterruptMode->setCurrentIndex(chipsettings.intmode);
-    ui->checkBoxRemoteWakeUp->setChecked(chipsettings.rmwakeup);
-    ui->checkBoxSPIBusCaptive->setChecked(chipsettings.nrelspi);
+    ui->comboBoxGP0->setCurrentIndex(chipSettings.gp0 == MCP2210::PCGPIO ? (0x01 & chipSettings.gpdir) == 0x00 : chipSettings.gp0 + 1);
+    ui->checkBoxGP0DefaultValue->setChecked((0x01 & chipSettings.gpout) != 0x00);
+    ui->comboBoxGP1->setCurrentIndex(chipSettings.gp1 == MCP2210::PCGPIO ? (0x02 & chipSettings.gpdir) == 0x00 : chipSettings.gp1 + 1);
+    ui->checkBoxGP1DefaultValue->setChecked((0x02 & chipSettings.gpout) != 0x00);
+    ui->comboBoxGP2->setCurrentIndex(chipSettings.gp2 == MCP2210::PCGPIO ? (0x04 & chipSettings.gpdir) == 0x00 : chipSettings.gp2 + 1);
+    ui->checkBoxGP2DefaultValue->setChecked((0x04 & chipSettings.gpout) != 0x00);
+    ui->comboBoxGP3->setCurrentIndex(chipSettings.gp3 == MCP2210::PCGPIO ? (0x08 & chipSettings.gpdir) == 0x00 : chipSettings.gp3 + 1);
+    ui->checkBoxGP3DefaultValue->setChecked((0x08 & chipSettings.gpout) != 0x00);
+    ui->comboBoxGP4->setCurrentIndex(chipSettings.gp4 == MCP2210::PCGPIO ? (0x10 & chipSettings.gpdir) == 0x00 : chipSettings.gp4 + 1);
+    ui->checkBoxGP4DefaultValue->setChecked((0x10 & chipSettings.gpout) != 0x00);
+    ui->comboBoxGP5->setCurrentIndex(chipSettings.gp5 == MCP2210::PCGPIO ? (0x20 & chipSettings.gpdir) == 0x00 : chipSettings.gp5 + 1);
+    ui->checkBoxGP5DefaultValue->setChecked((0x20 & chipSettings.gpout) != 0x00);
+    ui->comboBoxGP6->setCurrentIndex(chipSettings.gp6 == MCP2210::PCGPIO ? (0x40 & chipSettings.gpdir) == 0x00 : chipSettings.gp6 + 1);
+    ui->checkBoxGP6DefaultValue->setChecked((0x40 & chipSettings.gpout) != 0x00);
+    ui->comboBoxGP7->setCurrentIndex(chipSettings.gp7 == MCP2210::PCGPIO ? (0x80 & chipSettings.gpdir) == 0x00 : chipSettings.gp7 + 1);
+    ui->checkBoxGP7DefaultValue->setChecked((0x80 & chipSettings.gpout) != 0x00);
+    ui->comboBoxGP8->setCurrentIndex(chipSettings.gp8 == MCP2210::PCGPIO ? 0 : 1);
+    ui->comboBoxInterruptMode->setCurrentIndex(chipSettings.intmode);
+    ui->checkBoxRemoteWakeUp->setChecked(chipSettings.rmwakeup);
+    ui->checkBoxSPIBusCaptive->setChecked(chipSettings.nrelspi);
 }
 
 // This is the main display routine, used to display the given configuration, updating all fields accordingly
-void ConfiguratorWindow::displayConfiguration(const Configuration &config)
+void ConfiguratorWindow::displayConfiguration(const Configuration &configuration)
 {
     setUsePasswordEnabled(accessMode_ == MCP2210::ACPASSWORD);
-    displayManufacturer(config.manufacturer);
-    displayProduct(config.product);
-    displayUSBParameters(config.usbparameters);
+    displayManufacturer(configuration.manufacturer);
+    displayProduct(configuration.product);
+    displayUSBParameters(configuration.usbParameters);
     displayNVRAMAccessMode();
     setGeneralSettingsEnabled(accessMode_ != MCP2210::ACLOCKED);
-    displayChipSettings(config.chipsettings);
+    displayChipSettings(configuration.chipSettings);
     setChipSettingsEnabled(accessMode_ != MCP2210::ACLOCKED);
-    displaySPISettings(config.spisettings);
+    displaySPISettings(configuration.spiSettings);
     setSPISettingsEnabled(accessMode_ != MCP2210::ACLOCKED);
     setWriteEnabled(accessMode_ != MCP2210::ACLOCKED);
 }
@@ -559,44 +564,44 @@ void ConfiguratorWindow::displayProduct(const QString &product)
 }
 
 // Updates all fields pertaining to SPI settings
-void ConfiguratorWindow::displaySPISettings(const MCP2210::SPISettings &spisettings)
+void ConfiguratorWindow::displaySPISettings(const MCP2210::SPISettings &spiSettings)
 {
-    ui->doubleSpinBoxBitRate->setValue(spisettings.bitrate / 1000.0);
-    ui->spinBoxSPIMode->setValue(spisettings.mode);
+    ui->doubleSpinBoxBitRate->setValue(spiSettings.bitrate / 1000.0);
+    ui->spinBoxSPIMode->setValue(spiSettings.mode);
     // TODO
 }
 
 // Updates all fields pertaining to USB parameters
-void ConfiguratorWindow::displayUSBParameters(const MCP2210::USBParameters &usbparameters)
+void ConfiguratorWindow::displayUSBParameters(const MCP2210::USBParameters &usbParameters)
 {
-    ui->lineEditVID->setText(QString("%1").arg(usbparameters.vid, 4, 16, QChar('0')));  // This will autofill with up to four leading zeros
-    ui->lineEditPID->setText(QString("%1").arg(usbparameters.pid, 4, 16, QChar('0')));  // Same as before
-    ui->lineEditMaxPower->setText(QString::number(2 * usbparameters.maxpow));
-    ui->lineEditMaxPowerHex->setText(QString("%1").arg(usbparameters.maxpow, 2, 16, QChar('0')));  // This will autofill with up to two leading zeros
-    ui->comboBoxPowerMode->setCurrentIndex(usbparameters.powmode);
-    ui->checkBoxRemoteWakeUpCapable->setChecked(usbparameters.rmwakeup);
+    ui->lineEditVID->setText(QString("%1").arg(usbParameters.vid, 4, 16, QChar('0')));  // This will autofill with up to four leading zeros
+    ui->lineEditPID->setText(QString("%1").arg(usbParameters.pid, 4, 16, QChar('0')));  // Same as before
+    ui->lineEditMaxPower->setText(QString::number(2 * usbParameters.maxpow));
+    ui->lineEditMaxPowerHex->setText(QString("%1").arg(usbParameters.maxpow, 2, 16, QChar('0')));  // This will autofill with up to two leading zeros
+    ui->comboBoxPowerMode->setCurrentIndex(usbParameters.powmode);
+    ui->checkBoxRemoteWakeUpCapable->setChecked(usbParameters.rmwakeup);
 }
 
 // Retrieves the user set configuration from the fields
 void ConfiguratorWindow::getEditedConfiguration()
 {
-    editedConfig_.manufacturer = ui->lineEditManufacturer->text();
-    editedConfig_.product = ui->lineEditProduct->text();
-    editedConfig_.usbparameters.vid = static_cast<quint16>(ui->lineEditVID->text().toUShort(nullptr, 16));  // Cast done for sanity purposes
-    editedConfig_.usbparameters.pid = static_cast<quint16>(ui->lineEditPID->text().toUShort(nullptr, 16));  // Cast done for sanity purposes
-    editedConfig_.usbparameters.maxpow = static_cast<quint8>(ui->lineEditMaxPowerHex->text().toUShort(nullptr, 16));
-    editedConfig_.usbparameters.powmode = static_cast<quint8>(ui->comboBoxPowerMode->currentIndex());
-    editedConfig_.usbparameters.rmwakeup = ui->checkBoxRemoteWakeUpCapable->isChecked();
-    editedConfig_.chipsettings.gp0 = static_cast<quint8>(ui->comboBoxGP0->currentIndex() > 0 ? ui->comboBoxGP0->currentIndex() - 1 : MCP2210::PCGPIO);
-    editedConfig_.chipsettings.gp1 = static_cast<quint8>(ui->comboBoxGP1->currentIndex() > 0 ? ui->comboBoxGP1->currentIndex() - 1 : MCP2210::PCGPIO);
-    editedConfig_.chipsettings.gp2 = static_cast<quint8>(ui->comboBoxGP2->currentIndex() > 0 ? ui->comboBoxGP2->currentIndex() - 1 : MCP2210::PCGPIO);
-    editedConfig_.chipsettings.gp3 = static_cast<quint8>(ui->comboBoxGP3->currentIndex() > 0 ? ui->comboBoxGP3->currentIndex() - 1 : MCP2210::PCGPIO);
-    editedConfig_.chipsettings.gp4 = static_cast<quint8>(ui->comboBoxGP4->currentIndex() > 0 ? ui->comboBoxGP4->currentIndex() - 1 : MCP2210::PCGPIO);
-    editedConfig_.chipsettings.gp5 = static_cast<quint8>(ui->comboBoxGP5->currentIndex() > 0 ? ui->comboBoxGP5->currentIndex() - 1 : MCP2210::PCGPIO);
-    editedConfig_.chipsettings.gp6 = static_cast<quint8>(ui->comboBoxGP6->currentIndex() > 0 ? ui->comboBoxGP6->currentIndex() - 1 : MCP2210::PCGPIO);
-    editedConfig_.chipsettings.gp7 = static_cast<quint8>(ui->comboBoxGP7->currentIndex() > 0 ? ui->comboBoxGP7->currentIndex() - 1 : MCP2210::PCGPIO);
-    editedConfig_.chipsettings.gp8 = static_cast<quint8>(ui->comboBoxGP8->currentIndex() == 0 ? MCP2210::PCGPIO : MCP2210::PCFUNC);
-    editedConfig_.chipsettings.gpdir = static_cast<quint8>((ui->comboBoxGP7->currentIndex() != 1) << 7 |  // All pins have their direction set to input by default, except those pins that are specifically set to be outputs
+    editedConfiguration_.manufacturer = ui->lineEditManufacturer->text();
+    editedConfiguration_.product = ui->lineEditProduct->text();
+    editedConfiguration_.usbParameters.vid = static_cast<quint16>(ui->lineEditVID->text().toUShort(nullptr, 16));  // Cast done for sanity purposes
+    editedConfiguration_.usbParameters.pid = static_cast<quint16>(ui->lineEditPID->text().toUShort(nullptr, 16));  // Cast done for sanity purposes
+    editedConfiguration_.usbParameters.maxpow = static_cast<quint8>(ui->lineEditMaxPowerHex->text().toUShort(nullptr, 16));
+    editedConfiguration_.usbParameters.powmode = static_cast<quint8>(ui->comboBoxPowerMode->currentIndex());
+    editedConfiguration_.usbParameters.rmwakeup = ui->checkBoxRemoteWakeUpCapable->isChecked();
+    editedConfiguration_.chipSettings.gp0 = static_cast<quint8>(ui->comboBoxGP0->currentIndex() > 0 ? ui->comboBoxGP0->currentIndex() - 1 : MCP2210::PCGPIO);
+    editedConfiguration_.chipSettings.gp1 = static_cast<quint8>(ui->comboBoxGP1->currentIndex() > 0 ? ui->comboBoxGP1->currentIndex() - 1 : MCP2210::PCGPIO);
+    editedConfiguration_.chipSettings.gp2 = static_cast<quint8>(ui->comboBoxGP2->currentIndex() > 0 ? ui->comboBoxGP2->currentIndex() - 1 : MCP2210::PCGPIO);
+    editedConfiguration_.chipSettings.gp3 = static_cast<quint8>(ui->comboBoxGP3->currentIndex() > 0 ? ui->comboBoxGP3->currentIndex() - 1 : MCP2210::PCGPIO);
+    editedConfiguration_.chipSettings.gp4 = static_cast<quint8>(ui->comboBoxGP4->currentIndex() > 0 ? ui->comboBoxGP4->currentIndex() - 1 : MCP2210::PCGPIO);
+    editedConfiguration_.chipSettings.gp5 = static_cast<quint8>(ui->comboBoxGP5->currentIndex() > 0 ? ui->comboBoxGP5->currentIndex() - 1 : MCP2210::PCGPIO);
+    editedConfiguration_.chipSettings.gp6 = static_cast<quint8>(ui->comboBoxGP6->currentIndex() > 0 ? ui->comboBoxGP6->currentIndex() - 1 : MCP2210::PCGPIO);
+    editedConfiguration_.chipSettings.gp7 = static_cast<quint8>(ui->comboBoxGP7->currentIndex() > 0 ? ui->comboBoxGP7->currentIndex() - 1 : MCP2210::PCGPIO);
+    editedConfiguration_.chipSettings.gp8 = static_cast<quint8>(ui->comboBoxGP8->currentIndex() == 0 ? MCP2210::PCGPIO : MCP2210::PCFUNC);
+    editedConfiguration_.chipSettings.gpdir = static_cast<quint8>((ui->comboBoxGP7->currentIndex() != 1) << 7 |  // All pins have their direction set to input by default, except those pins that are specifically set to be outputs
                                                            (ui->comboBoxGP6->currentIndex() != 1) << 6 |
                                                            (ui->comboBoxGP5->currentIndex() != 1) << 5 |
                                                            (ui->comboBoxGP4->currentIndex() != 1) << 4 |
@@ -604,7 +609,7 @@ void ConfiguratorWindow::getEditedConfiguration()
                                                            (ui->comboBoxGP2->currentIndex() != 1) << 2 |
                                                            (ui->comboBoxGP1->currentIndex() != 1) << 1 |
                                                            (ui->comboBoxGP0->currentIndex() != 1));
-    editedConfig_.chipsettings.gpout = static_cast<quint8>(ui->checkBoxGP7DefaultValue->isChecked() << 7 |
+    editedConfiguration_.chipSettings.gpout = static_cast<quint8>(ui->checkBoxGP7DefaultValue->isChecked() << 7 |
                                                            ui->checkBoxGP6DefaultValue->isChecked() << 6 |
                                                            ui->checkBoxGP5DefaultValue->isChecked() << 5 |
                                                            ui->checkBoxGP4DefaultValue->isChecked() << 4 |
@@ -612,18 +617,55 @@ void ConfiguratorWindow::getEditedConfiguration()
                                                            ui->checkBoxGP2DefaultValue->isChecked() << 2 |
                                                            ui->checkBoxGP1DefaultValue->isChecked() << 1 |
                                                            ui->checkBoxGP0DefaultValue->isChecked());
-    editedConfig_.chipsettings.rmwakeup = ui->checkBoxRemoteWakeUp->isChecked();
-    editedConfig_.chipsettings.intmode = static_cast<quint8>(ui->comboBoxInterruptMode->currentIndex());
-    editedConfig_.chipsettings.nrelspi = ui->checkBoxSPIBusCaptive->isChecked();
+    editedConfiguration_.chipSettings.rmwakeup = ui->checkBoxRemoteWakeUp->isChecked();
+    editedConfiguration_.chipSettings.intmode = static_cast<quint8>(ui->comboBoxInterruptMode->currentIndex());
+    editedConfiguration_.chipSettings.nrelspi = ui->checkBoxSPIBusCaptive->isChecked();
     // TODO
-    editedConfig_.spisettings.nbytes = deviceConfig_.spisettings.nbytes;  // TODO To delete
-    editedConfig_.spisettings.bitrate = deviceConfig_.spisettings.bitrate;  // TODO To delete
-    editedConfig_.spisettings.mode = deviceConfig_.spisettings.mode;  // TODO To delete
-    editedConfig_.spisettings.actcs = deviceConfig_.spisettings.actcs;  // TODO To delete
-    editedConfig_.spisettings.idlcs = deviceConfig_.spisettings.idlcs;  // TODO To delete
-    editedConfig_.spisettings.csdtdly = deviceConfig_.spisettings.csdtdly;  // TODO To delete
-    editedConfig_.spisettings.dtcsdly = deviceConfig_.spisettings.dtcsdly;  // TODO To delete
-    editedConfig_.spisettings.itbytdly = deviceConfig_.spisettings.itbytdly;  // TODO To delete
+    editedConfiguration_.spiSettings.nbytes = deviceConfiguration_.spiSettings.nbytes;  // TODO To delete
+    editedConfiguration_.spiSettings.bitrate = deviceConfiguration_.spiSettings.bitrate;  // TODO To delete
+    editedConfiguration_.spiSettings.mode = deviceConfiguration_.spiSettings.mode;  // TODO To delete
+    editedConfiguration_.spiSettings.actcs = deviceConfiguration_.spiSettings.actcs;  // TODO To delete
+    editedConfiguration_.spiSettings.idlcs = deviceConfiguration_.spiSettings.idlcs;  // TODO To delete
+    editedConfiguration_.spiSettings.csdtdly = deviceConfiguration_.spiSettings.csdtdly;  // TODO To delete
+    editedConfiguration_.spiSettings.dtcsdly = deviceConfiguration_.spiSettings.dtcsdly;  // TODO To delete
+    editedConfiguration_.spiSettings.itbytdly = deviceConfiguration_.spiSettings.itbytdly;  // TODO To delete
+}
+
+// Returns the nearest compatible bit rate, given a bit rate
+quint32 ConfiguratorWindow::getNearestCompatibleBitRate(quint32 bitrate)
+{
+    int errcnt = 0;
+    QString errstr;
+    MCP2210::SPISettings currentSPISettings = mcp2210_.getSPISettings(errcnt, errstr);  // Keep the current volatile SPI settings
+    MCP2210::SPISettings testSPISettings = currentSPISettings;  // Settings used to test bitrate values
+    quint32 testBitrate = 4 * bitrate;  // Variable used for testing and finding compatible bit rates
+    quint32 nearestGreaterOrEqualBitrate = MCP2210Limits::BITRATE_MAX, nearestLesserOrEqualBitrate = MCP2210Limits::BITRATE_MIN;  // These variables are assigned here for correctness
+    quint32 retval;
+    while (errcnt == 0) {
+        testSPISettings.bitrate = testBitrate;
+        mcp2210_.configureSPISettings(testSPISettings, errcnt, errstr);
+        quint32 returnedBitrate = mcp2210_.getSPISettings(errcnt, errstr).bitrate;
+        if (returnedBitrate == testBitrate) {
+            if (testBitrate >= bitrate) {
+                nearestGreaterOrEqualBitrate = testBitrate;
+            }
+            if (testBitrate <= bitrate) {
+                nearestLesserOrEqualBitrate = testBitrate;
+                break;
+            }
+            --testBitrate;
+        } else {  // Incidentally, "returnedBitrate" is expected to be lesser than "testBitrate"
+            testBitrate = returnedBitrate;
+        }
+    }
+    mcp2210_.configureSPISettings(currentSPISettings, errcnt, errstr);  // Restore the previously kept volatile SPI settings
+    validateOperation(tr("get bit rate"), errcnt, errstr);
+    if (nearestGreaterOrEqualBitrate - bitrate < bitrate - nearestLesserOrEqualBitrate) {
+        retval = nearestGreaterOrEqualBitrate;
+    } else {
+        retval = nearestLesserOrEqualBitrate;
+    }
+    return retval;
 }
 
 // Determines the type of error and acts accordingly, always showing a message
@@ -640,11 +682,11 @@ void ConfiguratorWindow::handleError()
 void ConfiguratorWindow::loadConfigurationFromFile(QFile &file)
 {
     getEditedConfiguration();
-    ConfigurationReader configReader(editedConfig_);
+    ConfigurationReader configReader(editedConfiguration_);
     if (!configReader.readFrom(&file)) {
         QMessageBox::critical(this, tr("Error"), configReader.errorString());
     } else {
-        displayConfiguration(editedConfig_);
+        displayConfiguration(editedConfiguration_);
     }
 }
 
@@ -652,25 +694,25 @@ void ConfiguratorWindow::loadConfigurationFromFile(QFile &file)
 QStringList ConfiguratorWindow::prepareTaskList()
 {
     QStringList tasks;
-    if (editedConfig_.manufacturer != deviceConfig_.manufacturer) {
+    if (editedConfiguration_.manufacturer != deviceConfiguration_.manufacturer) {
         tasks += "writeManufacturerDesc";
     }
-    if (editedConfig_.product != deviceConfig_.product) {
+    if (editedConfiguration_.product != deviceConfiguration_.product) {
         tasks += "writeProductDesc";
     }
-    if (editedConfig_.usbparameters != deviceConfig_.usbparameters) {
+    if (editedConfiguration_.usbParameters != deviceConfiguration_.usbParameters) {
         tasks += "writeUSBParameters";
     }
-    if (editedConfig_.chipsettings != deviceConfig_.chipsettings) {
+    if (editedConfiguration_.chipSettings != deviceConfiguration_.chipSettings) {
         tasks += "writeChipSettings";
     }
     // TODO
     tasks += "verifyConfiguration";
     if (ui->checkBoxApplyImmediately->isChecked()) {
-        if (editedConfig_.chipsettings != deviceConfig_.chipsettings) {
+        if (editedConfiguration_.chipSettings != deviceConfiguration_.chipSettings) {
             tasks += "applyChipSettings";
         }
-        if (editedConfig_.spisettings != deviceConfig_.spisettings) {
+        if (editedConfiguration_.spiSettings != deviceConfiguration_.spiSettings) {
             tasks += "applySPISettings";
         }
     }
@@ -682,11 +724,11 @@ void ConfiguratorWindow::readDeviceConfiguration()
 {
     int errcnt = 0;
     QString errstr;
-    deviceConfig_.manufacturer = mcp2210_.getManufacturerDesc(errcnt, errstr);
-    deviceConfig_.product = mcp2210_.getProductDesc(errcnt, errstr);
-    deviceConfig_.usbparameters = mcp2210_.getUSBParameters(errcnt, errstr);
-    deviceConfig_.chipsettings = mcp2210_.getNVChipSettings(errcnt, errstr);
-    deviceConfig_.spisettings = mcp2210_.getNVSPISettings(errcnt, errstr);
+    deviceConfiguration_.manufacturer = mcp2210_.getManufacturerDesc(errcnt, errstr);
+    deviceConfiguration_.product = mcp2210_.getProductDesc(errcnt, errstr);
+    deviceConfiguration_.usbParameters = mcp2210_.getUSBParameters(errcnt, errstr);
+    deviceConfiguration_.chipSettings = mcp2210_.getNVChipSettings(errcnt, errstr);
+    deviceConfiguration_.spiSettings = mcp2210_.getNVSPISettings(errcnt, errstr);
     accessMode_ = mcp2210_.getAccessControlMode(errcnt, errstr);
     validateOperation(tr("read device configuration"), errcnt, errstr);
 }
@@ -695,7 +737,7 @@ void ConfiguratorWindow::readDeviceConfiguration()
 void ConfiguratorWindow::saveConfigurationToFile(QFile &file)
 {
     getEditedConfiguration();
-    ConfigurationWriter configWriter(editedConfig_);
+    ConfigurationWriter configWriter(editedConfiguration_);
     configWriter.writeTo(&file);
 }
 

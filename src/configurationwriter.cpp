@@ -33,8 +33,8 @@ void ConfigurationWriter::writeConfiguration()
 {
     writeDescriptor("manufacturer", configuration_.manufacturer);
     writeDescriptor("product", configuration_.product);
-    writeWordGeneric("vid", configuration_.usbparameters.vid);
-    writeWordGeneric("pid", configuration_.usbparameters.pid);
+    writeWordGeneric("vid", configuration_.usbParameters.vid);
+    writeWordGeneric("pid", configuration_.usbParameters.pid);
     writePower();
     writeRemoteWakeup();
     writePins();
@@ -63,7 +63,7 @@ void ConfigurationWriter::writeGP(int number, quint8 mode)
 void ConfigurationWriter::writeInterrupt()
 {
     xmlWriter_.writeStartElement("interrupt");
-    xmlWriter_.writeAttribute("mode", QString::number(configuration_.chipsettings.intmode));
+    xmlWriter_.writeAttribute("mode", QString::number(configuration_.chipSettings.intmode));
     xmlWriter_.writeEndElement();
 }
 
@@ -72,22 +72,22 @@ void ConfigurationWriter::writePins()
 {
     xmlWriter_.writeStartElement("pins");
     QVector<quint8> pinModes{
-        configuration_.chipsettings.gp0,
-        configuration_.chipsettings.gp1,
-        configuration_.chipsettings.gp2,
-        configuration_.chipsettings.gp3,
-        configuration_.chipsettings.gp4,
-        configuration_.chipsettings.gp5,
-        configuration_.chipsettings.gp6,
-        configuration_.chipsettings.gp7,
-        configuration_.chipsettings.gp8
+        configuration_.chipSettings.gp0,
+        configuration_.chipSettings.gp1,
+        configuration_.chipSettings.gp2,
+        configuration_.chipSettings.gp3,
+        configuration_.chipSettings.gp4,
+        configuration_.chipSettings.gp5,
+        configuration_.chipSettings.gp6,
+        configuration_.chipSettings.gp7,
+        configuration_.chipSettings.gp8
     };
     int numberOfPins = pinModes.size();
     for (int i = 0; i < numberOfPins; ++i) {
         writeGP(i, pinModes.at(i));
     }
-    writeByteGeneric("gpdir", configuration_.chipsettings.gpdir);
-    writeByteGeneric("gpout", configuration_.chipsettings.gpout);
+    writeByteGeneric("gpdir", configuration_.chipSettings.gpdir);
+    writeByteGeneric("gpout", configuration_.chipSettings.gpout);
     xmlWriter_.writeEndElement();
 }
 
@@ -95,8 +95,8 @@ void ConfigurationWriter::writePins()
 void ConfigurationWriter::writePower()
 {
     xmlWriter_.writeStartElement("power");
-    xmlWriter_.writeAttribute("maximum", QString::number(configuration_.usbparameters.maxpow, 16));
-    xmlWriter_.writeAttribute("self", (configuration_.usbparameters.powmode ? "true" : "false"));
+    xmlWriter_.writeAttribute("maximum", QString::number(configuration_.usbParameters.maxpow, 16));
+    xmlWriter_.writeAttribute("self", (configuration_.usbParameters.powmode ? "true" : "false"));
     xmlWriter_.writeEndElement();
 }
 
@@ -104,8 +104,8 @@ void ConfigurationWriter::writePower()
 void ConfigurationWriter::writeRemoteWakeup()
 {
     xmlWriter_.writeStartElement("remotewakeup");
-    xmlWriter_.writeAttribute("capable", (configuration_.usbparameters.rmwakeup ? "true" : "false"));
-    xmlWriter_.writeAttribute("enabled", (configuration_.chipsettings.rmwakeup ? "true" : "false"));
+    xmlWriter_.writeAttribute("capable", (configuration_.usbParameters.rmwakeup ? "true" : "false"));
+    xmlWriter_.writeAttribute("enabled", (configuration_.chipSettings.rmwakeup ? "true" : "false"));
     xmlWriter_.writeEndElement();
 }
 
@@ -113,7 +113,7 @@ void ConfigurationWriter::writeRemoteWakeup()
 void ConfigurationWriter::writeSPIBus()
 {
     xmlWriter_.writeStartElement("spibus");
-    xmlWriter_.writeAttribute("captive", (configuration_.chipsettings.nrelspi ? "true" : "false"));
+    xmlWriter_.writeAttribute("captive", (configuration_.chipSettings.nrelspi ? "true" : "false"));
     xmlWriter_.writeEndElement();
 }
 

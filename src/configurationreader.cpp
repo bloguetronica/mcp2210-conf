@@ -55,9 +55,9 @@ void ConfigurationReader::readConfiguration()
         } else if (xmlReader_.name() == QLatin1String("product")) {
             readDescriptor("product", configuration_.product);
         } else if (xmlReader_.name() == QLatin1String("vid")) {
-            readWordGeneric("vid", configuration_.usbparameters.vid, MCP2210Limits::VID_MIN, MCP2210Limits::VID_MAX);
+            readWordGeneric("vid", configuration_.usbParameters.vid, MCP2210Limits::VID_MIN, MCP2210Limits::VID_MAX);
         } else if (xmlReader_.name() == QLatin1String("pid")) {
-            readWordGeneric("pid", configuration_.usbparameters.pid, MCP2210Limits::PID_MIN, MCP2210Limits::PID_MAX);
+            readWordGeneric("pid", configuration_.usbParameters.pid, MCP2210Limits::PID_MIN, MCP2210Limits::PID_MAX);
         } else if (xmlReader_.name() == QLatin1String("power")) {
             readPower();
         } else if (xmlReader_.name() == QLatin1String("remotewakeup")) {
@@ -125,7 +125,7 @@ void ConfigurationReader::readInterrupt()
             if (!ok || intmode > MCP2210Limits::INTMODE_MAX) {
                 xmlReader_.raiseError(QObject::tr("In \"interrupt\" element, the \"mode\" attribute contains an invalid value. It should be an integer between 0 and %1.").arg(MCP2210Limits::INTMODE_MAX));
             } else {
-                configuration_.chipsettings.intmode = static_cast<quint8>(intmode);
+                configuration_.chipSettings.intmode = static_cast<quint8>(intmode);
             }
         }
     }
@@ -139,27 +139,27 @@ void ConfigurationReader::readPins()
 
     while (xmlReader_.readNextStartElement()) {
         if (xmlReader_.name() == QLatin1String("gp0")) {
-            readGP(0, configuration_.chipsettings.gp0, MCP2210Limits::GP0_MAX);
+            readGP(0, configuration_.chipSettings.gp0, MCP2210Limits::GP0_MAX);
         } else if (xmlReader_.name() == QLatin1String("gp1")) {
-            readGP(1, configuration_.chipsettings.gp1, MCP2210Limits::GP1_MAX);
+            readGP(1, configuration_.chipSettings.gp1, MCP2210Limits::GP1_MAX);
         } else if (xmlReader_.name() == QLatin1String("gp2")) {
-            readGP(2, configuration_.chipsettings.gp2, MCP2210Limits::GP2_MAX);
+            readGP(2, configuration_.chipSettings.gp2, MCP2210Limits::GP2_MAX);
         } else if (xmlReader_.name() == QLatin1String("gp3")) {
-            readGP(3, configuration_.chipsettings.gp3, MCP2210Limits::GP3_MAX);
+            readGP(3, configuration_.chipSettings.gp3, MCP2210Limits::GP3_MAX);
         } else if (xmlReader_.name() == QLatin1String("gp4")) {
-            readGP(4, configuration_.chipsettings.gp4, MCP2210Limits::GP4_MAX);
+            readGP(4, configuration_.chipSettings.gp4, MCP2210Limits::GP4_MAX);
         } else if (xmlReader_.name() == QLatin1String("gp5")) {
-            readGP(5, configuration_.chipsettings.gp5, MCP2210Limits::GP5_MAX);
+            readGP(5, configuration_.chipSettings.gp5, MCP2210Limits::GP5_MAX);
         } else if (xmlReader_.name() == QLatin1String("gp6")) {
-            readGP(6, configuration_.chipsettings.gp6, MCP2210Limits::GP6_MAX);
+            readGP(6, configuration_.chipSettings.gp6, MCP2210Limits::GP6_MAX);
         } else if (xmlReader_.name() == QLatin1String("gp7")) {
-            readGP(7, configuration_.chipsettings.gp7, MCP2210Limits::GP7_MAX);
+            readGP(7, configuration_.chipSettings.gp7, MCP2210Limits::GP7_MAX);
         } else if (xmlReader_.name() == QLatin1String("gp8")) {
-            readGP(8, configuration_.chipsettings.gp8, MCP2210Limits::GP8_MAX);
+            readGP(8, configuration_.chipSettings.gp8, MCP2210Limits::GP8_MAX);
         } else if (xmlReader_.name() == QLatin1String("gpdir")) {
-            readByteGeneric("gpdir", configuration_.chipsettings.gpdir, 0x00, MCP2210Limits::GPDIR_MAX);
+            readByteGeneric("gpdir", configuration_.chipSettings.gpdir, 0x00, MCP2210Limits::GPDIR_MAX);
         } else if (xmlReader_.name() == QLatin1String("gpout")) {
-            readByteGeneric("gpout", configuration_.chipsettings.gpout, 0x00, MCP2210Limits::GPOUT_MAX);
+            readByteGeneric("gpout", configuration_.chipSettings.gpout, 0x00, MCP2210Limits::GPOUT_MAX);
         } else {
             xmlReader_.skipCurrentElement();
         }
@@ -179,14 +179,14 @@ void ConfigurationReader::readPower()
             if (!ok || maxpow > MCP2210Limits::MAXPOW_MAX) {
                 xmlReader_.raiseError(QObject::tr("In \"power\" element, the \"maximum\" attribute contains an invalid value. It should be an hexadecimal integer between 0 and %1.").arg(MCP2210Limits::MAXPOW_MAX, 0, 16));
             } else {
-                configuration_.usbparameters.maxpow = static_cast<quint8>(maxpow);
+                configuration_.usbParameters.maxpow = static_cast<quint8>(maxpow);
             }
         } else if (attr.name().toString() == "self") {
             QString selfpow = attr.value().toString();
             if (selfpow != "true" && selfpow != "false" && selfpow != "1" && selfpow != "0") {
                 xmlReader_.raiseError(QObject::tr("In \"power\" element, the \"self\" attribute contains an invalid value. It should be \"true\", \"false\", \"1\" or \"0\"."));
             } else {
-                configuration_.usbparameters.powmode = selfpow == "true" || selfpow == "1";
+                configuration_.usbParameters.powmode = selfpow == "true" || selfpow == "1";
             }
         }
     }
@@ -205,14 +205,14 @@ void ConfigurationReader::readRemoteWakeup()
             if (rmcapable != "true" && rmcapable != "false" && rmcapable != "1" && rmcapable != "0") {
                 xmlReader_.raiseError(QObject::tr("In \"remotewakeup\" element, the \"capable\" attribute contains an invalid value. It should be \"true\", \"false\", \"1\" or \"0\"."));
             } else {
-                configuration_.usbparameters.rmwakeup = rmcapable == "true" || rmcapable == "1";
+                configuration_.usbParameters.rmwakeup = rmcapable == "true" || rmcapable == "1";
             }
         } else if (attr.name().toString() == "enabled") {
             QString rmenabled = attr.value().toString();
             if (rmenabled != "true" && rmenabled != "false" && rmenabled != "1" && rmenabled != "0") {
                 xmlReader_.raiseError(QObject::tr("In \"remotewakeup\" element, the \"enabled\" attribute contains an invalid value. It should be \"true\", \"false\", \"1\" or \"0\"."));
             } else {
-                configuration_.chipsettings.rmwakeup = rmenabled == "true" || rmenabled == "1";
+                configuration_.chipSettings.rmwakeup = rmenabled == "true" || rmenabled == "1";
             }
         }
     }
@@ -231,7 +231,7 @@ void ConfigurationReader::readSPIBus()
             if (spicaptive != "true" && spicaptive != "false" && spicaptive != "1" && spicaptive != "0") {
                 xmlReader_.raiseError(QObject::tr("In \"spibus\" element, the \"captive\" attribute contains an invalid value. It should be \"true\", \"false\", \"1\" or \"0\"."));
             } else {
-                configuration_.chipsettings.nrelspi = spicaptive == "true" || spicaptive == "1";
+                configuration_.chipSettings.nrelspi = spicaptive == "true" || spicaptive == "1";
             }
         }
     }
