@@ -222,6 +222,7 @@ void ConfiguratorWindow::on_checkBoxDoNotChangePassword_stateChanged(int state)
 
 void ConfiguratorWindow::on_doubleSpinBoxBitRate_editingFinished()
 {
+    err_ = false;
     ui->doubleSpinBoxBitRate->setValue(getNearestCompatibleBitRate(static_cast<quint32>(1000 * ui->doubleSpinBoxBitRate->value())) / 1000.0);  // Note that getNearestCompatibleBitRate() is guaranteed to return a valid bit rate value
     if (err_) {
         handleError();
@@ -706,6 +707,7 @@ void ConfiguratorWindow::handleError()
 // Loads the configuration from a given file
 void ConfiguratorWindow::loadConfigurationFromFile(QFile &file)
 {
+    err_ = false;
     getEditedConfiguration();
     ConfigurationReader configReader(editedConfiguration_);
     if (!configReader.readFrom(&file)) {
