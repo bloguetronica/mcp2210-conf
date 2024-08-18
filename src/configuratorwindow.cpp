@@ -155,7 +155,7 @@ void ConfiguratorWindow::on_actionStatus_triggered()
         err_ = false;
         int errcnt = 0;
         QString errstr;
-        // Obtain information here????
+        // TODO Obtain information here????
         validateOperation(tr("retrieve device status"), errcnt, errstr);
         if (err_) {
             handleError();
@@ -163,7 +163,7 @@ void ConfiguratorWindow::on_actionStatus_triggered()
             statusDialog_ = new StatusDialog(this);
             statusDialog_->setAttribute(Qt::WA_DeleteOnClose);  // It is important to delete the dialog in memory once closed, in order to force the application to retrieve the device status if the window is opened again???
             statusDialog_->setWindowTitle(tr("Device Status (S/N: %1)").arg(serialstr_));
-            // To implement set texts
+            // TODO To implement set texts
             statusDialog_->show();
         }
     } else {
@@ -452,6 +452,15 @@ void ConfiguratorWindow::writeProductDesc()
     validateOperation(tr("write product desc"), errcnt, errstr);
 }
 
+// Writes the SPI settings to the MCP2210 NVRAM
+void ConfiguratorWindow::writeSPISettings()
+{
+    int errcnt = 0;
+    QString errstr;
+    mcp2210_.writeNVSPISettings(editedConfiguration_.spiSettings, errcnt, errstr);
+    validateOperation(tr("write SPI settings"), errcnt, errstr);
+}
+
 // Writes the USB parameters to the MCP2210 NVRAM
 void ConfiguratorWindow::writeUSBParameters()
 {
@@ -620,10 +629,11 @@ void ConfiguratorWindow::getEditedConfiguration()
     editedConfiguration_.chipSettings.rmwakeup = ui->checkBoxRemoteWakeUp->isChecked();
     editedConfiguration_.chipSettings.intmode = static_cast<quint8>(ui->comboBoxInterruptMode->currentIndex());
     editedConfiguration_.chipSettings.nrelspi = ui->checkBoxSPIBusCaptive->isChecked();
+    // TODO Get number of bytes from UI
+    editedConfiguration_.spiSettings.bitrate = static_cast<quint32>(1000 * ui->doubleSpinBoxBitRate->value());
+    editedConfiguration_.spiSettings.mode = static_cast<quint8>(ui->spinBoxSPIMode->value());
     // TODO
     editedConfiguration_.spiSettings.nbytes = deviceConfiguration_.spiSettings.nbytes;  // TODO To delete
-    editedConfiguration_.spiSettings.bitrate = deviceConfiguration_.spiSettings.bitrate;  // TODO To delete
-    editedConfiguration_.spiSettings.mode = deviceConfiguration_.spiSettings.mode;  // TODO To delete
     editedConfiguration_.spiSettings.actcs = deviceConfiguration_.spiSettings.actcs;  // TODO To delete
     editedConfiguration_.spiSettings.idlcs = deviceConfiguration_.spiSettings.idlcs;  // TODO To delete
     editedConfiguration_.spiSettings.csdtdly = deviceConfiguration_.spiSettings.csdtdly;  // TODO To delete
@@ -634,13 +644,13 @@ void ConfiguratorWindow::getEditedConfiguration()
 // Returns the nearest compatible bit rate, given a bit rate
 quint32 ConfiguratorWindow::getNearestCompatibleBitRate(quint32 bitrate)
 {
+    quint32 retval;
     int errcnt = 0;
     QString errstr;
     MCP2210::SPISettings currentSPISettings = mcp2210_.getSPISettings(errcnt, errstr);  // Keep the current volatile SPI settings
     MCP2210::SPISettings testSPISettings = currentSPISettings;  // Settings used to test bitrate values
     quint32 testBitrate = 4 * bitrate;  // Variable used for testing and finding compatible bit rates
     quint32 nearestGreaterOrEqualBitrate = MCP2210Limits::BITRATE_MAX, nearestLesserOrEqualBitrate = MCP2210Limits::BITRATE_MIN;  // These variables are assigned here for correctness
-    quint32 retval;
     while (errcnt == 0) {
         testSPISettings.bitrate = testBitrate;
         mcp2210_.configureSPISettings(testSPISettings, errcnt, errstr);
@@ -706,7 +716,9 @@ QStringList ConfiguratorWindow::prepareTaskList()
     if (editedConfiguration_.chipSettings != deviceConfiguration_.chipSettings) {
         tasks += "writeChipSettings";
     }
-    // TODO
+    if (editedConfiguration_.spiSettings != deviceConfiguration_.spiSettings) {
+        tasks += "writeSPISettings";
+    }
     tasks += "verifyConfiguration";
     if (ui->checkBoxApplyImmediately->isChecked()) {
         if (editedConfiguration_.chipSettings != deviceConfiguration_.chipSettings) {

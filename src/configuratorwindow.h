@@ -84,6 +84,7 @@ private slots:
     void writeChipSettings();
     void writeManufacturerDesc();
     void writeProductDesc();
+    void writeSPISettings();
     void writeUSBParameters();
 
 private:
