@@ -663,7 +663,7 @@ quint32 ConfiguratorWindow::getNearestCompatibleBitRate(quint32 bitrate)
     quint32 retval;
     int errcnt = 0;
     QString errstr;
-    MCP2210::SPISettings initialSPISettings = mcp2210_.getSPISettings(errcnt, errstr);  // Keep the current volatile SPI settings
+    MCP2210::SPISettings initialSPISettings = mcp2210_.getSPISettings(errcnt, errstr);  // Keep these initial volatile SPI settings
     MCP2210::SPISettings testSPISettings = initialSPISettings;  // Settings used to test bitrate values
     quint32 testBitrate = static_cast<quint32>(1.5 * bitrate);  // Variable used for testing and finding compatible bit rates (multiplier value was determined empirically)
     quint32 nearestLowerBitrate = MCP2210Limits::BITRATE_MIN, nearestUpperBitrate = MCP2210Limits::BITRATE_MAX;  // These variables are assigned here, not just for correctness, but to allow algorithmic simplification
