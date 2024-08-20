@@ -44,7 +44,7 @@ void ConfigurationReader::readBitRate()
     xmlReader_.skipCurrentElement();
 }
 
-// Generic procedure to read a named element with a byte value in hexadecimal as it's attribute (used for pin configurations)
+// Generic procedure to read a named element with a byte value in hexadecimal as it's attribute (used for chip select and pin configurations)
 void ConfigurationReader::readByteGeneric(const QString &name, quint8 &toVariable, quint8 min, quint8 max)
 {
     Q_ASSERT(xmlReader_.isStartElement() && xmlReader_.name() == name);

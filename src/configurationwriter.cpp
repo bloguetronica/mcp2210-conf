@@ -30,7 +30,7 @@ void ConfigurationWriter::writeBitRate()
     xmlWriter_.writeEndElement();
 }
 
-// Generic procedure to write a named element with a byte value in hexadecimal as its attribute (used for pin configurations)
+// Generic procedure to write a named element with a byte value in hexadecimal as its attribute (used for chip select and pin configurations)
 void ConfigurationWriter::writeByteGeneric(const QString &name, quint8 value)
 {
     writeWordGeneric(name, value);
