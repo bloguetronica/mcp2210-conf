@@ -1552,7 +1552,7 @@
        </property>
       </widget>
      </widget>
-     <widget class="QGroupBox" name="groupBox">
+     <widget class="QGroupBox" name="groupBoxDelays">
       <property name="enabled">
        <bool>false</bool>
       </property>
@@ -1592,6 +1592,9 @@
          <height>31</height>
         </rect>
        </property>
+       <property name="maximum">
+        <number>65535</number>
+       </property>
       </widget>
       <widget class="QLabel" name="labelDataToCSDelay">
        <property name="geometry">
@@ -1618,6 +1621,9 @@
          <height>31</height>
         </rect>
        </property>
+       <property name="maximum">
+        <number>65535</number>
+       </property>
       </widget>
       <widget class="QLabel" name="labelInterByteDelay">
        <property name="geometry">
@@ -1643,6 +1649,9 @@
          <width>101</width>
          <height>31</height>
         </rect>
+       </property>
+       <property name="maximum">
+        <number>65535</number>
        </property>
       </widget>
      </widget>
