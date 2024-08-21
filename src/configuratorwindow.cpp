@@ -594,7 +594,25 @@ void ConfiguratorWindow::displaySPISettings(const MCP2210::SPISettings &spiSetti
     ui->spinBoxBytesPerTransaction->setValue(spiSettings.nbytes);
     ui->doubleSpinBoxBitRate->setValue(spiSettings.bitrate / 1000.0);
     ui->spinBoxMode->setValue(spiSettings.mode);
-    // TODO
+    ui->checkBoxActiveCS0->setChecked((0x01 & spiSettings.actcs) != 0x00);
+    ui->checkBoxActiveCS1->setChecked((0x02 & spiSettings.actcs) != 0x00);
+    ui->checkBoxActiveCS2->setChecked((0x04 & spiSettings.actcs) != 0x00);
+    ui->checkBoxActiveCS3->setChecked((0x08 & spiSettings.actcs) != 0x00);
+    ui->checkBoxActiveCS4->setChecked((0x10 & spiSettings.actcs) != 0x00);
+    ui->checkBoxActiveCS5->setChecked((0x20 & spiSettings.actcs) != 0x00);
+    ui->checkBoxActiveCS6->setChecked((0x40 & spiSettings.actcs) != 0x00);
+    ui->checkBoxActiveCS7->setChecked((0x80 & spiSettings.actcs) != 0x00);
+    ui->checkBoxIdleCS0->setChecked((0x01 & spiSettings.idlcs) != 0x00);
+    ui->checkBoxIdleCS1->setChecked((0x02 & spiSettings.idlcs) != 0x00);
+    ui->checkBoxIdleCS2->setChecked((0x04 & spiSettings.idlcs) != 0x00);
+    ui->checkBoxIdleCS3->setChecked((0x08 & spiSettings.idlcs) != 0x00);
+    ui->checkBoxIdleCS4->setChecked((0x10 & spiSettings.idlcs) != 0x00);
+    ui->checkBoxIdleCS5->setChecked((0x20 & spiSettings.idlcs) != 0x00);
+    ui->checkBoxIdleCS6->setChecked((0x40 & spiSettings.idlcs) != 0x00);
+    ui->checkBoxIdleCS7->setChecked((0x80 & spiSettings.idlcs) != 0x00);
+    ui->spinBoxCSToDataDelay->setValue(spiSettings.csdtdly);
+    ui->spinBoxDataToCSDelay->setValue(spiSettings.dtcsdly);
+    ui->spinBoxInterByteDelay->setValue(spiSettings.itbytdly);
 }
 
 // Updates all fields pertaining to USB parameters
@@ -628,33 +646,48 @@ void ConfiguratorWindow::getEditedConfiguration()
     editedConfiguration_.chipSettings.gp7 = static_cast<quint8>(ui->comboBoxGP7->currentIndex() > 0 ? ui->comboBoxGP7->currentIndex() - 1 : MCP2210::PCGPIO);
     editedConfiguration_.chipSettings.gp8 = static_cast<quint8>(ui->comboBoxGP8->currentIndex() == 0 ? MCP2210::PCGPIO : MCP2210::PCFUNC);
     editedConfiguration_.chipSettings.gpdir = static_cast<quint8>((ui->comboBoxGP7->currentIndex() != 1) << 7 |  // All pins have their direction set to input by default, except those pins that are specifically set to be outputs
-                                                           (ui->comboBoxGP6->currentIndex() != 1) << 6 |
-                                                           (ui->comboBoxGP5->currentIndex() != 1) << 5 |
-                                                           (ui->comboBoxGP4->currentIndex() != 1) << 4 |
-                                                           (ui->comboBoxGP3->currentIndex() != 1) << 3 |
-                                                           (ui->comboBoxGP2->currentIndex() != 1) << 2 |
-                                                           (ui->comboBoxGP1->currentIndex() != 1) << 1 |
-                                                           (ui->comboBoxGP0->currentIndex() != 1));
+                                                                  (ui->comboBoxGP6->currentIndex() != 1) << 6 |
+                                                                  (ui->comboBoxGP5->currentIndex() != 1) << 5 |
+                                                                  (ui->comboBoxGP4->currentIndex() != 1) << 4 |
+                                                                  (ui->comboBoxGP3->currentIndex() != 1) << 3 |
+                                                                  (ui->comboBoxGP2->currentIndex() != 1) << 2 |
+                                                                  (ui->comboBoxGP1->currentIndex() != 1) << 1 |
+                                                                  (ui->comboBoxGP0->currentIndex() != 1));
     editedConfiguration_.chipSettings.gpout = static_cast<quint8>(ui->checkBoxGP7DefaultValue->isChecked() << 7 |
-                                                           ui->checkBoxGP6DefaultValue->isChecked() << 6 |
-                                                           ui->checkBoxGP5DefaultValue->isChecked() << 5 |
-                                                           ui->checkBoxGP4DefaultValue->isChecked() << 4 |
-                                                           ui->checkBoxGP3DefaultValue->isChecked() << 3 |
-                                                           ui->checkBoxGP2DefaultValue->isChecked() << 2 |
-                                                           ui->checkBoxGP1DefaultValue->isChecked() << 1 |
-                                                           ui->checkBoxGP0DefaultValue->isChecked());
+                                                                  ui->checkBoxGP6DefaultValue->isChecked() << 6 |
+                                                                  ui->checkBoxGP5DefaultValue->isChecked() << 5 |
+                                                                  ui->checkBoxGP4DefaultValue->isChecked() << 4 |
+                                                                  ui->checkBoxGP3DefaultValue->isChecked() << 3 |
+                                                                  ui->checkBoxGP2DefaultValue->isChecked() << 2 |
+                                                                  ui->checkBoxGP1DefaultValue->isChecked() << 1 |
+                                                                  ui->checkBoxGP0DefaultValue->isChecked());
     editedConfiguration_.chipSettings.rmwakeup = ui->checkBoxRemoteWakeUp->isChecked();
     editedConfiguration_.chipSettings.intmode = static_cast<quint8>(ui->comboBoxInterruptMode->currentIndex());
     editedConfiguration_.chipSettings.nrelspi = ui->checkBoxSPIBusCaptive->isChecked();
     editedConfiguration_.spiSettings.nbytes = static_cast<quint16>(ui->spinBoxBytesPerTransaction->value());
     editedConfiguration_.spiSettings.bitrate = static_cast<quint32>(1000 * ui->doubleSpinBoxBitRate->value());
     editedConfiguration_.spiSettings.mode = static_cast<quint8>(ui->spinBoxMode->value());
-    // TODO
-    editedConfiguration_.spiSettings.actcs = deviceConfiguration_.spiSettings.actcs;  // TODO To delete
-    editedConfiguration_.spiSettings.idlcs = deviceConfiguration_.spiSettings.idlcs;  // TODO To delete
-    editedConfiguration_.spiSettings.csdtdly = deviceConfiguration_.spiSettings.csdtdly;  // TODO To delete
-    editedConfiguration_.spiSettings.dtcsdly = deviceConfiguration_.spiSettings.dtcsdly;  // TODO To delete
-    editedConfiguration_.spiSettings.itbytdly = deviceConfiguration_.spiSettings.itbytdly;  // TODO To delete
+    editedConfiguration_.spiSettings.actcs = static_cast<quint8>(ui->checkBoxActiveCS7->isChecked() << 7 |
+                                                                 ui->checkBoxActiveCS6->isChecked() << 6 |
+                                                                 ui->checkBoxActiveCS6->isChecked() << 6 |
+                                                                 ui->checkBoxActiveCS5->isChecked() << 5 |
+                                                                 ui->checkBoxActiveCS4->isChecked() << 4 |
+                                                                 ui->checkBoxActiveCS3->isChecked() << 3 |
+                                                                 ui->checkBoxActiveCS2->isChecked() << 2 |
+                                                                 ui->checkBoxActiveCS1->isChecked() << 1 |
+                                                                 ui->checkBoxActiveCS0->isChecked());
+    editedConfiguration_.spiSettings.idlcs = static_cast<quint8>(ui->checkBoxIdleCS7->isChecked() << 7 |
+                                                                 ui->checkBoxIdleCS6->isChecked() << 6 |
+                                                                 ui->checkBoxIdleCS6->isChecked() << 6 |
+                                                                 ui->checkBoxIdleCS5->isChecked() << 5 |
+                                                                 ui->checkBoxIdleCS4->isChecked() << 4 |
+                                                                 ui->checkBoxIdleCS3->isChecked() << 3 |
+                                                                 ui->checkBoxIdleCS2->isChecked() << 2 |
+                                                                 ui->checkBoxIdleCS1->isChecked() << 1 |
+                                                                 ui->checkBoxIdleCS0->isChecked());
+    editedConfiguration_.spiSettings.csdtdly = static_cast<quint16>(ui->spinBoxCSToDataDelay->value());
+    editedConfiguration_.spiSettings.dtcsdly = static_cast<quint16>(ui->spinBoxDataToCSDelay->value());
+    editedConfiguration_.spiSettings.itbytdly = static_cast<quint16>(ui->spinBoxInterByteDelay->value());
 }
 
 // Returns the nearest compatible bit rate, given a bit rate
@@ -821,7 +854,9 @@ void ConfiguratorWindow::setSPISettingsEnabled(bool value)
     ui->spinBoxMode->setEnabled(value);
     ui->spinBoxCPOL->setEnabled(value);
     ui->spinBoxCPHA->setEnabled(value);
-    // TODO
+    ui->groupBoxActiveCSValues->setEnabled(value);
+    ui->groupBoxIdleCSValues->setEnabled(value);
+    ui->groupBoxDelays->setEnabled(value);
 }
 
 // Enables or disables the "Use Password" menu option (File > Use Password)
