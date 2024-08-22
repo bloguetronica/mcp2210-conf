@@ -36,6 +36,7 @@ private:
     void readBitRate();
     void readByteGeneric(const QString &name, quint8 &toVariable, quint8 min, quint8 max);
     void readConfiguration();
+    void readDelay(const QString &name, quint16 &toVariable, quint16 max);
     void readDelays();
     void readDescriptor(const QString &name, QString &toVariable);
     void readGP(int number, quint8 &toVariable, quint8 max);

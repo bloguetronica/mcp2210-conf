@@ -51,13 +51,21 @@ void ConfigurationWriter::writeConfiguration()
     writeSPISettings();
 }
 
-// Writes "delays" element
+// Writes named delay element
+void ConfigurationWriter::writeDelay(const QString &name, quint16 delay)
+{
+    xmlWriter_.writeStartElement(name);
+    xmlWriter_.writeAttribute("delay", QString::number(delay));
+    xmlWriter_.writeEndElement();
+}
+
+// Writes "delays" element and its respective sub-elements
 void ConfigurationWriter::writeDelays()
 {
     xmlWriter_.writeStartElement("delays");
-    xmlWriter_.writeAttribute("cstodata", QString::number(configuration_.spiSettings.csdtdly));
-    xmlWriter_.writeAttribute("datatocs", QString::number(configuration_.spiSettings.dtcsdly));
-    xmlWriter_.writeAttribute("interbyte", QString::number(configuration_.spiSettings.itbytdly));
+    writeDelay("cstodata", configuration_.spiSettings.csdtdly);
+    writeDelay("datatocs", configuration_.spiSettings.dtcsdly);
+    writeDelay("interbyte", configuration_.spiSettings.itbytdly);
     xmlWriter_.writeEndElement();
 }
 
@@ -101,7 +109,7 @@ void ConfigurationWriter::writeNBytes()
     xmlWriter_.writeEndElement();
 }
 
-// Writes "pins" element
+// Writes "pins" element and its respective sub-elements
 void ConfigurationWriter::writePins()
 {
     xmlWriter_.writeStartElement("pins");
@@ -151,7 +159,7 @@ void ConfigurationWriter::writeSPIBus()
     xmlWriter_.writeEndElement();
 }
 
-// Writes "spisettings" element
+// Writes "spisettings" element and its respective sub-elements
 void ConfigurationWriter::writeSPISettings()
 {
     xmlWriter_.writeStartElement("spisettings");
