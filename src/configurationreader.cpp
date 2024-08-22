@@ -94,24 +94,40 @@ void ConfigurationReader::readConfiguration()
     }
 }
 
-// Reads the sub-elements of "csvalues" element
-void ConfigurationReader::readCSValues()
-{
-    Q_ASSERT(xmlReader_.isStartElement() && xmlReader_.name() == QLatin1String("csvalues"));
-
-    while (xmlReader_.readNextStartElement()) {
-        // TODO
-    }
-}
-
-// Reads the sub-elements of "delays" element
+// Reads "delays" element
 void ConfigurationReader::readDelays()
 {
     Q_ASSERT(xmlReader_.isStartElement() && xmlReader_.name() == QLatin1String("delays"));
 
-    while (xmlReader_.readNextStartElement()) {
-        // TODO
+    const QXmlStreamAttributes attrs = xmlReader_.attributes();
+    for (const QXmlStreamAttribute &attr : attrs) {
+        if (attr.name().toString() == "cstodata") {
+            bool ok;
+            quint16 csdtdly = static_cast<quint16>(attr.value().toUShort(&ok));  // Cast done for sanity purposes
+            if (!ok) {
+                xmlReader_.raiseError(QObject::tr("In \"delays\" element, the \"cstodata\" attribute contains an invalid value. It should be an integer between 0 and %1.").arg(MCP2210Limits::CSDTDLY_MAX));
+            } else {
+                configuration_.spiSettings.csdtdly = csdtdly;
+            }
+        } else if (attr.name().toString() == "datatocs") {
+            bool ok;
+            quint16 dtcsdly = static_cast<quint16>(attr.value().toUShort(&ok));  // Cast done for sanity purposes
+            if (!ok) {
+                xmlReader_.raiseError(QObject::tr("In \"delays\" element, the \"datatocs\" attribute contains an invalid value. It should be an integer between 0 and %1.").arg(MCP2210Limits::DTCSDLY_MAX));
+            } else {
+                configuration_.spiSettings.dtcsdly = dtcsdly;
+            }
+        } else if (attr.name().toString() == "interbyte") {
+            bool ok;
+            quint16 itbytdly = static_cast<quint16>(attr.value().toUShort(&ok));  // Cast done for sanity purposes
+            if (!ok) {
+                xmlReader_.raiseError(QObject::tr("In \"delays\" element, the \"interbyte\" attribute contains an invalid value. It should be an integer between 0 and %1.").arg(MCP2210Limits::ITBYTDLY_MAX));
+            } else {
+                configuration_.spiSettings.itbytdly = itbytdly;
+            }
+        }
     }
+    xmlReader_.skipCurrentElement();
 }
 
 // Reads descriptor element (used for manufacturer and product descriptors)
@@ -331,10 +347,12 @@ void ConfigurationReader::readSPISettings()
             readBitRate();
         } else if (xmlReader_.name() == QLatin1String("mode")) {
             readMode();
+        } else if (xmlReader_.name() == QLatin1String("activecs")) {
+            readByteGeneric("activecs", configuration_.spiSettings.actcs, 0x00, MCP2210Limits::ACTCS_MAX);
+        } else if (xmlReader_.name() == QLatin1String("idlecs")) {
+            readByteGeneric("idlecs", configuration_.spiSettings.idlcs, 0x00, MCP2210Limits::IDLCS_MAX);
         } else if (xmlReader_.name() == QLatin1String("delays")) {
             readDelays();
-        } else if (xmlReader_.name() == QLatin1String("csvalues")) {
-            readCSValues();
         } else {
             xmlReader_.skipCurrentElement();
         }

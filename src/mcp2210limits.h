@@ -27,8 +27,11 @@
 
 namespace MCP2210Limits
 {
+const quint8 ACTCS_MAX = 0xff;
 const quint32 BITRATE_MAX = MCP2210::BRT12M;
 const quint32 BITRATE_MIN = MCP2210::BRT1K464;
+const quint16 CSDTDLY_MAX = 65535;
+const quint16 DTCSDLY_MAX = 65535;
 const quint8 GP0_MAX = MCP2210::PCCS;
 const quint8 GP1_MAX = MCP2210::PCCS;
 const quint8 GP2_MAX = MCP2210::PCFUNC;
@@ -40,7 +43,9 @@ const quint8 GP7_MAX = MCP2210::PCFUNC;
 const quint8 GP8_MAX = MCP2210::PCFUNC;
 const quint8 GPDIR_MAX = 0xff;
 const quint8 GPOUT_MAX = 0xff;
+const quint8 IDLCS_MAX = 0xff;
 const quint8 INTMODE_MAX = MCP2210::IMCNTHP;
+const quint16 ITBYTDLY_MAX = 65535;
 const quint8 MAXPOW_MAX = 0xfa;
 const quint16 NBYTES_MAX = 65535;
 const quint16 PID_MAX = 0xffff;

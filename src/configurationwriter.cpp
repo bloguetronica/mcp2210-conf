@@ -22,7 +22,7 @@
 #include "mcp2210.h"
 #include "configurationwriter.h"
 
-//
+// Writes "bitrate" element
 void ConfigurationWriter::writeBitRate()
 {
     xmlWriter_.writeStartElement("bitrate");
@@ -51,19 +51,13 @@ void ConfigurationWriter::writeConfiguration()
     writeSPISettings();
 }
 
-// Writes "csvalues" element
-void ConfigurationWriter::writeCSValues()
-{
-    xmlWriter_.writeStartElement("csvalues");
-    // TODO
-    xmlWriter_.writeEndElement();
-}
-
 // Writes "delays" element
 void ConfigurationWriter::writeDelays()
 {
     xmlWriter_.writeStartElement("delays");
-    // TODO
+    xmlWriter_.writeAttribute("cstodata", QString::number(configuration_.spiSettings.csdtdly));
+    xmlWriter_.writeAttribute("datatocs", QString::number(configuration_.spiSettings.dtcsdly));
+    xmlWriter_.writeAttribute("interbyte", QString::number(configuration_.spiSettings.itbytdly));
     xmlWriter_.writeEndElement();
 }
 
@@ -164,7 +158,8 @@ void ConfigurationWriter::writeSPISettings()
     writeNBytes();
     writeBitRate();
     writeMode();
-    writeCSValues();
+    writeByteGeneric("activecs", configuration_.spiSettings.actcs);
+    writeByteGeneric("idlecs", configuration_.spiSettings.idlcs);
     writeDelays();
     xmlWriter_.writeEndElement();
 }

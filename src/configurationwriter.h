@@ -36,7 +36,6 @@ private:
     void writeBitRate();
     void writeByteGeneric(const QString &name, quint8 value);
     void writeConfiguration();
-    void writeCSValues();
     void writeDelays();
     void writeDescriptor(const QString &name, QString value);
     void writeGP(int number, quint8 mode);
