@@ -51,6 +51,22 @@ void ConfigurationWriter::writeConfiguration()
     writeSPISettings();
 }
 
+// Writes "csvalues" element
+void ConfigurationWriter::writeCSValues()
+{
+    xmlWriter_.writeStartElement("csvalues");
+    // TODO
+    xmlWriter_.writeEndElement();
+}
+
+// Writes "delays" element
+void ConfigurationWriter::writeDelays()
+{
+    xmlWriter_.writeStartElement("delays");
+    // TODO
+    xmlWriter_.writeEndElement();
+}
+
 // Writes descriptor element (used for manufacturer and product descriptors)
 void ConfigurationWriter::writeDescriptor(const QString &name, QString value)
 {
@@ -148,7 +164,8 @@ void ConfigurationWriter::writeSPISettings()
     writeNBytes();
     writeBitRate();
     writeMode();
-    // TODO
+    writeCSValues();
+    writeDelays();
     xmlWriter_.writeEndElement();
 }
 

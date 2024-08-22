@@ -94,6 +94,26 @@ void ConfigurationReader::readConfiguration()
     }
 }
 
+// Reads the sub-elements of "csvalues" element
+void ConfigurationReader::readCSValues()
+{
+    Q_ASSERT(xmlReader_.isStartElement() && xmlReader_.name() == QLatin1String("csvalues"));
+
+    while (xmlReader_.readNextStartElement()) {
+        // TODO
+    }
+}
+
+// Reads the sub-elements of "delays" element
+void ConfigurationReader::readDelays()
+{
+    Q_ASSERT(xmlReader_.isStartElement() && xmlReader_.name() == QLatin1String("delays"));
+
+    while (xmlReader_.readNextStartElement()) {
+        // TODO
+    }
+}
+
 // Reads descriptor element (used for manufacturer and product descriptors)
 void ConfigurationReader::readDescriptor(const QString &name, QString &toVariable)
 {
@@ -311,7 +331,11 @@ void ConfigurationReader::readSPISettings()
             readBitRate();
         } else if (xmlReader_.name() == QLatin1String("mode")) {
             readMode();
-        } else {  // TODO
+        } else if (xmlReader_.name() == QLatin1String("delays")) {
+            readDelays();
+        } else if (xmlReader_.name() == QLatin1String("csvalues")) {
+            readCSValues();
+        } else {
             xmlReader_.skipCurrentElement();
         }
     }
