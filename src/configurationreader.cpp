@@ -34,7 +34,7 @@ void ConfigurationReader::readBitRate()
         if (attr.name().toString() == "value") {
             bool ok;
             quint32 bitrate = static_cast<quint32>(attr.value().toUInt(&ok));  // Cast done for sanity purposes
-            if (!ok) {
+            if (!ok || bitrate > MCP2210Limits::BITRATE_MAX || bitrate < MCP2210Limits::BITRATE_MIN) {
                 xmlReader_.raiseError(QObject::tr("In \"bitrate\" element, the \"value\" attribute contains an invalid value. It should be an integer between %1 and %2.").arg(MCP2210Limits::BITRATE_MIN).arg(MCP2210Limits::BITRATE_MAX));
             } else {
                 configuration_.spiSettings.bitrate = bitrate;
@@ -104,7 +104,7 @@ void ConfigurationReader::readDelay(const QString &name, quint16 &toVariable, qu
         if (attr.name().toString() == "delay") {
             bool ok;
             quint16 delay = static_cast<quint16>(attr.value().toUShort(&ok));  // Cast done for sanity purposes
-            if (!ok) {
+            if (!ok || delay > max) {
                 xmlReader_.raiseError(QObject::tr("In \"%1\" element, the \"delay\" attribute contains an invalid value. It should be an integer between 0 and %2.").arg(name).arg(max));
             } else {
                 toVariable = delay;
@@ -221,7 +221,7 @@ void ConfigurationReader::readNBytes()
         if (attr.name().toString() == "value") {
             bool ok;
             quint16 nbytes = static_cast<quint16>(attr.value().toUShort(&ok));  // Cast done for sanity purposes
-            if (!ok) {
+            if (!ok || nbytes > MCP2210Limits::NBYTES_MAX) {
                 xmlReader_.raiseError(QObject::tr("In \"nbytes\" element, the \"value\" attribute contains an invalid value. It should be an integer between 0 and %1.").arg(MCP2210Limits::NBYTES_MAX));
             } else {
                 configuration_.spiSettings.nbytes = nbytes;
