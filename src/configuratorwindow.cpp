@@ -767,11 +767,11 @@ QStringList ConfiguratorWindow::prepareTaskList()
     if (editedConfiguration_.usbParameters != deviceConfiguration_.usbParameters) {
         tasks += "writeUSBParameters";
     }
-    if (editedConfiguration_.chipSettings != deviceConfiguration_.chipSettings) {
-        tasks += "writeChipSettings";
-    }
     if (editedConfiguration_.spiSettings != deviceConfiguration_.spiSettings) {
         tasks += "writeSPISettings";
+    }
+    if (editedConfiguration_.chipSettings != deviceConfiguration_.chipSettings) {
+        tasks += "writeChipSettings";  // Depending on the user's choice, this may protect or even lock the device
     }
     tasks += "verifyConfiguration";
     if (ui->checkBoxApplyImmediately->isChecked()) {
