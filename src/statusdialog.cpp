@@ -33,3 +33,27 @@ StatusDialog::~StatusDialog()
 {
     delete ui;
 }
+
+// Sets the text of "labelBusOnwerValue"
+void StatusDialog::setBusOwnerValueLabelText(quint8 busowner)
+{
+    ui->labelBusOwnerValue->setText("");
+}
+
+// Sets the text of "labelBusRequestValue"
+void StatusDialog::setBusRequestValueLabelText(bool busreq)
+{
+    ui->labelBusRequestValue->setText("");
+}
+
+// Sets the text of "labelPasswordStatusValue"
+void StatusDialog::setPasswordStatusValueLabelText(bool pwok)
+{
+    ui->labelPasswordStatusValue->setText("");
+}
+
+// Sets the text of "labelPasswordTriesValue"
+void StatusDialog::setPasswordTriesValueLabelText(quint8 pwtries)
+{
+    ui->labelPasswordTriesValue->setText("");
+}

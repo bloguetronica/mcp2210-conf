@@ -36,6 +36,11 @@ public:
     explicit StatusDialog(QWidget *parent = nullptr);
     ~StatusDialog();
 
+    void setBusOwnerValueLabelText(quint8 busowner);
+    void setBusRequestValueLabelText(bool busreq);
+    void setPasswordStatusValueLabelText(bool pwok);
+    void setPasswordTriesValueLabelText(quint8 pwtries);
+
 private:
     Ui::StatusDialog *ui;
 };

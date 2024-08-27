@@ -155,7 +155,7 @@ void ConfiguratorWindow::on_actionStatus_triggered()
         err_ = false;
         int errcnt = 0;
         QString errstr;
-        // TODO Obtain information here????
+        MCP2210::ChipStatus chipStatus = mcp2210_.getChipStatus(errcnt, errstr);
         validateOperation(tr("retrieve device status"), errcnt, errstr);
         if (err_) {  // If an error has occured
             handleError();
@@ -163,7 +163,10 @@ void ConfiguratorWindow::on_actionStatus_triggered()
             statusDialog_ = new StatusDialog(this);
             statusDialog_->setAttribute(Qt::WA_DeleteOnClose);  // It is important to delete the dialog in memory once closed, in order to force the application to retrieve the device status if the window is opened again???
             statusDialog_->setWindowTitle(tr("Device Status (S/N: %1)").arg(serialstr_));
-            // TODO To implement set texts
+            statusDialog_->setBusRequestValueLabelText(chipStatus.busreq);
+            statusDialog_->setBusOwnerValueLabelText(chipStatus.busowner);
+            statusDialog_->setPasswordStatusValueLabelText(chipStatus.pwok);
+            statusDialog_->setPasswordTriesValueLabelText(chipStatus.pwtries);
             statusDialog_->show();
         }
     } else {
