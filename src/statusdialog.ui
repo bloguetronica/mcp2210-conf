@@ -30,10 +30,10 @@
   <widget class="QDialogButtonBox" name="buttonBox">
    <property name="geometry">
     <rect>
-     <x>40</x>
-     <y>120</y>
+     <x>10</x>
+     <y>87</y>
      <width>341</width>
-     <height>32</height>
+     <height>31</height>
     </rect>
    </property>
    <property name="orientation">
@@ -43,13 +43,13 @@
     <set>QDialogButtonBox::Close</set>
    </property>
   </widget>
-  <widget class="QLabel" name="labelBusRequestValueLabel">
+  <widget class="QLabel" name="labelBusRequest">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>20</y>
+     <x>10</x>
+     <y>10</y>
      <width>141</width>
-     <height>18</height>
+     <height>17</height>
     </rect>
    </property>
    <property name="text">
@@ -63,22 +63,22 @@
    <property name="geometry">
     <rect>
      <x>200</x>
-     <y>20</y>
+     <y>10</y>
      <width>141</width>
-     <height>18</height>
+     <height>17</height>
     </rect>
    </property>
    <property name="text">
     <string/>
    </property>
   </widget>
-  <widget class="QLabel" name="labelBusOwnerValueLabel">
+  <widget class="QLabel" name="labelBusOwner">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>40</y>
+     <x>10</x>
+     <y>27</y>
      <width>141</width>
-     <height>18</height>
+     <height>17</height>
     </rect>
    </property>
    <property name="text">
@@ -92,22 +92,22 @@
    <property name="geometry">
     <rect>
      <x>200</x>
-     <y>40</y>
+     <y>27</y>
      <width>141</width>
-     <height>18</height>
+     <height>17</height>
     </rect>
    </property>
    <property name="text">
     <string/>
    </property>
   </widget>
-  <widget class="QLabel" name="labelPasswordStatusValueLabel">
+  <widget class="QLabel" name="labelPasswordStatus">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>60</y>
+     <x>10</x>
+     <y>44</y>
      <width>141</width>
-     <height>18</height>
+     <height>17</height>
     </rect>
    </property>
    <property name="text">
@@ -121,22 +121,22 @@
    <property name="geometry">
     <rect>
      <x>200</x>
-     <y>60</y>
+     <y>44</y>
      <width>141</width>
-     <height>18</height>
+     <height>17</height>
     </rect>
    </property>
    <property name="text">
     <string/>
    </property>
   </widget>
-  <widget class="QLabel" name="labelPasswordTriesValueLabel">
+  <widget class="QLabel" name="labelPasswordTries">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>80</y>
+     <x>10</x>
+     <y>61</y>
      <width>141</width>
-     <height>18</height>
+     <height>17</height>
     </rect>
    </property>
    <property name="text">
@@ -150,9 +150,9 @@
    <property name="geometry">
     <rect>
      <x>200</x>
-     <y>80</y>
+     <y>61</y>
      <width>141</width>
-     <height>18</height>
+     <height>17</height>
     </rect>
    </property>
    <property name="text">
