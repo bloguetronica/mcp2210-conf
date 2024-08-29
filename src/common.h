@@ -25,7 +25,8 @@
 #include <QString>
 
 // Global variables
-extern QString filePath;
+extern QString binFilePath;
+extern QString xmlFilePath;
 
 // Function prototypes
 void closeAboutDialog();

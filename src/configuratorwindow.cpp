@@ -64,13 +64,13 @@ void ConfiguratorWindow::openDevice(quint16 vid, quint16 pid, const QString &ser
     int err = mcp2210_.open(vid, pid, serialstr);
     if (err == MCP2210::SUCCESS) {  // Device was successfully opened
         err_ = false;
-        serialstr_ = serialstr;  // Pass the serial number
         readDeviceConfiguration();
         if (err_) {  // If an error has occured
             handleError();
             this->deleteLater();  // Close window after the subsequent show() call
         } else {  // Device is now open
-            this->setWindowTitle(tr("MCP2210 Device (S/N: %1)").arg(serialstr_));
+            serialstr_ = serialstr;  // Pass the serial number
+            this->setWindowTitle(tr("MCP2210 Device (S/N: %1)").arg(serialstr));
             displayConfiguration(deviceConfiguration_);
             viewEnabled_ = true;
         }
@@ -112,7 +112,7 @@ void ConfiguratorWindow::on_actionAbout_triggered()
 
 void ConfiguratorWindow::on_actionLoadConfiguration_triggered()
 {
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Load Configuration from File"), filePath, tr("XML files (*.xml);;All files (*)"));
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Load Configuration from File"), xmlFilePath, tr("XML files (*.xml);;All files (*)"));
     if (!fileName.isEmpty()) {  // Note that the previous dialog will return an empty string if the user cancels it
         QFile file(fileName);
         if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
@@ -120,14 +120,31 @@ void ConfiguratorWindow::on_actionLoadConfiguration_triggered()
         } else {
             loadConfigurationFromFile(file);
             file.close();
-            filePath = fileName;
+            xmlFilePath = fileName;
         }
     }
 }
 
 void ConfiguratorWindow::on_actionReadEEPROM_triggered()
 {
-    // TODO
+    err_ = false;
+    EEPROM eeprom = readEEPROM();
+    if (err_) {  // If an error has occured
+        handleError();
+    } else {  // Successful read
+        QString fileName = QFileDialog::getSaveFileName(this, tr("Save EEPROM Contents to File"), binFilePath, tr("Binary files (*.bin);;All files (*)"));
+        if (!fileName.isEmpty()) {  // Note that the previous dialog will return an empty string if the user cancels it
+            QFile file(fileName);
+            if (!file.open(QIODevice::WriteOnly)) {
+                QMessageBox::critical(this, tr("Error"), tr("Could not write to %1.\n\nPlease verify that you have write access to this file.").arg(QDir::toNativeSeparators(fileName)));
+            } else {
+                QDataStream out(&file);
+                out << eeprom;
+                file.close();
+                binFilePath = fileName;
+            }
+        }
+    }
 }
 
 void ConfiguratorWindow::on_actionSaveConfiguration_triggered()
@@ -135,7 +152,7 @@ void ConfiguratorWindow::on_actionSaveConfiguration_triggered()
     if(showInvalidInput()) {
         QMessageBox::critical(this, tr("Error"), tr("One or more fields have invalid information.\n\nPlease correct the information in the fields highlighted in red."));
     } else {
-        QString fileName = QFileDialog::getSaveFileName(this, tr("Save Configuration to File"), filePath, tr("XML files (*.xml);;All files (*)"));
+        QString fileName = QFileDialog::getSaveFileName(this, tr("Save Configuration to File"), xmlFilePath, tr("XML files (*.xml);;All files (*)"));
         if (!fileName.isEmpty()) {  // Note that the previous dialog will return an empty string if the user cancels it
             QFile file(fileName);
             if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
@@ -143,7 +160,7 @@ void ConfiguratorWindow::on_actionSaveConfiguration_triggered()
             } else {
                 saveConfigurationToFile(file);
                 file.close();
-                filePath = fileName;
+                xmlFilePath = fileName;
             }
         }
     }
@@ -188,7 +205,7 @@ void ConfiguratorWindow::on_actionUsePassword_triggered()
             handleError();
         } else if (response == MCP2210::COMPLETED) {  // If error check passes and password is verified
             // TODO Disable "Use Password" action?
-            QMessageBox::information(this, tr("Access Granted"), tr("The password was sucessfully entered and full write access to the NVRAM is now granted."));
+            QMessageBox::information(this, tr("Access Granted"), tr("The password was successfully entered and full write access to the NVRAM is now granted."));
         } else if (response == MCP2210::BLOCKED) {  // If error check passes and access is blocked
             // TODO Disable "Write" button?
             QMessageBox::warning(this, tr("Access Blocked"), tr("The password was not accepted and access is temporarily blocked. Please disconnect and reconnect your device, and try again."));
@@ -203,12 +220,54 @@ void ConfiguratorWindow::on_actionUsePassword_triggered()
 
 void ConfiguratorWindow::on_actionVerifyEEPROM_triggered()
 {
-    // TODO
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Verify EEPROM Contents against File"), binFilePath, tr("Binary files (*.bin);;All files (*)"));
+    if (!fileName.isEmpty()) {  // Note that the previous dialog will return an empty string if the user cancels it
+        QFile file(fileName);
+        if (!file.open(QIODevice::ReadOnly)) {
+            QMessageBox::critical(this, tr("Error"), tr("Could not read from %1.\n\nPlease verify that you have read access to this file.").arg(QDir::toNativeSeparators(fileName)));
+        } else if (file.bytesAvailable() != EEPROM_SIZE) {
+            QMessageBox::critical(this, tr("Error"), tr("The selected file is not a valid MCP2210 EEPROM binary file."));
+        } else {
+            EEPROM eeprom, eepromFromFile;
+            QDataStream in(&file);
+            in >> eepromFromFile;
+            file.close();
+            binFilePath = fileName;
+            err_ = false;
+            eeprom = readEEPROM();
+            if (err_) {  // If an error has occured
+                handleError();
+            } else if (eeprom == eepromFromFile) {  // Non-error cases
+                QMessageBox::information(this, tr("EEPROM Verified"), tr("EEPROM was successfully verified."));
+            } else {
+                QMessageBox::warning(this, tr("EEPROM Mismatch"), tr("Verification failed because EEPROM contents don't match file contents."));
+            }
+        }
+    }
 }
 
 void ConfiguratorWindow::on_actionWriteEEPROM_triggered()
 {
-    // TODO
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Load EEPROM Contents from File"), binFilePath, tr("Binary files (*.bin);;All files (*)"));
+    if (!fileName.isEmpty()) {  // Note that the previous dialog will return an empty string if the user cancels it
+        QFile file(fileName);
+        if (!file.open(QIODevice::ReadOnly)) {
+            QMessageBox::critical(this, tr("Error"), tr("Could not read from %1.\n\nPlease verify that you have read access to this file.").arg(QDir::toNativeSeparators(fileName)));
+        } else if (file.bytesAvailable() != EEPROM_SIZE) {
+            QMessageBox::critical(this, tr("Error"), tr("The selected file is not a valid MCP2210 EEPROM binary file."));
+        } else {
+            EEPROM eepromFromFile;
+            QDataStream in(&file);
+            in >> eepromFromFile;
+            file.close();
+            binFilePath = fileName;
+            err_ = false;
+            writeEEPROM(eepromFromFile);
+            if (err_) {  // If an error has occured
+                handleError();
+            }
+        }
+    }
 }
 
 void ConfiguratorWindow::on_checkBoxDoNotChangePassword_stateChanged(int state)
@@ -498,13 +557,12 @@ void ConfiguratorWindow::configureDevice()
     for (int i = 0; i < nTasks; ++i) {  // Iterate through the newly created task list
         QMetaObject::invokeMethod(this, tasks[i].toStdString().c_str());  // The task list entry is converted to a C string
         if (err_) {  // If an error has occured
+            handleError();
+            QMessageBox::critical(this, tr("Error"), tr("The device configuration could not be completed."));
             break;  // Abort the configuration
         }
     }
-    if (err_) {  // If an error occured
-        handleError();
-        QMessageBox::critical(this, tr("Error"), tr("The device configuration could not be completed."));
-    } else {  // Successful configuration
+    if (!err_) {  // Successful configuration
         QMessageBox::information(this, tr("Device Configured"), tr("Device was successfully configured."));
     }
 }
@@ -802,6 +860,22 @@ void ConfiguratorWindow::readDeviceConfiguration()
     validateOperation(tr("read device configuration"), errcnt, errstr);
 }
 
+// Reads the contents from the MCP2210 EEPROM
+EEPROM ConfiguratorWindow::readEEPROM()
+{
+    EEPROM eeprom;
+    int errcnt = 0;
+    QString errstr;
+    for (size_t i = 0; i < EEPROM_SIZE; ++i) {
+        eeprom.bytes[i] = mcp2210_.readEEPROMByte(i, errcnt, errstr);
+        validateOperation(tr("read EEPROM"), errcnt, errstr);
+        if (err_) {  // If an error has occured
+            break;  // Abort
+        }
+    }
+    return eeprom;
+}
+
 // Saves the current configuration to a given file
 void ConfiguratorWindow::saveConfigurationToFile(QFile &file)
 {
@@ -915,6 +989,20 @@ void ConfiguratorWindow::validateOperation(const QString &operation, int errcnt,
         } else {
             errstr.chop(1);  // Remove the last character, which is always a newline
             errmsg_ = tr("Failed to %1. The operation returned the following error(s):\n– %2", "", errcnt).arg(operation, errstr.replace("\n", "\n– "));
+        }
+    }
+}
+
+// Overwrites the contents of the MCP2210 EEPROM
+void ConfiguratorWindow::writeEEPROM(EEPROM eeprom)
+{
+    int errcnt = 0;
+    QString errstr;
+    for (size_t i = 0; i < EEPROM_SIZE; ++i) {
+        eeprom.bytes[i] = mcp2210_.writeEEPROMByte(i, eeprom.bytes[i], errcnt, errstr);
+        validateOperation(tr("write EEPROM"), errcnt, errstr);
+        if (err_) {  // If an error has occured
+            break;  // Abort
         }
     }
 }

@@ -34,20 +34,20 @@ bool EEPROM::operator ==(const EEPROM &other) const
     return equal;
 }
 
-// "In" operator
-QDataStream &EEPROM::operator <<(QDataStream &dataStream)
+// "Out" operator
+QDataStream &operator <<(QDataStream &dataStream, const EEPROM &eeprom)
 {
     for (size_t i = 0; i < EEPROM_SIZE; ++i) {
-        dataStream << bytes[i];
+        dataStream << eeprom.bytes[i];
     }
     return dataStream;
 }
 
-// "Out" operator
-QDataStream &EEPROM::operator >>(QDataStream &dataStream)
+// "In" operator
+QDataStream &operator >>(QDataStream &dataStream, EEPROM &eeprom)
 {
     for (size_t i = 0; i < EEPROM_SIZE; ++i) {
-        dataStream >> bytes[i];
+        dataStream >> eeprom.bytes[i];
     }
     return dataStream;
 }

@@ -32,8 +32,9 @@ struct EEPROM
     quint8 bytes[EEPROM_SIZE];
 
     bool operator ==(const EEPROM &other) const;
-    QDataStream &operator <<(QDataStream &dataStream);
-    QDataStream &operator >>(QDataStream &dataStream);
 };
+
+QDataStream &operator <<(QDataStream &dataStream, const EEPROM &eeprom);
+QDataStream &operator >>(QDataStream &dataStream, EEPROM &eeprom);
 
 #endif  // EEPROM_H
