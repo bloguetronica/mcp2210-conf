@@ -265,6 +265,8 @@ void ConfiguratorWindow::on_actionWriteEEPROM_triggered()
             writeEEPROM(eepromFromFile);
             if (err_) {  // If an error has occured
                 handleError();
+            } else {  // Success
+                QMessageBox::information(this, tr("EEPROM Written"), tr("EEPROM was successfully written."));
             }
         }
     }
@@ -864,6 +866,7 @@ void ConfiguratorWindow::readDeviceConfiguration()
 EEPROM ConfiguratorWindow::readEEPROM()
 {
     EEPROM eeprom;
+    this->setCursor(Qt::WaitCursor);  // This task takes quite a few tenths of a second, so it is a good idea to change the cursor to reflect that
     int errcnt = 0;
     QString errstr;
     for (size_t i = 0; i < EEPROM_SIZE; ++i) {
@@ -873,6 +876,7 @@ EEPROM ConfiguratorWindow::readEEPROM()
             break;  // Abort
         }
     }
+    this->unsetCursor();
     return eeprom;
 }
 
@@ -996,6 +1000,7 @@ void ConfiguratorWindow::validateOperation(const QString &operation, int errcnt,
 // Overwrites the contents of the MCP2210 EEPROM
 void ConfiguratorWindow::writeEEPROM(EEPROM eeprom)
 {
+    this->setCursor(Qt::WaitCursor);  // This task takes several tenths of a second, so it is a good idea to change the cursor to reflect that
     int errcnt = 0;
     QString errstr;
     for (size_t i = 0; i < EEPROM_SIZE; ++i) {
@@ -1005,4 +1010,5 @@ void ConfiguratorWindow::writeEEPROM(EEPROM eeprom)
             break;  // Abort
         }
     }
+    this->unsetCursor();
 }
