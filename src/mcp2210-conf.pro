@@ -29,11 +29,11 @@ SOURCES += \
     configurationreader.cpp \
     configurationwriter.cpp \
     configuratorwindow.cpp \
-    eeprom.cpp \
     libusb-extra.c \
     main.cpp \
     mainwindow.cpp \
     mcp2210.cpp \
+    mcp2210eeprom.cpp \
     passworddialog.cpp \
     statusdialog.cpp
 
@@ -44,10 +44,10 @@ HEADERS += \
     configurationreader.h \
     configurationwriter.h \
     configuratorwindow.h \
-    eeprom.h \
     libusb-extra.h \
     mainwindow.h \
     mcp2210.h \
+    mcp2210eeprom.h \
     mcp2210limits.h \
     passworddialog.h \
     statusdialog.h

@@ -28,8 +28,8 @@
 #include <QString>
 #include <QStringList>
 #include "configuration.h"
-#include "eeprom.h"
 #include "mcp2210.h"
+#include "mcp2210eeprom.h"
 #include "statusdialog.h"
 
 namespace Ui {
@@ -115,7 +115,7 @@ private:
     void loadConfigurationFromFile(QFile &file);
     QStringList prepareTaskList();
     void readDeviceConfiguration();
-    EEPROM readEEPROM();
+    MCP2210EEPROM readEEPROM();
     void saveConfigurationToFile(QFile &file);
     void setChipSettingsEnabled(bool value);
     void setGeneralSettingsEnabled(bool value);
@@ -124,7 +124,7 @@ private:
     void setWriteEnabled(bool value);
     bool showInvalidInput();
     void validateOperation(const QString &operation, int errcnt, QString errstr);
-    void writeEEPROM(EEPROM eeprom);
+    void writeEEPROM(MCP2210EEPROM eeprom);
 };
 
 #endif  // CONFIGURATORWINDOW_H

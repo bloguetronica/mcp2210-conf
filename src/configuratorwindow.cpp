@@ -128,7 +128,7 @@ void ConfiguratorWindow::on_actionLoadConfiguration_triggered()
 void ConfiguratorWindow::on_actionReadEEPROM_triggered()
 {
     err_ = false;
-    EEPROM eeprom = readEEPROM();
+    MCP2210EEPROM eeprom = readEEPROM();
     if (err_) {  // If an error has occured
         handleError();
     } else {  // Successful read
@@ -225,10 +225,10 @@ void ConfiguratorWindow::on_actionVerifyEEPROM_triggered()
         QFile file(fileName);
         if (!file.open(QIODevice::ReadOnly)) {
             QMessageBox::critical(this, tr("Error"), tr("Could not read from %1.\n\nPlease verify that you have read access to this file.").arg(QDir::toNativeSeparators(fileName)));
-        } else if (file.bytesAvailable() != EEPROM_SIZE) {
+        } else if (file.bytesAvailable() != MCP2210::EEPROM_SIZE) {
             QMessageBox::critical(this, tr("Error"), tr("The selected file is not a valid MCP2210 EEPROM binary file."));
         } else {
-            EEPROM eeprom, eepromFromFile;
+            MCP2210EEPROM eeprom, eepromFromFile;
             QDataStream in(&file);
             in >> eepromFromFile;
             file.close();
@@ -253,10 +253,10 @@ void ConfiguratorWindow::on_actionWriteEEPROM_triggered()
         QFile file(fileName);
         if (!file.open(QIODevice::ReadOnly)) {
             QMessageBox::critical(this, tr("Error"), tr("Could not read from %1.\n\nPlease verify that you have read access to this file.").arg(QDir::toNativeSeparators(fileName)));
-        } else if (file.bytesAvailable() != EEPROM_SIZE) {
+        } else if (file.bytesAvailable() != MCP2210::EEPROM_SIZE) {
             QMessageBox::critical(this, tr("Error"), tr("The selected file is not a valid MCP2210 EEPROM binary file."));
         } else {
-            EEPROM eepromFromFile;
+            MCP2210EEPROM eepromFromFile;
             QDataStream in(&file);
             in >> eepromFromFile;
             file.close();
@@ -863,13 +863,13 @@ void ConfiguratorWindow::readDeviceConfiguration()
 }
 
 // Reads the contents from the MCP2210 EEPROM
-EEPROM ConfiguratorWindow::readEEPROM()
+MCP2210EEPROM ConfiguratorWindow::readEEPROM()
 {
-    EEPROM eeprom;
+    MCP2210EEPROM eeprom;
     this->setCursor(Qt::WaitCursor);  // This task takes quite a few tenths of a second, so it is a good idea to change the cursor to reflect that
     int errcnt = 0;
     QString errstr;
-    for (size_t i = 0; i < EEPROM_SIZE; ++i) {
+    for (size_t i = 0; i < MCP2210::EEPROM_SIZE; ++i) {
         eeprom.bytes[i] = mcp2210_.readEEPROMByte(i, errcnt, errstr);
         validateOperation(tr("read EEPROM"), errcnt, errstr);
         if (err_) {  // If an error has occured
@@ -998,12 +998,12 @@ void ConfiguratorWindow::validateOperation(const QString &operation, int errcnt,
 }
 
 // Overwrites the contents of the MCP2210 EEPROM
-void ConfiguratorWindow::writeEEPROM(EEPROM eeprom)
+void ConfiguratorWindow::writeEEPROM(MCP2210EEPROM eeprom)
 {
     this->setCursor(Qt::WaitCursor);  // This task takes several tenths of a second, so it is a good idea to change the cursor to reflect that
     int errcnt = 0;
     QString errstr;
-    for (size_t i = 0; i < EEPROM_SIZE; ++i) {
+    for (size_t i = 0; i < MCP2210::EEPROM_SIZE; ++i) {
         eeprom.bytes[i] = mcp2210_.writeEEPROMByte(i, eeprom.bytes[i], errcnt, errstr);
         validateOperation(tr("write EEPROM"), errcnt, errstr);
         if (err_) {  // If an error has occured
