@@ -69,9 +69,9 @@ void ConfiguratorWindow::openDevice(quint16 vid, quint16 pid, const QString &ser
             handleError();
             this->deleteLater();  // Close window after the subsequent show() call
         } else {  // Device is now open
-            serialstr_ = serialstr;  // Pass the serial number
             this->setWindowTitle(tr("MCP2210 Device (S/N: %1)").arg(serialstr));
             displayConfiguration(deviceConfiguration_);
+            serialstr_ = serialstr;  // Pass the serial number
             viewEnabled_ = true;
         }
     } else if (err == MCP2210::ERROR_INIT) {  // Failed to initialize libusb
