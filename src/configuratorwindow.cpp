@@ -420,7 +420,7 @@ void ConfiguratorWindow::on_pushButtonRevealRepeatPassword_released()
 
 void ConfiguratorWindow::on_pushButtonRevert_clicked()
 {
-    displayConfiguration(deviceConfiguration_, false);
+    displayConfiguration(deviceConfiguration_, false);  // A partial update is done here for efficiency purposes
 }
 
 void ConfiguratorWindow::on_pushButtonWrite_clicked()
@@ -595,11 +595,11 @@ void ConfiguratorWindow::displayConfiguration(const Configuration &configuration
     displayChipSettings(configuration.chipSettings);
     displaySPISettings(configuration.spiSettings);
     if (fullUpdate) {
-        setUsePasswordEnabled(!passwordIsLocked_ && configuration.accessMode == MCP2210::ACPASSWORD && !passwordIsValid_);
-        setGeneralSettingsEnabled(!passwordIsLocked_ && configuration.accessMode != MCP2210::ACLOCKED);
-        setChipSettingsEnabled(!passwordIsLocked_ && configuration.accessMode != MCP2210::ACLOCKED);
-        setSPISettingsEnabled(!passwordIsLocked_ && configuration.accessMode != MCP2210::ACLOCKED);
-        setWriteEnabled(!passwordIsLocked_ && configuration.accessMode != MCP2210::ACLOCKED);
+        setUsePasswordEnabled(configuration.accessMode == MCP2210::ACPASSWORD && !passwordIsValid_ && !passwordIsLocked_);
+        setGeneralSettingsEnabled(configuration.accessMode != MCP2210::ACLOCKED && !passwordIsLocked_);
+        setChipSettingsEnabled(configuration.accessMode != MCP2210::ACLOCKED && !passwordIsLocked_);
+        setSPISettingsEnabled(configuration.accessMode != MCP2210::ACLOCKED && !passwordIsLocked_);
+        setWriteEnabled(configuration.accessMode != MCP2210::ACLOCKED && !passwordIsLocked_);
     }
 }
 
@@ -803,7 +803,7 @@ void ConfiguratorWindow::loadConfigurationFromFile(QFile &file)
         if (err_) {  // If an error has occured
             handleError();
         }
-        displayConfiguration(editedConfiguration_, false);
+        displayConfiguration(editedConfiguration_, false);  // A full update is not done here, in order to prevent any fields from being disabled
     }
 }
 
