@@ -588,17 +588,17 @@ void ConfiguratorWindow::displayChipSettings(const MCP2210::ChipSettings &chipSe
 // This is the main display routine, used to display the given configuration, updating all fields accordingly
 void ConfiguratorWindow::displayConfiguration(const Configuration &configuration)
 {
-    setUsePasswordEnabled(configuration.accessMode == MCP2210::ACPASSWORD && !passwordIsValid_);
+    setUsePasswordEnabled(!passwordIsLocked_ && configuration.accessMode == MCP2210::ACPASSWORD && !passwordIsValid_);
     displayManufacturer(configuration.manufacturer);
     displayProduct(configuration.product);
     displayUSBParameters(configuration.usbParameters);
     displayNVRAMAccessMode(configuration.accessMode);
-    setGeneralSettingsEnabled(configuration.accessMode != MCP2210::ACLOCKED);
+    setGeneralSettingsEnabled(!passwordIsLocked_ && configuration.accessMode != MCP2210::ACLOCKED);
     displayChipSettings(configuration.chipSettings);
-    setChipSettingsEnabled(configuration.accessMode != MCP2210::ACLOCKED);
+    setChipSettingsEnabled(!passwordIsLocked_ && configuration.accessMode != MCP2210::ACLOCKED);
     displaySPISettings(configuration.spiSettings);
-    setSPISettingsEnabled(configuration.accessMode != MCP2210::ACLOCKED);
-    setWriteEnabled(configuration.accessMode != MCP2210::ACLOCKED);
+    setSPISettingsEnabled(!passwordIsLocked_ && configuration.accessMode != MCP2210::ACLOCKED);
+    setWriteEnabled(!passwordIsLocked_ && configuration.accessMode != MCP2210::ACLOCKED);
 }
 
 // Updates the manufacturer descriptor field
@@ -732,7 +732,13 @@ void ConfiguratorWindow::getEditedConfiguration()
     editedConfiguration_.spiSettings.csdtdly = static_cast<quint16>(ui->spinBoxCSToDataDelay->value());
     editedConfiguration_.spiSettings.dtcsdly = static_cast<quint16>(ui->spinBoxDataToCSDelay->value());
     editedConfiguration_.spiSettings.itbytdly = static_cast<quint16>(ui->spinBoxInterByteDelay->value());
-    editedConfiguration_.accessMode = deviceConfiguration_.accessMode;  // TODO This is here to bypass
+    if (ui->radioButtonPasswordProtected->isChecked()) {
+        editedConfiguration_.accessMode = MCP2210::ACPASSWORD;
+    } else if (ui->radioButtonPermanentlyLocked->isChecked()) {
+        editedConfiguration_.accessMode = MCP2210::ACLOCKED;
+    } else {
+        editedConfiguration_.accessMode = MCP2210::ACNONE;
+    }
 }
 
 // Returns the nearest compatible bit rate, given a bit rate
@@ -841,7 +847,9 @@ void ConfiguratorWindow::readDeviceConfiguration()
     deviceConfiguration_.chipSettings = mcp2210_.getNVChipSettings(errcnt, errstr);
     deviceConfiguration_.spiSettings = mcp2210_.getNVSPISettings(errcnt, errstr);
     deviceConfiguration_.accessMode = mcp2210_.getAccessControlMode(errcnt, errstr);
-    passwordIsValid_ = mcp2210_.getChipStatus(errcnt, errstr).pwok;
+    MCP2210::ChipStatus chipStatus = mcp2210_.getChipStatus(errcnt, errstr);
+    passwordIsLocked_ = chipStatus.pwtries > 4;
+    passwordIsValid_ = chipStatus.pwok;
     validateOperation(tr("read device configuration"), errcnt, errstr);
 }
 
@@ -990,27 +998,22 @@ bool ConfiguratorWindow::validatePassword()
         int errcnt = 0;
         QString errstr;
         quint8 response = mcp2210_.usePassword(passwordDialog.passwordLineEditText(), errcnt, errstr);
+        MCP2210::ChipStatus chipStatus = mcp2210_.getChipStatus(errcnt, errstr);
         validateOperation(tr("use password"), errcnt, errstr);
         if (err_) {  // If an error has occured
             handleError();
         } else {  // Success
             if (!statusDialog_.isNull()) {  // This updates the status dialog, but only the fields pertaining to the password, if such is open
-                MCP2210::ChipStatus chipStatus = mcp2210_.getChipStatus(errcnt, errstr);
-                validateOperation(tr("retrieve device status"), errcnt, errstr);
-                if (err_) {  // If an error has occured
-                    handleError();
-                } else {  // Success
-                    statusDialog_->setPasswordStatusValueLabelText(chipStatus.pwok);
-                    statusDialog_->setPasswordTriesValueLabelText(chipStatus.pwtries);
-                }
+                statusDialog_->setPasswordStatusValueLabelText(chipStatus.pwok);
+                statusDialog_->setPasswordTriesValueLabelText(chipStatus.pwtries);
             }
             if (response == MCP2210::COMPLETED) {  // If error check passes and password is verified
                 setUsePasswordEnabled(false);  // Disable "Use Password" action
                 // TODO Keep valid password
                 passwordIsValid_ = true;
                 retval = true;
-            } else if (response == MCP2210::BLOCKED) {  // If error check passes and access is blocked
-                deviceConfiguration_.accessMode = MCP2210::ACLOCKED;  // From this point on, the device will be viewed as if it was locked
+            } else if (response == MCP2210::BLOCKED || chipStatus.pwtries > 4) {  // If error check passes and access is blocked (redundancy is necessary)
+                passwordIsLocked_ = true;  // From this point on, the device will be viewed as if it was locked
                 displayConfiguration(deviceConfiguration_);
                 QMessageBox::warning(this, tr("Access Blocked"), tr("The password was not accepted and access is temporarily blocked. Please disconnect and reconnect your device, and try again."));
             } else if (response == MCP2210::REJECTED) {  // If error check passes and access is somehow rejected

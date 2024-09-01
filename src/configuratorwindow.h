@@ -97,7 +97,7 @@ private:
     MCP2210 mcp2210_;
     QPointer<StatusDialog> statusDialog_;
     QString errmsg_, serialstr_;
-    bool err_, passwordIsValid_ = false, viewEnabled_ = false;
+    bool err_, passwordIsLocked_, passwordIsValid_, viewEnabled_ = false;
 
     void configureDevice();
     void disableView();
