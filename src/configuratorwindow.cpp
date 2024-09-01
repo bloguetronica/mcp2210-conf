@@ -501,7 +501,7 @@ void ConfiguratorWindow::writeManufacturerDesc()
     int errcnt = 0;
     QString errstr;
     mcp2210_.writeManufacturerDesc(editedConfiguration_.manufacturer, errcnt, errstr);
-    validateOperation(tr("write manufacturer desc"), errcnt, errstr);
+    validateOperation(tr("write manufacturer descriptor"), errcnt, errstr);
 }
 
 // Writes the product descriptor to the MCP2210 NVRAM
@@ -510,7 +510,7 @@ void ConfiguratorWindow::writeProductDesc()
     int errcnt = 0;
     QString errstr;
     mcp2210_.writeProductDesc(editedConfiguration_.product, errcnt, errstr);
-    validateOperation(tr("write product desc"), errcnt, errstr);
+    validateOperation(tr("write product descriptor"), errcnt, errstr);
 }
 
 // Writes the SPI settings to the MCP2210 NVRAM
