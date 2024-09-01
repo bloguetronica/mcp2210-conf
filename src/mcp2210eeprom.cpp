@@ -19,7 +19,6 @@
 
 
 // Includes
-#include "mcp2210.h"
 #include "mcp2210eeprom.h"
 
 // "Equal to" operator

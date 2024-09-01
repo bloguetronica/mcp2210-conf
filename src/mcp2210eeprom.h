@@ -23,6 +23,7 @@
 
 // Includes
 #include <QDataStream>
+#include "mcp2210.h"
 
 struct MCP2210EEPROM
 {
