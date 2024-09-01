@@ -595,7 +595,7 @@ void ConfiguratorWindow::displayConfiguration(const Configuration &configuration
     displayChipSettings(configuration.chipSettings);
     displaySPISettings(configuration.spiSettings);
     if (fullUpdate) {
-        setUsePasswordEnabled(configuration.accessMode == MCP2210::ACPASSWORD && !passwordIsValid_ && !passwordIsLocked_);
+        setUsePasswordEnabled(configuration.accessMode == MCP2210::ACPASSWORD && !passwordIsLocked_ && !passwordIsValid_);
         setGeneralSettingsEnabled(configuration.accessMode != MCP2210::ACLOCKED && !passwordIsLocked_);
         setChipSettingsEnabled(configuration.accessMode != MCP2210::ACLOCKED && !passwordIsLocked_);
         setSPISettingsEnabled(configuration.accessMode != MCP2210::ACLOCKED && !passwordIsLocked_);
