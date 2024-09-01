@@ -592,7 +592,7 @@ void ConfiguratorWindow::displayConfiguration(const Configuration &configuration
     displayManufacturer(configuration.manufacturer);
     displayProduct(configuration.product);
     displayUSBParameters(configuration.usbParameters);
-    displayNVRAMAccessMode(deviceConfiguration_.accessMode);
+    displayNVRAMAccessMode(configuration.accessMode);
     setGeneralSettingsEnabled(configuration.accessMode != MCP2210::ACLOCKED);
     displayChipSettings(configuration.chipSettings);
     setChipSettingsEnabled(configuration.accessMode != MCP2210::ACLOCKED);
