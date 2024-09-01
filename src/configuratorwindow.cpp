@@ -1012,13 +1012,13 @@ bool ConfiguratorWindow::validatePassword()
                 // TODO Keep valid password
                 passwordIsValid_ = true;
                 retval = true;
-            } else if (response == MCP2210::BLOCKED || chipStatus.pwtries > 4) {  // If error check passes and access is blocked (redundancy is necessary)
+            } else if (response == MCP2210::BLOCKED || chipStatus.pwtries > 4) {  // If access is blocked (redundancy is necessary)
                 passwordIsLocked_ = true;  // From this point on, the device will be viewed as if it was locked
                 displayConfiguration(deviceConfiguration_);
                 QMessageBox::warning(this, tr("Access Blocked"), tr("The password was not accepted and access is temporarily blocked. Please disconnect and reconnect your device, and try again."));
-            } else if (response == MCP2210::REJECTED) {  // If error check passes and access is somehow rejected
+            } else if (response == MCP2210::REJECTED) {  // If access is somehow rejected
                 QMessageBox::warning(this, tr("Access Rejected"), tr("Full write access to the NVRAM was rejected for unknown reasons."));
-            } else if (response == MCP2210::WRONG_PASSWORD) {  // If error check passes and password is not verified
+            } else if (response == MCP2210::WRONG_PASSWORD) {  // If password is not verified
                 QMessageBox::warning(this, tr("Access Denied"), tr("The password was not accepted. Please try again."));
             }
         }
