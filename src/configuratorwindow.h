@@ -97,15 +97,14 @@ private:
     MCP2210 mcp2210_;
     QPointer<StatusDialog> statusDialog_;
     QString errmsg_, serialstr_;
-    quint8 accessMode_;
-    bool err_, viewEnabled_ = false;
+    bool err_, passwordIsValid_ = false, viewEnabled_ = false;
 
     void configureDevice();
     void disableView();
     void displayChipSettings(const MCP2210::ChipSettings &chipSettings);
     void displayConfiguration(const Configuration &configuration);
     void displayManufacturer(const QString &manufacturer);
-    void displayNVRAMAccessMode();
+    void displayNVRAMAccessMode(quint8 accessMode);
     void displayProduct(const QString &product);
     void displaySPISettings(const MCP2210::SPISettings &spiSettings);
     void displayUSBParameters(const MCP2210::USBParameters &usbParameters);
@@ -124,6 +123,7 @@ private:
     void setWriteEnabled(bool value);
     bool showInvalidInput();
     void validateOperation(const QString &operation, int errcnt, QString errstr);
+    bool validatePassword();
     void writeEEPROM(MCP2210EEPROM eeprom);
 };
 

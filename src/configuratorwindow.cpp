@@ -194,39 +194,8 @@ void ConfiguratorWindow::on_actionStatus_triggered()
 
 void ConfiguratorWindow::on_actionUsePassword_triggered()
 {
-    PasswordDialog passwordDialog(this);
-    if (passwordDialog.exec() == QDialog::Accepted) {
-        err_ = false;
-        int errcnt = 0;
-        QString errstr;
-        quint8 response = mcp2210_.usePassword(passwordDialog.passwordLineEditText(), errcnt, errstr);
-        validateOperation(tr("use password"), errcnt, errstr);
-        if (err_) {  // If an error has occured
-            handleError();
-        } else {  // Success
-            if (!statusDialog_.isNull()) {  // This updates the status dialog, but only the fields pertaining to the password, if such is open
-                MCP2210::ChipStatus chipStatus = mcp2210_.getChipStatus(errcnt, errstr);
-                validateOperation(tr("retrieve device status"), errcnt, errstr);
-                if (err_) {  // If an error has occured
-                    handleError();
-                } else {  // Success
-                    statusDialog_->setPasswordStatusValueLabelText(chipStatus.pwok);
-                    statusDialog_->setPasswordTriesValueLabelText(chipStatus.pwtries);
-                }
-            }
-            if (response == MCP2210::COMPLETED) {  // If error check passes and password is verified
-                // TODO Disable "Use Password" action?
-                QMessageBox::information(this, tr("Access Granted"), tr("The password was successfully entered and full write access to the NVRAM is now granted."));
-            } else if (response == MCP2210::BLOCKED) {  // If error check passes and access is blocked
-                // TODO Disable write and enter read-only mode?
-                QMessageBox::warning(this, tr("Access Blocked"), tr("The password was not accepted and access is temporarily blocked. Please disconnect and reconnect your device, and try again."));
-            } else if (response == MCP2210::REJECTED) {  // If error check passes and access is somehow rejected
-                // TODO Disable write and enter read-only mode?
-                QMessageBox::warning(this, tr("Access Rejected"), tr("Full write access to the NVRAM was rejected for unknown reasons."));
-            } else if (response == MCP2210::WRONG_PASSWORD) {  // If error check passes and password is not verified
-                QMessageBox::warning(this, tr("Access Denied"), tr("The password was not accepted. Please try again."));
-            }
-        }
+    if (validatePassword()) {
+        QMessageBox::information(this, tr("Access Granted"), tr("The password was successfully entered and full write access to the NVRAM is now granted."));
     }
 }
 
@@ -461,11 +430,11 @@ void ConfiguratorWindow::on_pushButtonWrite_clicked()
             QMessageBox::critical(this, tr("Error"), tr("One or more fields have invalid information.\n\nPlease correct the information in the fields highlighted in red."));
         } else {
             getEditedConfiguration();
-            if (editedConfiguration_ == deviceConfiguration_) {
+            if (editedConfiguration_ == deviceConfiguration_ && (editedConfiguration_.accessMode != MCP2210::ACPASSWORD || ui->checkBoxDoNotChangePassword->isChecked())) {
                 QMessageBox::information(this, tr("No Changes Done"), tr("No changes were effected, because no values were modified."));
             } else {
-                int qmret = QMessageBox::question(this, tr("Write Configuration?"), tr("This will write the changes to the OTP ROM of your device. These changes will be permanent.\n\nDo you wish to proceed?"), QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
-                if (qmret == QMessageBox::Yes) {
+                int qmret = QMessageBox::question(this, tr("Write Configuration?"), tr("This will write the changes to the NVRAM of your device.\n\nDo you wish to proceed?"), QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+                if (qmret == QMessageBox::Yes && (deviceConfiguration_.accessMode == MCP2210::ACNONE || (deviceConfiguration_.accessMode == MCP2210::ACPASSWORD && (passwordIsValid_ || validatePassword())))) {
                     configureDevice();
                 }
             }
@@ -480,7 +449,8 @@ void ConfiguratorWindow::on_radioButtonPasswordProtected_toggled(bool checked)
         ui->lineEditNewPassword->clear();
         ui->lineEditRepeatPassword->clear();
     }
-    ui->checkBoxDoNotChangePassword->setEnabled(checked && accessMode_ == MCP2210::ACPASSWORD);
+    ui->checkBoxDoNotChangePassword->setChecked(checked && deviceConfiguration_.accessMode == MCP2210::ACPASSWORD);
+    ui->checkBoxDoNotChangePassword->setEnabled(checked && deviceConfiguration_.accessMode == MCP2210::ACPASSWORD);
     ui->lineEditNewPassword->setEnabled(checked && !ui->checkBoxDoNotChangePassword->isChecked());
     ui->pushButtonRevealNewPassword->setEnabled(checked && !ui->checkBoxDoNotChangePassword->isChecked() && !ui->lineEditNewPassword->text().isEmpty());
     ui->lineEditRepeatPassword->setEnabled(checked && !ui->checkBoxDoNotChangePassword->isChecked());
@@ -502,7 +472,6 @@ void ConfiguratorWindow::on_spinBoxMode_valueChanged(int i)
     ui->spinBoxCPOL->setValue(i / 2);
     ui->spinBoxCPHA->setValue(i % 2);
 }
-
 
 // Verifies the MCP2210 configuration against the input configuration
 void ConfiguratorWindow::verifyConfiguration()
@@ -619,17 +588,17 @@ void ConfiguratorWindow::displayChipSettings(const MCP2210::ChipSettings &chipSe
 // This is the main display routine, used to display the given configuration, updating all fields accordingly
 void ConfiguratorWindow::displayConfiguration(const Configuration &configuration)
 {
-    setUsePasswordEnabled(accessMode_ == MCP2210::ACPASSWORD);
+    setUsePasswordEnabled(configuration.accessMode == MCP2210::ACPASSWORD && !passwordIsValid_);
     displayManufacturer(configuration.manufacturer);
     displayProduct(configuration.product);
     displayUSBParameters(configuration.usbParameters);
-    displayNVRAMAccessMode();
-    setGeneralSettingsEnabled(accessMode_ != MCP2210::ACLOCKED);
+    displayNVRAMAccessMode(deviceConfiguration_.accessMode);
+    setGeneralSettingsEnabled(configuration.accessMode != MCP2210::ACLOCKED);
     displayChipSettings(configuration.chipSettings);
-    setChipSettingsEnabled(accessMode_ != MCP2210::ACLOCKED);
+    setChipSettingsEnabled(configuration.accessMode != MCP2210::ACLOCKED);
     displaySPISettings(configuration.spiSettings);
-    setSPISettingsEnabled(accessMode_ != MCP2210::ACLOCKED);
-    setWriteEnabled(accessMode_ != MCP2210::ACLOCKED);
+    setSPISettingsEnabled(configuration.accessMode != MCP2210::ACLOCKED);
+    setWriteEnabled(configuration.accessMode != MCP2210::ACLOCKED);
 }
 
 // Updates the manufacturer descriptor field
@@ -639,9 +608,9 @@ void ConfiguratorWindow::displayManufacturer(const QString &manufacturer)
 }
 
 // Updates controls inside the "NVRAM Access Mode" group box
-void ConfiguratorWindow::displayNVRAMAccessMode()
+void ConfiguratorWindow::displayNVRAMAccessMode(quint8 accessMode)
 {
-    switch (accessMode_) {
+    switch (accessMode) {
         case MCP2210::ACPASSWORD:
             ui->radioButtonPasswordProtected->setChecked(true);
             ui->checkBoxDoNotChangePassword->setChecked(true);
@@ -763,6 +732,7 @@ void ConfiguratorWindow::getEditedConfiguration()
     editedConfiguration_.spiSettings.csdtdly = static_cast<quint16>(ui->spinBoxCSToDataDelay->value());
     editedConfiguration_.spiSettings.dtcsdly = static_cast<quint16>(ui->spinBoxDataToCSDelay->value());
     editedConfiguration_.spiSettings.itbytdly = static_cast<quint16>(ui->spinBoxInterByteDelay->value());
+    editedConfiguration_.accessMode = deviceConfiguration_.accessMode;  // TODO This is here to bypass
 }
 
 // Returns the nearest compatible bit rate, given a bit rate
@@ -870,7 +840,8 @@ void ConfiguratorWindow::readDeviceConfiguration()
     deviceConfiguration_.usbParameters = mcp2210_.getUSBParameters(errcnt, errstr);
     deviceConfiguration_.chipSettings = mcp2210_.getNVChipSettings(errcnt, errstr);
     deviceConfiguration_.spiSettings = mcp2210_.getNVSPISettings(errcnt, errstr);
-    accessMode_ = mcp2210_.getAccessControlMode(errcnt, errstr);
+    deviceConfiguration_.accessMode = mcp2210_.getAccessControlMode(errcnt, errstr);
+    passwordIsValid_ = mcp2210_.getChipStatus(errcnt, errstr).pwok;
     validateOperation(tr("read device configuration"), errcnt, errstr);
 }
 
@@ -1007,6 +978,49 @@ void ConfiguratorWindow::validateOperation(const QString &operation, int errcnt,
             errmsg_ = tr("Failed to %1. The operation returned the following error(s):\n– %2", "", errcnt).arg(operation, errstr.replace("\n", "\n– "));
         }
     }
+}
+
+// Prompts the user for a password, validating it and returning true if valid
+bool ConfiguratorWindow::validatePassword()
+{
+    bool retval = false;
+    PasswordDialog passwordDialog(this);
+    if (passwordDialog.exec() == QDialog::Accepted) {
+        err_ = false;
+        int errcnt = 0;
+        QString errstr;
+        quint8 response = mcp2210_.usePassword(passwordDialog.passwordLineEditText(), errcnt, errstr);
+        validateOperation(tr("use password"), errcnt, errstr);
+        if (err_) {  // If an error has occured
+            handleError();
+        } else {  // Success
+            if (!statusDialog_.isNull()) {  // This updates the status dialog, but only the fields pertaining to the password, if such is open
+                MCP2210::ChipStatus chipStatus = mcp2210_.getChipStatus(errcnt, errstr);
+                validateOperation(tr("retrieve device status"), errcnt, errstr);
+                if (err_) {  // If an error has occured
+                    handleError();
+                } else {  // Success
+                    statusDialog_->setPasswordStatusValueLabelText(chipStatus.pwok);
+                    statusDialog_->setPasswordTriesValueLabelText(chipStatus.pwtries);
+                }
+            }
+            if (response == MCP2210::COMPLETED) {  // If error check passes and password is verified
+                setUsePasswordEnabled(false);  // Disable "Use Password" action
+                // TODO Keep valid password
+                passwordIsValid_ = true;
+                retval = true;
+            } else if (response == MCP2210::BLOCKED) {  // If error check passes and access is blocked
+                deviceConfiguration_.accessMode = MCP2210::ACLOCKED;  // From this point on, the device will be viewed as if it was locked
+                displayConfiguration(deviceConfiguration_);
+                QMessageBox::warning(this, tr("Access Blocked"), tr("The password was not accepted and access is temporarily blocked. Please disconnect and reconnect your device, and try again."));
+            } else if (response == MCP2210::REJECTED) {  // If error check passes and access is somehow rejected
+                QMessageBox::warning(this, tr("Access Rejected"), tr("Full write access to the NVRAM was rejected for unknown reasons."));
+            } else if (response == MCP2210::WRONG_PASSWORD) {  // If error check passes and password is not verified
+                QMessageBox::warning(this, tr("Access Denied"), tr("The password was not accepted. Please try again."));
+            }
+        }
+    }
+    return retval;
 }
 
 // Overwrites the contents of the MCP2210 EEPROM

@@ -32,6 +32,7 @@ struct Configuration
     MCP2210::USBParameters usbParameters;
     MCP2210::ChipSettings chipSettings;
     MCP2210::SPISettings spiSettings;
+    quint8 accessMode;
 
     bool operator ==(const Configuration &other) const;
     bool operator !=(const Configuration &other) const;
