@@ -102,7 +102,7 @@ private:
     void configureDevice();
     void disableView();
     void displayChipSettings(const MCP2210::ChipSettings &chipSettings);
-    void displayConfiguration(const Configuration &configuration);
+    void displayConfiguration(const Configuration &configuration, bool fullUpdate);
     void displayManufacturer(const QString &manufacturer);
     void displayNVRAMAccessMode(quint8 accessMode);
     void displayProduct(const QString &product);

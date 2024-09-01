@@ -70,7 +70,7 @@ void ConfiguratorWindow::openDevice(quint16 vid, quint16 pid, const QString &ser
             this->deleteLater();  // Close window after the subsequent show() call
         } else {  // Device is now open
             this->setWindowTitle(tr("MCP2210 Device (S/N: %1)").arg(serialstr));
-            displayConfiguration(deviceConfiguration_);
+            displayConfiguration(deviceConfiguration_, true);
             serialstr_ = serialstr;  // Pass the serial number
             viewEnabled_ = true;
         }
@@ -420,7 +420,7 @@ void ConfiguratorWindow::on_pushButtonRevealRepeatPassword_released()
 
 void ConfiguratorWindow::on_pushButtonRevert_clicked()
 {
-    displayConfiguration(deviceConfiguration_);
+    displayConfiguration(deviceConfiguration_, false);
 }
 
 void ConfiguratorWindow::on_pushButtonWrite_clicked()
@@ -478,7 +478,7 @@ void ConfiguratorWindow::verifyConfiguration()
 {
     readDeviceConfiguration();
     if (!err_) {
-        displayConfiguration(deviceConfiguration_);
+        displayConfiguration(deviceConfiguration_, true);
         if (deviceConfiguration_ != editedConfiguration_) {
             err_ = true;
             errmsg_ = tr("Failed verification.");
@@ -586,19 +586,21 @@ void ConfiguratorWindow::displayChipSettings(const MCP2210::ChipSettings &chipSe
 }
 
 // This is the main display routine, used to display the given configuration, updating all fields accordingly
-void ConfiguratorWindow::displayConfiguration(const Configuration &configuration)
+void ConfiguratorWindow::displayConfiguration(const Configuration &configuration, bool fullUpdate)
 {
-    setUsePasswordEnabled(!passwordIsLocked_ && configuration.accessMode == MCP2210::ACPASSWORD && !passwordIsValid_);
     displayManufacturer(configuration.manufacturer);
     displayProduct(configuration.product);
     displayUSBParameters(configuration.usbParameters);
     displayNVRAMAccessMode(configuration.accessMode);
-    setGeneralSettingsEnabled(!passwordIsLocked_ && configuration.accessMode != MCP2210::ACLOCKED);
     displayChipSettings(configuration.chipSettings);
-    setChipSettingsEnabled(!passwordIsLocked_ && configuration.accessMode != MCP2210::ACLOCKED);
     displaySPISettings(configuration.spiSettings);
-    setSPISettingsEnabled(!passwordIsLocked_ && configuration.accessMode != MCP2210::ACLOCKED);
-    setWriteEnabled(!passwordIsLocked_ && configuration.accessMode != MCP2210::ACLOCKED);
+    if (fullUpdate) {
+        setUsePasswordEnabled(!passwordIsLocked_ && configuration.accessMode == MCP2210::ACPASSWORD && !passwordIsValid_);
+        setGeneralSettingsEnabled(!passwordIsLocked_ && configuration.accessMode != MCP2210::ACLOCKED);
+        setChipSettingsEnabled(!passwordIsLocked_ && configuration.accessMode != MCP2210::ACLOCKED);
+        setSPISettingsEnabled(!passwordIsLocked_ && configuration.accessMode != MCP2210::ACLOCKED);
+        setWriteEnabled(!passwordIsLocked_ && configuration.accessMode != MCP2210::ACLOCKED);
+    }
 }
 
 // Updates the manufacturer descriptor field
@@ -801,7 +803,7 @@ void ConfiguratorWindow::loadConfigurationFromFile(QFile &file)
         if (err_) {  // If an error has occured
             handleError();
         }
-        displayConfiguration(editedConfiguration_);
+        displayConfiguration(editedConfiguration_, false);
     }
 }
 
@@ -1014,7 +1016,7 @@ bool ConfiguratorWindow::validatePassword()
                 retval = true;
             } else if (response == MCP2210::BLOCKED || chipStatus.pwtries > 4) {  // If access is blocked (redundancy is necessary)
                 passwordIsLocked_ = true;  // From this point on, the device will be viewed as if it was locked
-                displayConfiguration(deviceConfiguration_);
+                displayConfiguration(deviceConfiguration_, true);
                 QMessageBox::warning(this, tr("Access Blocked"), tr("The password was not accepted and access is temporarily blocked. Please disconnect and reconnect your device, and try again."));
             } else if (response == MCP2210::REJECTED) {  // If access is somehow rejected
                 QMessageBox::warning(this, tr("Access Rejected"), tr("Full write access to the NVRAM was rejected for unknown reasons."));
