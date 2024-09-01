@@ -51,7 +51,7 @@ private:
     void readWordGeneric(const QString &name, quint16 &toVariable, quint16 min, quint16 max);
 
 public:
-    ConfigurationReader(Configuration &configuration);
+    explicit ConfigurationReader(Configuration &configuration);
 
     QString errorString() const;
 

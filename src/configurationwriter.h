@@ -51,7 +51,7 @@ private:
     void writeWordGeneric(const QString &name, quint16 value);
 
 public:
-    ConfigurationWriter(const Configuration &configuration);
+    explicit ConfigurationWriter(const Configuration &configuration);
 
     void writeTo(QIODevice *device);
 };
