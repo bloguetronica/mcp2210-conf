@@ -203,17 +203,29 @@ void ConfiguratorWindow::on_actionUsePassword_triggered()
         validateOperation(tr("use password"), errcnt, errstr);
         if (err_) {  // If an error has occured
             handleError();
-        } else if (response == MCP2210::COMPLETED) {  // If error check passes and password is verified
-            // TODO Disable "Use Password" action?
-            QMessageBox::information(this, tr("Access Granted"), tr("The password was successfully entered and full write access to the NVRAM is now granted."));
-        } else if (response == MCP2210::BLOCKED) {  // If error check passes and access is blocked
-            // TODO Disable "Write" button?
-            QMessageBox::warning(this, tr("Access Blocked"), tr("The password was not accepted and access is temporarily blocked. Please disconnect and reconnect your device, and try again."));
-        } else if (response == MCP2210::REJECTED) {  // If error check passes and access is somehow rejected
-            // TODO Disable "Write" button?
-            QMessageBox::warning(this, tr("Access Rejected"), tr("Full write access to the NVRAM was rejected for unknown reasons."));
-        } else if (response == MCP2210::WRONG_PASSWORD) {  // If error check passes and password is not verified
-            QMessageBox::warning(this, tr("Access Denied"), tr("The password was not accepted. Please try again."));
+        } else {  // Success
+            if (!statusDialog_.isNull()) {  // This updates the status dialog, but only the fields pertaining to the password, if such is open
+                MCP2210::ChipStatus chipStatus = mcp2210_.getChipStatus(errcnt, errstr);
+                validateOperation(tr("retrieve device status"), errcnt, errstr);
+                if (err_) {  // If an error has occured
+                    handleError();
+                } else {  // Success
+                    statusDialog_->setPasswordStatusValueLabelText(chipStatus.pwok);
+                    statusDialog_->setPasswordTriesValueLabelText(chipStatus.pwtries);
+                }
+            }
+            if (response == MCP2210::COMPLETED) {  // If error check passes and password is verified
+                // TODO Disable "Use Password" action?
+                QMessageBox::information(this, tr("Access Granted"), tr("The password was successfully entered and full write access to the NVRAM is now granted."));
+            } else if (response == MCP2210::BLOCKED) {  // If error check passes and access is blocked
+                // TODO Disable write and enter read-only mode?
+                QMessageBox::warning(this, tr("Access Blocked"), tr("The password was not accepted and access is temporarily blocked. Please disconnect and reconnect your device, and try again."));
+            } else if (response == MCP2210::REJECTED) {  // If error check passes and access is somehow rejected
+                // TODO Disable write and enter read-only mode?
+                QMessageBox::warning(this, tr("Access Rejected"), tr("Full write access to the NVRAM was rejected for unknown reasons."));
+            } else if (response == MCP2210::WRONG_PASSWORD) {  // If error check passes and password is not verified
+                QMessageBox::warning(this, tr("Access Denied"), tr("The password was not accepted. Please try again."));
+            }
         }
     }
 }
