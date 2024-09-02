@@ -79,16 +79,16 @@ void MainWindow::on_pushButtonOpen_clicked()
 {
     QString serialstr = ui->comboBoxDevices->currentText();  // Extract the serial number from the chosen item in the combo box
     QString usbidstr = QString("%1%2%3").arg(vid_, 4, 16, QChar('0')).arg(pid_, 4, 16, QChar('0')).arg(serialstr);  // Unique identifier string for the USB device
-    ConfiguratorWindow *confWindow;
-    if (confWindowMap_.contains(usbidstr) && !confWindowMap_[usbidstr].isNull() && (confWindow = confWindowMap_[usbidstr].data())->isViewEnabled()) {  // If the device is already mapped, and its window is open but not disabled
-        confWindow->showNormal();  // Required if the corresponding device window is minimized
-        confWindow->activateWindow();  // Set focus on the device window (window is raised and selected)
+    ConfiguratorWindow *configuratorWindow;
+    if (configuratorWindowMap_.contains(usbidstr) && !configuratorWindowMap_[usbidstr].isNull() && (configuratorWindow = configuratorWindowMap_[usbidstr].data())->isViewEnabled()) {  // If the device is already mapped, and its window is open but not disabled
+        configuratorWindow->showNormal();  // Required if the corresponding device window is minimized
+        configuratorWindow->activateWindow();  // Set focus on the device window (window is raised and selected)
     } else {
-        confWindow = new ConfiguratorWindow(this);  // Create a new window that will close when its parent window closes
-        confWindow->setAttribute(Qt::WA_DeleteOnClose);  // This will not only free the allocated memory once the window is closed, but will also automatically call the destructor of the respective device, which in turn closes it
-        confWindow->openDevice(vid_, pid_, serialstr);  // Access the selected device and prepare its view
-        confWindow->show();  // Then open the corresponding window
-        confWindowMap_[usbidstr] = confWindow;  // Map the device window, via a QPointer, to the unique identifier string of the device
+        configuratorWindow = new ConfiguratorWindow(this);  // Create a new window that will close when its parent window closes
+        configuratorWindow->setAttribute(Qt::WA_DeleteOnClose);  // This will not only free the allocated memory once the window is closed, but will also automatically call the destructor of the respective device, which in turn closes it
+        configuratorWindow->openDevice(vid_, pid_, serialstr);  // Access the selected device and prepare its view
+        configuratorWindow->show();  // Then open the corresponding window
+        configuratorWindowMap_[usbidstr] = configuratorWindow;  // Map the device window, via a QPointer, to the unique identifier string of the device
     }
 }
 

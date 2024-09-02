@@ -53,7 +53,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    QMap<QString, QPointer<ConfiguratorWindow>> confWindowMap_;
+    QMap<QString, QPointer<ConfiguratorWindow>> configuratorWindowMap_;
     quint16 pid_, vid_;
 
     void refresh();
