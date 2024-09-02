@@ -28,6 +28,9 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+// Definitions
+const int CENTRAL_HEIGHT = 171;
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -47,6 +50,12 @@ void MainWindow::closeEvent(QCloseEvent *event)
 {
     Q_UNUSED(event);
     closeAboutDialog();  // See "common.h" and "common.cpp"
+}
+
+void MainWindow::resizeEvent(QResizeEvent *event)
+{
+    Q_UNUSED(event);
+    this->setFixedHeight(ui->menuBar->height() + CENTRAL_HEIGHT);
 }
 
 void MainWindow::on_actionAbout_triggered()

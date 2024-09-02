@@ -22,9 +22,11 @@
 #define MAINWINDOW_H
 
 // Includes
+#include <QCloseEvent>
 #include <QMainWindow>
 #include <QMap>
 #include <QPointer>
+#include <QResizeEvent>
 #include <QString>
 #include "configuratorwindow.h"
 
@@ -42,6 +44,7 @@ public:
 
 protected:
     void closeEvent(QCloseEvent *event);
+    void resizeEvent(QResizeEvent *event);
 
 private slots:
     void on_actionAbout_triggered();

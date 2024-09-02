@@ -34,6 +34,9 @@
 #include "configuratorwindow.h"
 #include "ui_configuratorwindow.h"
 
+// Definitions
+const int CENTRAL_HEIGHT = 581;
+
 ConfiguratorWindow::ConfiguratorWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::ConfiguratorWindow)
@@ -85,6 +88,12 @@ void ConfiguratorWindow::openDevice(quint16 vid, quint16 pid, const QString &ser
         }
         this->deleteLater();  // Close window after the subsequent show() call
     }
+}
+
+void ConfiguratorWindow::resizeEvent(QResizeEvent *event)
+{
+    Q_UNUSED(event);
+    this->setFixedHeight(ui->menuBar->height() + CENTRAL_HEIGHT);
 }
 
 // Applies the chip settings to the MCP2210 volatile memory area

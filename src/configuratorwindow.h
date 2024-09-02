@@ -25,6 +25,7 @@
 #include <QFile>
 #include <QMainWindow>
 #include <QPointer>
+#include <QResizeEvent>
 #include <QString>
 #include <QStringList>
 #include "configuration.h"
@@ -46,6 +47,9 @@ public:
 
     bool isViewEnabled();
     void openDevice(quint16 vid, quint16 pid, const QString &serialstr);
+
+protected:
+    void resizeEvent(QResizeEvent *event);
 
 private slots:
     void applyChipSettings();
