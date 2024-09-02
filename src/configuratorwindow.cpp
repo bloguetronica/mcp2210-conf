@@ -229,25 +229,27 @@ void ConfiguratorWindow::on_actionVerifyEEPROM_triggered()
 
 void ConfiguratorWindow::on_actionWriteEEPROM_triggered()
 {
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Load EEPROM Contents from File"), binFilePath, tr("Binary files (*.bin);;All files (*)"));
-    if (!fileName.isEmpty()) {  // Note that the previous dialog will return an empty string if the user cancels it
-        QFile file(fileName);
-        if (!file.open(QIODevice::ReadOnly)) {
-            QMessageBox::critical(this, tr("Error"), tr("Could not read from %1.\n\nPlease verify that you have read access to this file.").arg(QDir::toNativeSeparators(fileName)));
-        } else if (file.bytesAvailable() != MCP2210::EEPROM_SIZE) {
-            QMessageBox::critical(this, tr("Error"), tr("The selected file is not a valid MCP2210 EEPROM binary file."));
-        } else {
-            MCP2210EEPROM eepromFromFile;
-            QDataStream in(&file);
-            in >> eepromFromFile;
-            file.close();
-            binFilePath = fileName;
-            err_ = false;
-            writeEEPROM(eepromFromFile);
-            if (err_) {  // If an error has occured
-                handleError();
-            } else {  // Success
-                QMessageBox::information(this, tr("EEPROM Written"), tr("EEPROM was successfully written."));
+    if (deviceConfiguration_.accessMode == MCP2210::ACNONE || (deviceConfiguration_.accessMode == MCP2210::ACPASSWORD && (passwordIsValid_ || validatePassword()))) {
+        QString fileName = QFileDialog::getOpenFileName(this, tr("Load EEPROM Contents from File"), binFilePath, tr("Binary files (*.bin);;All files (*)"));
+        if (!fileName.isEmpty()) {  // Note that the previous dialog will return an empty string if the user cancels it
+            QFile file(fileName);
+            if (!file.open(QIODevice::ReadOnly)) {
+                QMessageBox::critical(this, tr("Error"), tr("Could not read from %1.\n\nPlease verify that you have read access to this file.").arg(QDir::toNativeSeparators(fileName)));
+            } else if (file.bytesAvailable() != MCP2210::EEPROM_SIZE) {
+                QMessageBox::critical(this, tr("Error"), tr("The selected file is not a valid MCP2210 EEPROM binary file."));
+            } else {
+                MCP2210EEPROM eepromFromFile;
+                QDataStream in(&file);
+                in >> eepromFromFile;
+                file.close();
+                binFilePath = fileName;
+                err_ = false;
+                writeEEPROM(eepromFromFile);
+                if (err_) {  // If an error has occured
+                    handleError();
+                } else {  // Success
+                    QMessageBox::information(this, tr("EEPROM Written"), tr("EEPROM was successfully written."));
+                }
             }
         }
     }
@@ -425,18 +427,18 @@ void ConfiguratorWindow::on_pushButtonRevert_clicked()
 
 void ConfiguratorWindow::on_pushButtonWrite_clicked()
 {
-    if (mcp2210_.isOpen()) {  // It is important to check if the device is open, since resetDevice() is non-blocking (a device reset could still be underway)
-        if(showInvalidInput()) {
-            QMessageBox::critical(this, tr("Error"), tr("One or more fields have invalid information.\n\nPlease correct the information in the fields highlighted in red."));
+    if(showInvalidInput()) {
+        QMessageBox::critical(this, tr("Error"), tr("One or more fields have invalid information.\n\nPlease correct the information in the fields highlighted in red."));
+    } else {
+        getEditedConfiguration();
+        if (editedConfiguration_ == deviceConfiguration_ && (editedConfiguration_.accessMode != MCP2210::ACPASSWORD || ui->checkBoxDoNotChangePassword->isChecked())) {
+            QMessageBox::information(this, tr("No Changes Done"), tr("No changes were effected, because no values were modified."));
         } else {
-            getEditedConfiguration();
-            if (editedConfiguration_ == deviceConfiguration_ && (editedConfiguration_.accessMode != MCP2210::ACPASSWORD || ui->checkBoxDoNotChangePassword->isChecked())) {
-                QMessageBox::information(this, tr("No Changes Done"), tr("No changes were effected, because no values were modified."));
-            } else {
-                int qmret = QMessageBox::question(this, tr("Write Configuration?"), tr("This will write the changes to the NVRAM of your device.\n\nDo you wish to proceed?"), QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
-                if (qmret == QMessageBox::Yes && (deviceConfiguration_.accessMode == MCP2210::ACNONE || (deviceConfiguration_.accessMode == MCP2210::ACPASSWORD && (passwordIsValid_ || validatePassword())))) {
-                    configureDevice();
-                }
+            int qmret = QMessageBox::question(this, tr("Write Configuration?"), tr("This will write the changes to the NVRAM of your device.\n\nDo you wish to proceed?"),
+                                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+            if (qmret == QMessageBox::Yes && (deviceConfiguration_.accessMode == MCP2210::ACNONE ||  // If the user clicks "Yes", depending on the access mode, the program will either proceed to device configuration
+                                              (deviceConfiguration_.accessMode == MCP2210::ACPASSWORD && (passwordIsValid_ || validatePassword())))) {  // or will prompt the user first for a password if not validated
+                configureDevice();
             }
         }
     }
@@ -942,6 +944,7 @@ void ConfiguratorWindow::setUsePasswordEnabled(bool value)
 // Enables or disables editing related actions, buttons and checkboxes
 void ConfiguratorWindow::setWriteEnabled(bool value)
 {
+    ui->actionWriteEEPROM->setEnabled(value);
     ui->actionLoadConfiguration->setEnabled(value);
     ui->pushButtonRevert->setEnabled(value);
     ui->checkBoxApplyImmediately->setEnabled(value);

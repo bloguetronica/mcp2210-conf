@@ -1712,7 +1712,7 @@
      <x>0</x>
      <y>0</y>
      <width>471</width>
-     <height>30</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuDevice">
@@ -1778,6 +1778,9 @@
    </property>
   </action>
   <action name="actionWriteEEPROM">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>&amp;Write...</string>
    </property>
