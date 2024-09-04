@@ -62,9 +62,9 @@ bool ConfiguratorWindow::isViewEnabled()
 }
 
 // Opens the device and prepares the corresponding window
-void ConfiguratorWindow::openDevice(quint16 vid, quint16 pid, const QString &serialstr)
+void ConfiguratorWindow::openDevice(quint16 vid, quint16 pid, const QString &serialString)
 {
-    int err = mcp2210_.open(vid, pid, serialstr);
+    int err = mcp2210_.open(vid, pid, serialString);
     if (err == MCP2210::SUCCESS) {  // Device was successfully opened
         err_ = false;
         readDeviceConfiguration();
@@ -72,9 +72,9 @@ void ConfiguratorWindow::openDevice(quint16 vid, quint16 pid, const QString &ser
             handleError();
             this->deleteLater();  // Close window after the subsequent show() call
         } else {  // Device is now open
-            this->setWindowTitle(tr("MCP2210 Device (S/N: %1)").arg(serialstr));
+            this->setWindowTitle(tr("MCP2210 Device (S/N: %1)").arg(serialString));
             displayConfiguration(deviceConfiguration_, true);
-            serialstr_ = serialstr;  // Pass the serial number
+            serialString_ = serialString;  // Pass the serial number
             viewEnabled_ = true;
         }
     } else if (err == MCP2210::ERROR_INIT) {  // Failed to initialize libusb
@@ -188,7 +188,7 @@ void ConfiguratorWindow::on_actionStatus_triggered()
         } else {  // Success
             statusDialog_ = new StatusDialog(this);
             statusDialog_->setAttribute(Qt::WA_DeleteOnClose);  // It is important to delete the dialog in memory once closed, in order to force the application to retrieve the device status if the window is opened again???
-            statusDialog_->setWindowTitle(tr("Device Status (S/N: %1)").arg(serialstr_));
+            statusDialog_->setWindowTitle(tr("Device Status (S/N: %1)").arg(serialString_));
             statusDialog_->setBusRequestValueLabelText(chipStatus.busreq);
             statusDialog_->setBusOwnerValueLabelText(chipStatus.busowner);
             statusDialog_->setPasswordStatusValueLabelText(chipStatus.pwok);
@@ -1023,7 +1023,7 @@ bool ConfiguratorWindow::validatePassword()
             }
             if (response == MCP2210::COMPLETED) {  // If error check passes and password is verified
                 setUsePasswordEnabled(false);  // Disable "Use Password" action
-                // TODO Keep valid password
+                validPassword_ = passwordDialog.passwordLineEditText();
                 passwordIsValid_ = true;
                 retval = true;
             } else if (response == MCP2210::BLOCKED || chipStatus.pwtries > 4) {  // If access is blocked (redundancy is necessary)

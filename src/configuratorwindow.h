@@ -46,7 +46,7 @@ public:
     ~ConfiguratorWindow();
 
     bool isViewEnabled();
-    void openDevice(quint16 vid, quint16 pid, const QString &serialstr);
+    void openDevice(quint16 vid, quint16 pid, const QString &serialString);
 
 protected:
     void resizeEvent(QResizeEvent *event);
@@ -100,7 +100,7 @@ private:
     Configuration deviceConfiguration_, editedConfiguration_;
     MCP2210 mcp2210_;
     QPointer<StatusDialog> statusDialog_;
-    QString errmsg_, serialstr_;
+    QString errmsg_, serialString_, validPassword_;
     bool err_, passwordIsLocked_, passwordIsValid_, viewEnabled_ = false;
 
     void configureDevice();
