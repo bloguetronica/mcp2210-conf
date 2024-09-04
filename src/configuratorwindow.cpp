@@ -842,7 +842,8 @@ QStringList ConfiguratorWindow::prepareTaskList()
     if (editedConfiguration_.spiSettings != deviceConfiguration_.spiSettings) {
         tasks += "writeSPISettings";
     }
-    if (editedConfiguration_.chipSettings != deviceConfiguration_.chipSettings) {
+    if (editedConfiguration_.chipSettings != deviceConfiguration_.chipSettings || editedConfiguration_.accessMode != deviceConfiguration_.accessMode ||
+        (editedConfiguration_.accessMode == MCP2210::ACPASSWORD && !ui->checkBoxDoNotChangePassword->isChecked())) {
         tasks += "writeChipSettings";  // Depending on the user's choice, this may protect or even lock the device
     }
     tasks += "verifyConfiguration";
