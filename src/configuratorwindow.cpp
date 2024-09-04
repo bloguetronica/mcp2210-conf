@@ -271,8 +271,10 @@ void ConfiguratorWindow::on_checkBoxDoNotChangePassword_stateChanged(int state)
         ui->lineEditRepeatPassword->clear();
     }
     ui->lineEditNewPassword->setEnabled(state == Qt::Unchecked);
+    ui->lineEditNewPassword->setStyleSheet(state == Qt::Unchecked ? "background: rgb(255, 204, 0);" : "");
     ui->pushButtonRevealNewPassword->setEnabled(state == Qt::Unchecked && !ui->lineEditNewPassword->text().isEmpty());
     ui->lineEditRepeatPassword->setEnabled(state == Qt::Unchecked);
+    ui->lineEditRepeatPassword->setStyleSheet(state == Qt::Unchecked ? "background: rgb(255, 204, 0);" : "");
     ui->pushButtonRevealRepeatPassword->setEnabled(state == Qt::Unchecked && !ui->lineEditRepeatPassword->text().isEmpty());
 }
 
@@ -349,7 +351,7 @@ void ConfiguratorWindow::on_lineEditMaxPowerHex_textEdited(const QString &text)
 void ConfiguratorWindow::on_lineEditNewPassword_textChanged(const QString &text)
 {
     ui->pushButtonRevealNewPassword->setEnabled(!text.isEmpty());
-    if (ui->lineEditNewPassword->text() != ui->lineEditRepeatPassword->text()) {
+    if (ui->lineEditNewPassword->text().isEmpty() || ui->lineEditNewPassword->text() != ui->lineEditRepeatPassword->text()) {
         ui->lineEditNewPassword->setStyleSheet("background: rgb(255, 204, 0);");
         ui->lineEditRepeatPassword->setStyleSheet("background: rgb(255, 204, 0);");
     } else {
@@ -384,7 +386,7 @@ void ConfiguratorWindow::on_lineEditProduct_textEdited()
 void ConfiguratorWindow::on_lineEditRepeatPassword_textChanged(const QString &text)
 {
     ui->pushButtonRevealRepeatPassword->setEnabled(!text.isEmpty());
-    if (ui->lineEditNewPassword->text() != ui->lineEditRepeatPassword->text()) {
+    if (ui->lineEditNewPassword->text().isEmpty() || ui->lineEditNewPassword->text() != ui->lineEditRepeatPassword->text()) {
         ui->lineEditNewPassword->setStyleSheet("background: rgb(255, 204, 0);");
         ui->lineEditRepeatPassword->setStyleSheet("background: rgb(255, 204, 0);");
     } else {
@@ -463,8 +465,10 @@ void ConfiguratorWindow::on_radioButtonPasswordProtected_toggled(bool checked)
     ui->checkBoxDoNotChangePassword->setChecked(checked && deviceConfiguration_.accessMode == MCP2210::ACPASSWORD);
     ui->checkBoxDoNotChangePassword->setEnabled(checked && deviceConfiguration_.accessMode == MCP2210::ACPASSWORD);
     ui->lineEditNewPassword->setEnabled(checked && !ui->checkBoxDoNotChangePassword->isChecked());
+    ui->lineEditNewPassword->setStyleSheet((checked && !ui->checkBoxDoNotChangePassword->isChecked()) ? "background: rgb(255, 204, 0);" : "");
     ui->pushButtonRevealNewPassword->setEnabled(checked && !ui->checkBoxDoNotChangePassword->isChecked() && !ui->lineEditNewPassword->text().isEmpty());
     ui->lineEditRepeatPassword->setEnabled(checked && !ui->checkBoxDoNotChangePassword->isChecked());
+    ui->lineEditRepeatPassword->setStyleSheet((checked && !ui->checkBoxDoNotChangePassword->isChecked()) ? "background: rgb(255, 204, 0);" : "");
     ui->pushButtonRevealRepeatPassword->setEnabled(checked && !ui->checkBoxDoNotChangePassword->isChecked() && !ui->lineEditNewPassword->text().isEmpty());
 }
 
@@ -989,7 +993,8 @@ bool ConfiguratorWindow::showInvalidInput()
         ui->lineEditMaxPowerHex->setStyleSheet("background: rgb(255, 102, 102);");
         retval = true;
     }
-    if (ui->lineEditNewPassword->text() != ui->lineEditRepeatPassword->text()) {
+    if (ui->radioButtonPasswordProtected->isChecked() && !ui->checkBoxDoNotChangePassword->isChecked() &&
+        (ui->lineEditNewPassword->text().isEmpty() || ui->lineEditNewPassword->text() != ui->lineEditRepeatPassword->text())) {
         ui->lineEditNewPassword->setStyleSheet("background: rgb(255, 102, 102);");
         ui->lineEditRepeatPassword->setStyleSheet("background: rgb(255, 102, 102);");
         retval = true;
