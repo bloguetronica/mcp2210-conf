@@ -445,14 +445,13 @@ void ConfiguratorWindow::on_pushButtonWrite_clicked()
         if (editedConfiguration_ == deviceConfiguration_ && (editedConfiguration_.accessMode != MCP2210::ACPASSWORD || ui->checkBoxDoNotChangePassword->isChecked())) {
             QMessageBox::information(this, tr("No Changes Done"), tr("No changes were effected, because no settings were modified."));
         } else {
-            QString message;
+            QString question;
             if (editedConfiguration_.accessMode == MCP2210::ACLOCKED) {
-                message = tr("This will write the changes to the NVRAM of your device. These changes will be permanent and irreversible.\n\nDo you still wish to proceed?");
+                question = tr("This will write the changes to the NVRAM of your device. These changes will be permanent and irreversible.\n\nDo you still wish to proceed?");
             } else {
-                message = tr("This will write the changes to the NVRAM of your device.\n\nDo you wish to proceed?");
+                question = tr("This will write the changes to the NVRAM of your device.\n\nDo you wish to proceed?");
             }
-            int qmret = QMessageBox::question(this, tr("Write Configuration?"), message,
-                                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+            int qmret = QMessageBox::question(this, tr("Write Configuration?"), question, QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
             if (qmret == QMessageBox::Yes && (deviceConfiguration_.accessMode == MCP2210::ACNONE ||  // If the user clicks "Yes", depending on the access mode, the program will either proceed to device configuration
                                               (deviceConfiguration_.accessMode == MCP2210::ACPASSWORD && (passwordIsValid_ || validatePassword())))) {  // or will prompt the user first for a password if not validated
                 configureDevice();
