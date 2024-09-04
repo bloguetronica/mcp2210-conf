@@ -500,9 +500,17 @@ void ConfiguratorWindow::verifyConfiguration()
 // Writes the chip settings to the MCP2210 NVRAM
 void ConfiguratorWindow::writeChipSettings()
 {
+    QString password;
+    if (editedConfiguration_.accessMode == MCP2210::ACPASSWORD) {
+        if (ui->checkBoxDoNotChangePassword->isChecked()) {
+            password = validPassword_;
+        } else {
+            password = ui->lineEditNewPassword->text();
+        }
+    }
     int errcnt = 0;
     QString errstr;
-    mcp2210_.writeNVChipSettings(editedConfiguration_.chipSettings, MCP2210::ACNONE, "", errcnt, errstr);  // TODO Implement password protection
+    mcp2210_.writeNVChipSettings(editedConfiguration_.chipSettings, editedConfiguration_.accessMode, password, errcnt, errstr);
     validateOperation(tr("write chip settings"), errcnt, errstr);
 }
 
