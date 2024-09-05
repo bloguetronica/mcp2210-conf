@@ -130,50 +130,50 @@
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="539"/>
-        <location filename="../configuratorwindow.ui" line="615"/>
-        <location filename="../configuratorwindow.ui" line="643"/>
-        <location filename="../configuratorwindow.ui" line="708"/>
-        <location filename="../configuratorwindow.ui" line="757"/>
-        <location filename="../configuratorwindow.ui" line="870"/>
-        <location filename="../configuratorwindow.ui" line="903"/>
-        <location filename="../configuratorwindow.ui" line="952"/>
-        <location filename="../configuratorwindow.ui" line="1039"/>
+        <location filename="../configuratorwindow.ui" line="599"/>
+        <location filename="../configuratorwindow.ui" line="659"/>
+        <location filename="../configuratorwindow.ui" line="724"/>
+        <location filename="../configuratorwindow.ui" line="789"/>
+        <location filename="../configuratorwindow.ui" line="854"/>
+        <location filename="../configuratorwindow.ui" line="919"/>
+        <location filename="../configuratorwindow.ui" line="984"/>
+        <location filename="../configuratorwindow.ui" line="1049"/>
         <source>Input</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="544"/>
-        <location filename="../configuratorwindow.ui" line="620"/>
-        <location filename="../configuratorwindow.ui" line="648"/>
-        <location filename="../configuratorwindow.ui" line="713"/>
-        <location filename="../configuratorwindow.ui" line="762"/>
-        <location filename="../configuratorwindow.ui" line="875"/>
-        <location filename="../configuratorwindow.ui" line="908"/>
-        <location filename="../configuratorwindow.ui" line="1044"/>
+        <location filename="../configuratorwindow.ui" line="604"/>
+        <location filename="../configuratorwindow.ui" line="664"/>
+        <location filename="../configuratorwindow.ui" line="729"/>
+        <location filename="../configuratorwindow.ui" line="794"/>
+        <location filename="../configuratorwindow.ui" line="859"/>
+        <location filename="../configuratorwindow.ui" line="924"/>
+        <location filename="../configuratorwindow.ui" line="989"/>
         <source>Output</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="549"/>
-        <location filename="../configuratorwindow.ui" line="625"/>
-        <location filename="../configuratorwindow.ui" line="653"/>
-        <location filename="../configuratorwindow.ui" line="718"/>
-        <location filename="../configuratorwindow.ui" line="767"/>
-        <location filename="../configuratorwindow.ui" line="880"/>
-        <location filename="../configuratorwindow.ui" line="913"/>
-        <location filename="../configuratorwindow.ui" line="1049"/>
+        <location filename="../configuratorwindow.ui" line="609"/>
+        <location filename="../configuratorwindow.ui" line="669"/>
+        <location filename="../configuratorwindow.ui" line="734"/>
+        <location filename="../configuratorwindow.ui" line="799"/>
+        <location filename="../configuratorwindow.ui" line="864"/>
+        <location filename="../configuratorwindow.ui" line="929"/>
+        <location filename="../configuratorwindow.ui" line="994"/>
         <source>Chip select</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="566"/>
-        <location filename="../configuratorwindow.ui" line="598"/>
-        <location filename="../configuratorwindow.ui" line="675"/>
-        <location filename="../configuratorwindow.ui" line="740"/>
+        <location filename="../configuratorwindow.ui" line="626"/>
+        <location filename="../configuratorwindow.ui" line="691"/>
+        <location filename="../configuratorwindow.ui" line="756"/>
         <location filename="../configuratorwindow.ui" line="821"/>
-        <location filename="../configuratorwindow.ui" line="837"/>
-        <location filename="../configuratorwindow.ui" line="935"/>
-        <location filename="../configuratorwindow.ui" line="1006"/>
+        <location filename="../configuratorwindow.ui" line="886"/>
+        <location filename="../configuratorwindow.ui" line="951"/>
+        <location filename="../configuratorwindow.ui" line="1016"/>
         <source>High</source>
         <translation type="unfinished"></translation>
     </message>
@@ -183,73 +183,73 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.ui" line="658"/>
-        <source>Suspend</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../configuratorwindow.ui" line="688"/>
+        <location filename="../configuratorwindow.ui" line="639"/>
         <source>GP2:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.ui" line="723"/>
-        <source>USB low power</source>
+        <location filename="../configuratorwindow.ui" line="674"/>
+        <source>Suspend</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.ui" line="772"/>
-        <source>USB configured</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../configuratorwindow.ui" line="786"/>
-        <source>GP4:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../configuratorwindow.ui" line="802"/>
+        <location filename="../configuratorwindow.ui" line="704"/>
         <source>GP3:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.ui" line="850"/>
-        <source>GP5:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../configuratorwindow.ui" line="885"/>
+        <location filename="../configuratorwindow.ui" line="739"/>
         <source>SPI transfer LED</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.ui" line="918"/>
-        <source>SPI bus release ACK</source>
+        <location filename="../configuratorwindow.ui" line="769"/>
+        <source>GP4:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.ui" line="957"/>
-        <source>SPI bus release REQ</source>
+        <location filename="../configuratorwindow.ui" line="804"/>
+        <source>USB low power</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.ui" line="971"/>
-        <source>GP7:</source>
+        <location filename="../configuratorwindow.ui" line="834"/>
+        <source>GP5:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.ui" line="987"/>
+        <location filename="../configuratorwindow.ui" line="869"/>
+        <source>USB configured</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../configuratorwindow.ui" line="899"/>
         <source>GP6:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.ui" line="1019"/>
+        <location filename="../configuratorwindow.ui" line="934"/>
+        <source>External interrupt</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../configuratorwindow.ui" line="964"/>
+        <source>GP7:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../configuratorwindow.ui" line="999"/>
+        <source>SPI bus release ACK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../configuratorwindow.ui" line="1029"/>
         <source>GP8:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="1054"/>
-        <source>External interrupt</source>
+        <source>SPI bus release REQ</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
