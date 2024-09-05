@@ -6,17 +6,17 @@
     <message>
         <location filename="../aboutdialog.ui" line="26"/>
         <source>About MCP2210 Configurator</source>
-        <translation type="unfinished"></translation>
+        <translation>Acerca do MCP2210 Configurator</translation>
     </message>
     <message>
         <location filename="../aboutdialog.ui" line="68"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/images/images/banner.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../aboutdialog.ui" line="81"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Version 1.0.0&lt;br/&gt;© 2023-2024 Samuel Lourenço&lt;/p&gt;&lt;p&gt;This program is distributed under the terms of the &lt;a href=&quot;https://www.gnu.org/licenses/gpl-3.0-standalone.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;GNU GPL v3&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Versão 1.0.0&lt;br/&gt;© 2023-2024 Samuel Lourenço&lt;/p&gt;&lt;p&gt;Este programa é distribuido sob os termos da licença &lt;a href=&quot;https://www.gnu.org/licenses/gpl-3.0-standalone.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;GNU GPL v3&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -24,59 +24,59 @@
     <message>
         <location filename="../configuratorwindow.ui" line="26"/>
         <source>MCP2210 Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Dispositivo MCP2210</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="57"/>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>Geral</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="69"/>
         <source>Manufacturer:</source>
-        <translation type="unfinished"></translation>
+        <translation>Fabricante:</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="104"/>
         <source>Product:</source>
-        <translation type="unfinished"></translation>
+        <translation>Produto:</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="139"/>
         <source>Vendor ID:</source>
-        <translation type="unfinished"></translation>
+        <translation>ID fornecedor:</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="161"/>
         <location filename="../configuratorwindow.ui" line="199"/>
         <location filename="../configuratorwindow.ui" line="253"/>
         <source>0x</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="177"/>
         <source>Product ID:</source>
-        <translation type="unfinished"></translation>
+        <translation>ID produto:</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="215"/>
         <source>Max. power consumption (mA):</source>
-        <translation type="unfinished"></translation>
+        <translation>Consumo máximo (mA):</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="269"/>
         <source>Power mode:</source>
-        <translation type="unfinished"></translation>
+        <translation>Alimentação:</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="289"/>
         <source>Bus-powered</source>
-        <translation type="unfinished"></translation>
+        <translation>Via USB</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="294"/>
         <source>Self-powered</source>
-        <translation type="unfinished"></translation>
+        <translation>Própria</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="311"/>
@@ -106,17 +106,17 @@
     <message>
         <location filename="../configuratorwindow.ui" line="425"/>
         <source>New password:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nova palavra-passe:</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="441"/>
         <source>Repeat password:</source>
-        <translation type="unfinished"></translation>
+        <translation>Repetir palavra-passe:</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="500"/>
         <source>Do not change password</source>
-        <translation type="unfinished"></translation>
+        <translation>Não alterar a palavra-passe</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="507"/>
@@ -126,7 +126,7 @@
     <message>
         <location filename="../configuratorwindow.ui" line="519"/>
         <source>GP0:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="539"/>
@@ -139,7 +139,7 @@
         <location filename="../configuratorwindow.ui" line="984"/>
         <location filename="../configuratorwindow.ui" line="1049"/>
         <source>Input</source>
-        <translation type="unfinished"></translation>
+        <translation>Entrada</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="544"/>
@@ -151,7 +151,7 @@
         <location filename="../configuratorwindow.ui" line="924"/>
         <location filename="../configuratorwindow.ui" line="989"/>
         <source>Output</source>
-        <translation type="unfinished"></translation>
+        <translation>Saída</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="549"/>
@@ -163,7 +163,7 @@
         <location filename="../configuratorwindow.ui" line="929"/>
         <location filename="../configuratorwindow.ui" line="994"/>
         <source>Chip select</source>
-        <translation type="unfinished"></translation>
+        <translation>Linha de selecção</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="566"/>
@@ -175,17 +175,17 @@
         <location filename="../configuratorwindow.ui" line="951"/>
         <location filename="../configuratorwindow.ui" line="1016"/>
         <source>High</source>
-        <translation type="unfinished"></translation>
+        <translation>Alto</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="579"/>
         <source>GP1:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="639"/>
         <source>GP2:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="674"/>
@@ -195,7 +195,7 @@
     <message>
         <location filename="../configuratorwindow.ui" line="704"/>
         <source>GP3:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="739"/>
@@ -205,7 +205,7 @@
     <message>
         <location filename="../configuratorwindow.ui" line="769"/>
         <source>GP4:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="804"/>
@@ -215,7 +215,7 @@
     <message>
         <location filename="../configuratorwindow.ui" line="834"/>
         <source>GP5:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="869"/>
@@ -225,7 +225,7 @@
     <message>
         <location filename="../configuratorwindow.ui" line="899"/>
         <source>GP6:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="934"/>
@@ -235,7 +235,7 @@
     <message>
         <location filename="../configuratorwindow.ui" line="964"/>
         <source>GP7:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="999"/>
@@ -245,7 +245,7 @@
     <message>
         <location filename="../configuratorwindow.ui" line="1029"/>
         <source>GP8:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="1054"/>
@@ -255,32 +255,32 @@
     <message>
         <location filename="../configuratorwindow.ui" line="1072"/>
         <source>Disabled</source>
-        <translation type="unfinished"></translation>
+        <translation>Desabilitado</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="1077"/>
         <source>Count falling edges</source>
-        <translation type="unfinished"></translation>
+        <translation>Contar flancos desc.</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="1082"/>
         <source>Count rising edges</source>
-        <translation type="unfinished"></translation>
+        <translation>Contar flancos asc.</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="1087"/>
         <source>Count low pulses</source>
-        <translation type="unfinished"></translation>
+        <translation>Contar pulsos baixos</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="1092"/>
         <source>Count high pulses</source>
-        <translation type="unfinished"></translation>
+        <translation>Contar pulsos altos</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="1106"/>
         <source>Int. mode:</source>
-        <translation type="unfinished"></translation>
+        <translation>Modo de int.:</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="1125"/>
@@ -315,12 +315,12 @@
     <message>
         <location filename="../configuratorwindow.ui" line="1261"/>
         <source>CPOL:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="1293"/>
         <source>CPHA:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="1328"/>
@@ -331,49 +331,49 @@
         <location filename="../configuratorwindow.ui" line="1340"/>
         <location filename="../configuratorwindow.ui" line="1460"/>
         <source>0</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="1353"/>
         <location filename="../configuratorwindow.ui" line="1473"/>
         <source>1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="1366"/>
         <location filename="../configuratorwindow.ui" line="1486"/>
         <source>2</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="1379"/>
         <location filename="../configuratorwindow.ui" line="1499"/>
         <source>3</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="1392"/>
         <location filename="../configuratorwindow.ui" line="1512"/>
         <source>4</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="1405"/>
         <location filename="../configuratorwindow.ui" line="1525"/>
         <source>5</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="1418"/>
         <location filename="../configuratorwindow.ui" line="1538"/>
         <source>6</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="1431"/>
         <location filename="../configuratorwindow.ui" line="1551"/>
         <source>7</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="1448"/>
@@ -383,7 +383,7 @@
     <message>
         <location filename="../configuratorwindow.ui" line="1568"/>
         <source>Delays</source>
-        <translation type="unfinished"></translation>
+        <translation>Latências</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="1580"/>
@@ -398,114 +398,116 @@
     <message>
         <location filename="../configuratorwindow.ui" line="1638"/>
         <source>Inter-byte (100 μs):</source>
-        <translation type="unfinished"></translation>
+        <translation>Entre bytes (100 μs):</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="1673"/>
         <source>Revert</source>
-        <translation type="unfinished"></translation>
+        <translation>Reverter</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="1689"/>
         <source>Write</source>
-        <translation type="unfinished"></translation>
+        <translation>Escrever</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="1705"/>
         <source>Apply settings immediately</source>
-        <translation type="unfinished"></translation>
+        <translation>Aplicar defin. imediatamente</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="1720"/>
         <source>&amp;Device</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Dispositivo</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="1724"/>
         <source>&amp;EEPROM</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="1742"/>
         <source>&amp;Help</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Ajuda</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="1751"/>
         <source>&amp;About MCP2210 Configurator</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Acerca do MCP2210 Configurator</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="1756"/>
         <source>&amp;Status</source>
-        <translation type="unfinished"></translation>
+        <translation>E&amp;stado</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="1761"/>
         <source>&amp;Close</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Fechar</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="1764"/>
         <source>Ctrl+W</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="1772"/>
         <source>Use &amp;Password...</source>
-        <translation type="unfinished"></translation>
+        <translation>Usar &amp;Palavra-Passe</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="1777"/>
         <source>&amp;Read...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Ler...</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="1785"/>
         <source>&amp;Write...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Escrever...</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="1790"/>
         <source>&amp;Verify...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Verificar...</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="1798"/>
         <source>&amp;Load Configuration...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Carregar Configuração...</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="1801"/>
         <source>Ctrl+O</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="1806"/>
         <source>&amp;Save Configuration...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Gravar Configuração...</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="1809"/>
         <source>Ctrl+S</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../configuratorwindow.cpp" line="75"/>
         <source>MCP2210 Device (S/N: %1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Dispositivo MCP2210 (NS: %1)</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.cpp" line="81"/>
         <source>Critical Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Erro Crítico</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.cpp" line="81"/>
         <source>Could not initialize libusb.
 
 This is a critical error and execution will be aborted.</source>
-        <translation type="unfinished"></translation>
+        <translation>Falhou ao inicializar o libusb.
+
+Este é um erro crítico e a execução será abortada.</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.cpp" line="85"/>
@@ -523,19 +525,21 @@ This is a critical error and execution will be aborted.</source>
         <location filename="../configuratorwindow.cpp" line="818"/>
         <location filename="../configuratorwindow.cpp" line="827"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Erro</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.cpp" line="85"/>
         <source>Could not find device.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dispositivo não encontrado.</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.cpp" line="87"/>
         <source>Device is currently unavailable.
 
 Please confirm that the device is not in use.</source>
-        <translation type="unfinished"></translation>
+        <translation>O dispositivo encontra-se indisponível neste momento.
+
+Por favor, confirme que o mesmo não está a ser utilizado.</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.cpp" line="105"/>
@@ -550,13 +554,13 @@ Please confirm that the device is not in use.</source>
     <message>
         <location filename="../configuratorwindow.cpp" line="124"/>
         <source>Load Configuration from File</source>
-        <translation type="unfinished"></translation>
+        <translation>Carregar Configuração a partir de Ficheiro</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.cpp" line="124"/>
         <location filename="../configuratorwindow.cpp" line="164"/>
         <source>XML files (*.xml);;All files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ficheiros XML (*.xml);;Todos os ficheiros (*)</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.cpp" line="128"/>
@@ -565,19 +569,21 @@ Please confirm that the device is not in use.</source>
         <source>Could not read from %1.
 
 Please verify that you have read access to this file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Não conseguiu ler de %1.
+
+Por favor, verifique se tem permissões de leitura sobre este ficheiro.</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.cpp" line="144"/>
         <source>Save EEPROM Contents to File</source>
-        <translation type="unfinished"></translation>
+        <translation>Gravar Conteúdos da EEPROM para Ficheiro</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.cpp" line="144"/>
         <location filename="../configuratorwindow.cpp" line="213"/>
         <location filename="../configuratorwindow.cpp" line="242"/>
         <source>Binary files (*.bin);;All files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ficheiros binários (*.bin);;Todos os ficheiros (*)</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.cpp" line="148"/>
@@ -585,7 +591,9 @@ Please verify that you have read access to this file.</source>
         <source>Could not write to %1.
 
 Please verify that you have write access to this file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Não conseguiu escrever em %1.
+
+Por favor, verifique se tem permissões de escrita sobre este ficheiro.</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.cpp" line="162"/>
@@ -593,12 +601,14 @@ Please verify that you have write access to this file.</source>
         <source>One or more fields have invalid information.
 
 Please correct the information in the fields highlighted in red.</source>
-        <translation type="unfinished"></translation>
+        <translation>Um ou mais campos contêm informações inválidas.
+
+Por favor, corriga a informação nos campos marcados a vermelho.</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.cpp" line="164"/>
         <source>Save Configuration to File</source>
-        <translation type="unfinished"></translation>
+        <translation>Gravar Configuração para Ficheiro</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.cpp" line="185"/>
@@ -654,7 +664,7 @@ Please correct the information in the fields highlighted in red.</source>
     <message>
         <location filename="../configuratorwindow.cpp" line="242"/>
         <source>Load EEPROM Contents from File</source>
-        <translation type="unfinished"></translation>
+        <translation>Carregar Conteúdos da EEPROM a partir de Ficheiro</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.cpp" line="260"/>
@@ -669,12 +679,12 @@ Please correct the information in the fields highlighted in red.</source>
     <message>
         <location filename="../configuratorwindow.cpp" line="446"/>
         <source>No Changes Done</source>
-        <translation type="unfinished"></translation>
+        <translation>Sem Alterações</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.cpp" line="446"/>
         <source>No changes were effected, because no settings were modified.</source>
-        <translation type="unfinished"></translation>
+        <translation>Não houve alterações, dado que nenhum valor foi modificado.</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.cpp" line="450"/>
@@ -743,7 +753,7 @@ Do you wish to proceed?</source>
     <message>
         <location filename="../configuratorwindow.cpp" line="586"/>
         <source>&amp;Close Window</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Fechar Janela</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.cpp" line="802"/>
@@ -758,33 +768,37 @@ Do you wish to proceed?</source>
     <message>
         <location filename="../configuratorwindow.cpp" line="896"/>
         <source>read EEPROM</source>
-        <translation type="unfinished"></translation>
+        <translation>ler a EEPROM</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.cpp" line="1016"/>
         <source>Device disconnected.
 
 Please reconnect it and try again.</source>
-        <translation type="unfinished"></translation>
+        <translation>O dispositivo foi desligado.
+
+Por favor, ligue-o e tente novamente.</translation>
     </message>
     <message numerus="yes">
         <location filename="../configuratorwindow.cpp" line="1019"/>
         <source>Failed to %1. The operation returned the following error(s):
 – %2</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Falhou ao %1. A operação retornou o seguinte erro:
+– %2</numerusform>
+            <numerusform>Falhou ao %1. A operação retornou os seguintes erros:
+– %2</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../configuratorwindow.cpp" line="1035"/>
         <source>use password</source>
-        <translation type="unfinished"></translation>
+        <translation>usar palavra-passe</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.cpp" line="1051"/>
         <source>Access Blocked</source>
-        <translation type="unfinished"></translation>
+        <translation>Acesso Bloqueado</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.cpp" line="1051"/>
@@ -794,7 +808,7 @@ Please reconnect it and try again.</source>
     <message>
         <location filename="../configuratorwindow.cpp" line="1053"/>
         <source>Access Rejected</source>
-        <translation type="unfinished"></translation>
+        <translation>Acesso Rejeitado</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.cpp" line="1053"/>
@@ -804,7 +818,7 @@ Please reconnect it and try again.</source>
     <message>
         <location filename="../configuratorwindow.cpp" line="1055"/>
         <source>Access Denied</source>
-        <translation type="unfinished"></translation>
+        <translation>Acesso Negado</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.cpp" line="1055"/>
@@ -822,75 +836,76 @@ Please reconnect it and try again.</source>
     <message>
         <location filename="../mainwindow.ui" line="26"/>
         <source>MCP2210 Configurator</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="53"/>
         <source>Vendor ID:</source>
-        <translation type="unfinished"></translation>
+        <translation>ID fornecedor:</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="72"/>
         <location filename="../mainwindow.ui" line="107"/>
         <source>0x</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="88"/>
         <source>Product ID:</source>
-        <translation type="unfinished"></translation>
+        <translation>ID produto:</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="127"/>
         <location filename="../mainwindow.cpp" line="114"/>
         <source>Select device...</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccione o dispositivo...</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="144"/>
         <source>Refresh</source>
-        <translation type="unfinished"></translation>
+        <translation>Actualizar</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="160"/>
         <source>Open</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="175"/>
         <source>&amp;File</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Ficheiro</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="181"/>
         <source>&amp;Help</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Ajuda</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="190"/>
         <source>&amp;Quit</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Sair</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="193"/>
         <source>Ctrl+Q</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="198"/>
         <source>&amp;About MCP2210 Configurator</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Acerca do MCP2210 Configurator</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="117"/>
         <source>Critical Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Erro Crítico</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="117"/>
         <source>%1
 This is a critical error and execution will be aborted.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1
+Este é um erro crítico e a execução será abortada.</translation>
     </message>
 </context>
 <context>
@@ -898,12 +913,12 @@ This is a critical error and execution will be aborted.</source>
     <message>
         <location filename="../passworddialog.ui" line="26"/>
         <source>Insert Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Inserir Palavra-Passe</translation>
     </message>
     <message>
         <location filename="../passworddialog.ui" line="68"/>
         <source>Password:</source>
-        <translation type="unfinished"></translation>
+        <translation>Palavra-passe:</translation>
     </message>
 </context>
 <context>
@@ -1159,7 +1174,7 @@ The selected file is not a valid MCP2210 configuration file.</source>
     <message>
         <location filename="../statusdialog.cpp" line="73"/>
         <source>%1 of 5</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 </TS>
