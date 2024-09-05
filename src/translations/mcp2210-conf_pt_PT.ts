@@ -664,7 +664,7 @@ Por favor, corriga a informação nos campos marcados a vermelho.</translation>
     <message>
         <location filename="../configuratorwindow.cpp" line="242"/>
         <source>Load EEPROM Contents from File</source>
-        <translation>Carregar Conteúdos da EEPROM a partir do Ficheiro</translation>
+        <translation>Carregar Conteúdos para a EEPROM a partir do Ficheiro</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.cpp" line="260"/>
