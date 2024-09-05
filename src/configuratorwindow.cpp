@@ -889,9 +889,9 @@ MCP2210EEPROM ConfiguratorWindow::readEEPROM()
 {
     MCP2210EEPROM eeprom;
     this->setCursor(Qt::WaitCursor);  // This task takes quite a few tenths of a second, so it is a good idea to change the cursor to reflect that
-    int errcnt = 0;
-    QString errstr;
     for (size_t i = 0; i < MCP2210::EEPROM_SIZE; ++i) {
+        int errcnt = 0;
+        QString errstr;
         eeprom.bytes[i] = mcp2210_.readEEPROMByte(i, errcnt, errstr);
         validateOperation(tr("read EEPROM"), errcnt, errstr);
         if (err_) {  // If an error has occured
@@ -1063,9 +1063,9 @@ bool ConfiguratorWindow::validatePassword()
 void ConfiguratorWindow::writeEEPROM(MCP2210EEPROM eeprom)
 {
     this->setCursor(Qt::WaitCursor);  // This task takes several tenths of a second, so it is a good idea to change the cursor to reflect that
-    int errcnt = 0;
-    QString errstr;
     for (size_t i = 0; i < MCP2210::EEPROM_SIZE; ++i) {
+        int errcnt = 0;
+        QString errstr;
         eeprom.bytes[i] = mcp2210_.writeEEPROMByte(i, eeprom.bytes[i], errcnt, errstr);
         validateOperation(tr("write EEPROM"), errcnt, errstr);
         if (err_) {  // If an error has occured
