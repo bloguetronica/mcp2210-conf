@@ -554,7 +554,7 @@ Por favor, confirme que o mesmo não está a ser utilizado.</translation>
     <message>
         <location filename="../configuratorwindow.cpp" line="124"/>
         <source>Load Configuration from File</source>
-        <translation>Carregar Configuração do Ficheiro</translation>
+        <translation>Carregar Configuração a partir do Ficheiro</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.cpp" line="124"/>
@@ -664,7 +664,7 @@ Por favor, corriga a informação nos campos marcados a vermelho.</translation>
     <message>
         <location filename="../configuratorwindow.cpp" line="242"/>
         <source>Load EEPROM Contents from File</source>
-        <translation>Carregar Conteúdos da EEPROM do Ficheiro</translation>
+        <translation>Carregar Conteúdos da EEPROM a partir do Ficheiro</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.cpp" line="260"/>
