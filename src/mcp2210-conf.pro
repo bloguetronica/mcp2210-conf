@@ -59,6 +59,12 @@ FORMS += \
     passworddialog.ui \
     statusdialog.ui
 
+TRANSLATIONS += \
+    translations/mcp2210-conf_en.ts \
+    translations/mcp2210-conf_en_US.ts \
+    translations/mcp2210-conf_pt.ts \
+    translations/mcp2210-conf_pt_PT.ts
+
 LIBS += -lusb-1.0
 
 RESOURCES += \
