@@ -1128,12 +1128,12 @@ The selected file is not a valid MCP2210 configuration file.</source>
     <message>
         <location filename="../statusdialog.ui" line="126"/>
         <source>Password status:</source>
-        <translation>Palavra-passe:</translation>
+        <translation>Est. da palavra-passe:</translation>
     </message>
     <message>
         <location filename="../statusdialog.ui" line="155"/>
         <source>Password tries:</source>
-        <translation>Tentativas:</translation>
+        <translation>Tentativas de acesso:</translation>
     </message>
     <message>
         <location filename="../statusdialog.cpp" line="44"/>
