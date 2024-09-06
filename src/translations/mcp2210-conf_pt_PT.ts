@@ -691,24 +691,28 @@ Por favor, corriga a informação nos campos marcados a vermelho.</translation>
         <source>This will write the changes to the NVRAM of your device. These changes will be permanent and irreversible.
 
 Do you still wish to proceed?</source>
-        <translation type="unfinished"></translation>
+        <translation>Isto irá escrever as definições modificadas na NVRAM do seu dispositivo. Estas alterações serão permanentes e irreversíveis.
+
+Deseja prosseguir?</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.cpp" line="452"/>
         <source>This will write the changes to the NVRAM of your device.
 
 Do you wish to proceed?</source>
-        <translation type="unfinished"></translation>
+        <translation>Isto irá escrever as definições modificadas na NVRAM do seu dispositivo.
+
+Deseja prosseguir?</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.cpp" line="454"/>
         <source>Write Configuration?</source>
-        <translation type="unfinished"></translation>
+        <translation>Escrever Configuração?</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.cpp" line="504"/>
         <source>Failed verification.</source>
-        <translation type="unfinished"></translation>
+        <translation>A verificação falhou.</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.cpp" line="523"/>
@@ -738,17 +742,17 @@ Do you wish to proceed?</source>
     <message>
         <location filename="../configuratorwindow.cpp" line="572"/>
         <source>The device configuration could not be completed.</source>
-        <translation type="unfinished"></translation>
+        <translation>A configuração do dispositivo não foi finalizada.</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.cpp" line="577"/>
         <source>Device Configured</source>
-        <translation type="unfinished"></translation>
+        <translation>Dispositivo Configurado</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.cpp" line="577"/>
         <source>Device was successfully configured.</source>
-        <translation type="unfinished"></translation>
+        <translation>O dispositivo foi configurado com sucesso.</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.cpp" line="586"/>
@@ -828,7 +832,7 @@ Por favor, ligue-o e tente novamente.</translation>
     <message>
         <location filename="../configuratorwindow.cpp" line="1070"/>
         <source>write EEPROM</source>
-        <translation type="unfinished"></translation>
+        <translation>escrever a EEPROM</translation>
     </message>
 </context>
 <context>
