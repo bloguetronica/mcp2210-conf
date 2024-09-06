@@ -684,7 +684,7 @@ Por favor, corriga a informação nos campos marcados a vermelho.</translation>
     <message>
         <location filename="../configuratorwindow.cpp" line="446"/>
         <source>No changes were effected, because no settings were modified.</source>
-        <translation>Não houve alterações, dado que nenhum valor foi modificado.</translation>
+        <translation>Não houve alterações, dado que nenhuma definição foi modificada.</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.cpp" line="450"/>
