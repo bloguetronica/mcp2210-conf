@@ -86,22 +86,22 @@
     <message>
         <location filename="../configuratorwindow.ui" line="327"/>
         <source>NVRAM Access Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Modo de Acesso à NVRAM</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="339"/>
         <source>Full access</source>
-        <translation type="unfinished"></translation>
+        <translation>Sem restrições</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="352"/>
         <source>Password protected</source>
-        <translation type="unfinished"></translation>
+        <translation>Protegido com palavra-passe</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="409"/>
         <source>Permanently locked</source>
-        <translation type="unfinished"></translation>
+        <translation>Permanentemente bloqueado</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="425"/>
@@ -549,7 +549,7 @@ Por favor, confirme que o mesmo não está a ser utilizado.</translation>
     <message>
         <location filename="../configuratorwindow.cpp" line="114"/>
         <source>apply SPI settings</source>
-        <translation type="unfinished"></translation>
+        <translation>aplicar as definições SPI</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.cpp" line="124"/>
@@ -613,17 +613,17 @@ Por favor, corriga a informação nos campos marcados a vermelho.</translation>
     <message>
         <location filename="../configuratorwindow.cpp" line="185"/>
         <source>retrieve device status</source>
-        <translation type="unfinished"></translation>
+        <translation>obter o estado do dispositivo</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.cpp" line="191"/>
         <source>Device Status (S/N: %1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Estado do Dispositivo (NS: %1)</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.cpp" line="207"/>
         <source>Access Granted</source>
-        <translation type="unfinished"></translation>
+        <translation>Acesso Concedido</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.cpp" line="207"/>
@@ -644,7 +644,7 @@ Por favor, corriga a informação nos campos marcados a vermelho.</translation>
     <message>
         <location filename="../configuratorwindow.cpp" line="231"/>
         <source>EEPROM Verified</source>
-        <translation type="unfinished"></translation>
+        <translation>EEPROM Verificada</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.cpp" line="231"/>
@@ -654,12 +654,12 @@ Por favor, corriga a informação nos campos marcados a vermelho.</translation>
     <message>
         <location filename="../configuratorwindow.cpp" line="233"/>
         <source>EEPROM Mismatch</source>
-        <translation type="unfinished"></translation>
+        <translation>Disparidade na EEPROM</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.cpp" line="233"/>
         <source>Verification failed because EEPROM contents don&apos;t match file contents.</source>
-        <translation type="unfinished"></translation>
+        <translation>A verificação falhou porque os conteúdos da EEPROM não condizem com os conteúdos do ficheiro.</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.cpp" line="242"/>
@@ -669,12 +669,12 @@ Por favor, corriga a informação nos campos marcados a vermelho.</translation>
     <message>
         <location filename="../configuratorwindow.cpp" line="260"/>
         <source>EEPROM Written</source>
-        <translation type="unfinished"></translation>
+        <translation>EEPROM Escrita</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.cpp" line="260"/>
         <source>EEPROM was successfully written.</source>
-        <translation type="unfinished"></translation>
+        <translation>A EEPROM foi escrita com sucesso.</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.cpp" line="446"/>
@@ -732,7 +732,7 @@ Deseja prosseguir?</translation>
     <message>
         <location filename="../configuratorwindow.cpp" line="550"/>
         <source>write SPI settings</source>
-        <translation type="unfinished"></translation>
+        <translation>escrever as definições SPI</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.cpp" line="559"/>
@@ -1113,72 +1113,72 @@ The selected file is not a valid MCP2210 configuration file.</source>
     <message>
         <location filename="../statusdialog.ui" line="26"/>
         <source>Device Status</source>
-        <translation type="unfinished"></translation>
+        <translation>Estado do Dispositivo</translation>
     </message>
     <message>
         <location filename="../statusdialog.ui" line="68"/>
         <source>Bus request:</source>
-        <translation type="unfinished"></translation>
+        <translation>Req. do barramento:</translation>
     </message>
     <message>
         <location filename="../statusdialog.ui" line="97"/>
         <source>Bus owner:</source>
-        <translation type="unfinished"></translation>
+        <translation>Dono do barramento:</translation>
     </message>
     <message>
         <location filename="../statusdialog.ui" line="126"/>
         <source>Password status:</source>
-        <translation type="unfinished"></translation>
+        <translation>Palavra-passe:</translation>
     </message>
     <message>
         <location filename="../statusdialog.ui" line="155"/>
         <source>Password tries:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tentativas:</translation>
     </message>
     <message>
         <location filename="../statusdialog.cpp" line="44"/>
         <source>No owner</source>
-        <translation type="unfinished"></translation>
+        <translation>Sem dono</translation>
     </message>
     <message>
         <location filename="../statusdialog.cpp" line="47"/>
         <source>This master</source>
-        <translation type="unfinished"></translation>
+        <translation>Este mestre</translation>
     </message>
     <message>
         <location filename="../statusdialog.cpp" line="50"/>
         <source>External master</source>
-        <translation type="unfinished"></translation>
+        <translation>Mestre externo</translation>
     </message>
     <message>
         <location filename="../statusdialog.cpp" line="53"/>
         <source>Unknown</source>
-        <translation type="unfinished"></translation>
+        <translation>Desconhecido</translation>
     </message>
     <message>
         <location filename="../statusdialog.cpp" line="61"/>
         <source>Pending</source>
-        <translation type="unfinished"></translation>
+        <translation>Pendente</translation>
     </message>
     <message>
         <location filename="../statusdialog.cpp" line="61"/>
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation>Nenhum</translation>
     </message>
     <message>
         <location filename="../statusdialog.cpp" line="67"/>
         <source>Guessed</source>
-        <translation type="unfinished"></translation>
+        <translation>Descoberta</translation>
     </message>
     <message>
         <location filename="../statusdialog.cpp" line="67"/>
         <source>Not guessed</source>
-        <translation type="unfinished"></translation>
+        <translation>Não descoberta</translation>
     </message>
     <message>
         <location filename="../statusdialog.cpp" line="73"/>
         <source>%1 of 5</source>
-        <translation></translation>
+        <translation>%1 de 5</translation>
     </message>
 </context>
 </TS>
