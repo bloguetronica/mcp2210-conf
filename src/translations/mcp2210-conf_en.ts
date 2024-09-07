@@ -928,7 +928,7 @@ This is a critical error and execution will be aborted.</source>
     </message>
     <message>
         <location filename="../configurationreader.cpp" line="145"/>
-        <source>In &quot;%1&quot; element, the &quot;string&quot; attribute contains an invalid value. It should contain a valid manufacturer string, having no more than %2 characters.</source>
+        <source>In &quot;%1&quot; element, the &quot;string&quot; attribute contains an invalid value. It should contain a valid descriptor string, having no more than %2 characters.</source>
         <translation></translation>
     </message>
     <message>

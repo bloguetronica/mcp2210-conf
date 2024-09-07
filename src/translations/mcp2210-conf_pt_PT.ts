@@ -300,17 +300,17 @@
     <message>
         <location filename="../configuratorwindow.ui" line="1159"/>
         <source>Bytes per SPI transaction:</source>
-        <translation type="unfinished"></translation>
+        <translation>Bytes por transacção SPI:</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="1191"/>
         <source>Bit rate (Kib/s):</source>
-        <translation type="unfinished"></translation>
+        <translation>Taxa de bits (Kib/s):</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="1229"/>
         <source>Mode:</source>
-        <translation type="unfinished"></translation>
+        <translation>Modo:</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="1261"/>
@@ -639,7 +639,7 @@ Por favor, corriga a informação nos campos marcados a vermelho.</translation>
         <location filename="../configuratorwindow.cpp" line="219"/>
         <location filename="../configuratorwindow.cpp" line="248"/>
         <source>The selected file is not a valid MCP2210 EEPROM binary file.</source>
-        <translation type="unfinished"></translation>
+        <translation>O ficheiro seleccionado não é um ficheiro binário válido para a EEPROM do MP2210.</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.cpp" line="231"/>
@@ -649,7 +649,7 @@ Por favor, corriga a informação nos campos marcados a vermelho.</translation>
     <message>
         <location filename="../configuratorwindow.cpp" line="231"/>
         <source>EEPROM was successfully verified.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../configuratorwindow.cpp" line="233"/>
@@ -722,12 +722,12 @@ Deseja prosseguir?</translation>
     <message>
         <location filename="../configuratorwindow.cpp" line="532"/>
         <source>write manufacturer descriptor</source>
-        <translation type="unfinished"></translation>
+        <translation>escrever o descritor de fabricante</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.cpp" line="541"/>
         <source>write product descriptor</source>
-        <translation type="unfinished"></translation>
+        <translation>escrever o descritor de produto</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.cpp" line="550"/>
@@ -737,7 +737,7 @@ Deseja prosseguir?</translation>
     <message>
         <location filename="../configuratorwindow.cpp" line="559"/>
         <source>write USB parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>escrever os parâmetros USB</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.cpp" line="572"/>
@@ -762,12 +762,12 @@ Deseja prosseguir?</translation>
     <message>
         <location filename="../configuratorwindow.cpp" line="802"/>
         <source>get nearest compatible bit rate</source>
-        <translation type="unfinished"></translation>
+        <translation>obter a taxa de bits compatível mais próxima</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.cpp" line="884"/>
         <source>read device configuration</source>
-        <translation type="unfinished"></translation>
+        <translation>ler a configuração do dispositivo</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.cpp" line="896"/>
@@ -930,98 +930,103 @@ Este é um erro crítico e a execução será abortada.</translation>
     <message>
         <location filename="../configurationreader.cpp" line="38"/>
         <source>In &quot;bitrate&quot; element, the &quot;value&quot; attribute contains an invalid value. It should be an integer between %1 and %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>No elemento &quot;bitrate&quot;, o atributo &quot;value&quot; contém um valor inválido. Este deve ser um inteiro entre %1 e %2.</translation>
     </message>
     <message>
         <location filename="../configurationreader.cpp" line="58"/>
         <location filename="../configurationreader.cpp" line="375"/>
         <source>In &quot;%1&quot; element, the &quot;value&quot; attribute contains an invalid value. It should be an hexadecimal integer between %2 and %3.</source>
-        <translation type="unfinished"></translation>
+        <translation>No elemento &quot;%1&quot;, o atributo &quot;value&quot; contém um valor inválido. Este deve ser um inteiro hexadeximal entre %2 e %3.</translation>
     </message>
     <message>
         <location filename="../configurationreader.cpp" line="108"/>
         <source>In &quot;%1&quot; element, the &quot;delay&quot; attribute contains an invalid value. It should be an integer between 0 and %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>No elemento &quot;%1&quot;, o atributo &quot;delay&quot; contém um valor inválido. Este deve ser um inteiro entre 0 e %2.</translation>
     </message>
     <message>
         <location filename="../configurationreader.cpp" line="145"/>
-        <source>In &quot;%1&quot; element, the &quot;string&quot; attribute contains an invalid value. It should contain a valid manufacturer string, having no more than %2 characters.</source>
-        <translation type="unfinished"></translation>
+        <source>In &quot;%1&quot; element, the &quot;string&quot; attribute contains an invalid value. It should contain a valid descriptor string, having no more than %2 characters.</source>
+        <translation>No elemento &quot;%1&quot;, o atributo &quot;string&quot; contém um valor inválido. Deve conter uma cadeia de descritor válida, que não deve ter mais do que %2 caracteres.</translation>
     </message>
     <message>
         <location filename="../configurationreader.cpp" line="165"/>
         <source>In &quot;gp%1&quot; element, the &quot;mode&quot; attribute contains an invalid value. It should be an integer between 0 and %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>No elemento &quot;gp%1&quot;, o atributo &quot;mode&quot; contém um valor inválido. Este deve ser um inteiro entre 0 e %2.</translation>
     </message>
     <message>
         <location filename="../configurationreader.cpp" line="185"/>
         <source>In &quot;interrupt&quot; element, the &quot;mode&quot; attribute contains an invalid value. It should be an integer between 0 and %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>No elemento &quot;interrupt&quot;, o atributo &quot;mode&quot; contém um valor inválido. Este deve ser um inteiro entre 0 e %1.</translation>
     </message>
     <message>
         <location filename="../configurationreader.cpp" line="205"/>
         <source>In &quot;mode&quot; element, the &quot;value&quot; attribute contains an invalid value. It should be an integer between 0 and %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>No elemento &quot;mode&quot;, o atributo &quot;value&quot; contém um valor inválido. Este deve ser um inteiro entre 0 e %1.</translation>
     </message>
     <message>
         <location filename="../configurationreader.cpp" line="225"/>
         <source>In &quot;nbytes&quot; element, the &quot;value&quot; attribute contains an invalid value. It should be an integer between 0 and %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>No elemento &quot;nbytes&quot;, o atributo &quot;value&quot; contém um valor inválido. Este deve ser um inteiro entre 0 e %1.</translation>
     </message>
     <message>
         <location filename="../configurationreader.cpp" line="279"/>
         <source>In &quot;power&quot; element, the &quot;maximum&quot; attribute contains an invalid value. It should be an hexadecimal integer between 0 and %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>No elemento &quot;power&quot;, o atributo &quot;maximum&quot; contém um valor inválido. Este deve ser um inteiro hexadeximal entre 0 e %1.</translation>
     </message>
     <message>
         <location filename="../configurationreader.cpp" line="286"/>
         <source>In &quot;power&quot; element, the &quot;self&quot; attribute contains an invalid value. It should be &quot;true&quot;, &quot;false&quot;, &quot;1&quot; or &quot;0&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>No elemento &quot;power&quot;, o atributo &quot;self&quot; contém um valor inválido. Este deve ser &quot;true&quot;, &quot;false&quot;, &quot;1&quot; ou &quot;0&quot;.</translation>
     </message>
     <message>
         <location filename="../configurationreader.cpp" line="305"/>
         <source>In &quot;remotewakeup&quot; element, the &quot;capable&quot; attribute contains an invalid value. It should be &quot;true&quot;, &quot;false&quot;, &quot;1&quot; or &quot;0&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>No elemento &quot;remotewakeup&quot;, o atributo &quot;capable&quot; contém um valor inválido. Este deve ser &quot;true&quot;, &quot;false&quot;, &quot;1&quot; ou &quot;0&quot;.</translation>
     </message>
     <message>
         <location filename="../configurationreader.cpp" line="312"/>
         <source>In &quot;remotewakeup&quot; element, the &quot;enabled&quot; attribute contains an invalid value. It should be &quot;true&quot;, &quot;false&quot;, &quot;1&quot; or &quot;0&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>No elemento &quot;remotewakeup&quot;, o atributo &quot;enabled&quot; contém um valor inválido. Este deve ser &quot;true&quot;, &quot;false&quot;, &quot;1&quot; ou &quot;0&quot;.</translation>
     </message>
     <message>
         <location filename="../configurationreader.cpp" line="331"/>
         <source>In &quot;spibus&quot; element, the &quot;captive&quot; attribute contains an invalid value. It should be &quot;true&quot;, &quot;false&quot;, &quot;1&quot; or &quot;0&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>No elemento &quot;spibus&quot;, o atributo &quot;captive&quot; contém um valor inválido. Este deve ser &quot;true&quot;, &quot;false&quot;, &quot;1&quot; ou &quot;0&quot;.</translation>
     </message>
     <message>
         <location filename="../configurationreader.cpp" line="392"/>
         <source>Line %1, column %2: %3</source>
-        <translation type="unfinished"></translation>
+        <translation>Linha %1, coluna %2: %3</translation>
     </message>
     <message>
         <location filename="../configurationreader.cpp" line="403"/>
         <source>Unknown root element.
 
 The selected file is not a valid MCP2210 configuration file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Elemento raiz desconhecido.
+
+O ficheiro seleccionado não é um ficheiro de configuração do MCP2210 válido.</translation>
     </message>
     <message>
         <location filename="../mcp2210.cpp" line="56"/>
         <source>In interruptTransfer(): device is not open.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Em &quot;interruptTransfer()&quot;: o dispositivo não se encontra aberto.
+</translation>
     </message>
     <message>
         <location filename="../mcp2210.cpp" line="62"/>
         <source>Failed interrupt OUT transfer to endpoint %1 (address 0x%2).
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Falhou transferência &quot;interrupt OUT&quot; para o &apos;endpoint&apos; %1 (endereço 0x%2).
+</translation>
     </message>
     <message>
         <location filename="../mcp2210.cpp" line="64"/>
         <source>Failed interrupt IN transfer from endpoint %1 (address 0x%2).
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Falhou transferência &quot;interrupt IN&quot; proveniente do &apos;endpoint&apos; %1 (endereço 0x%2).
+</translation>
     </message>
     <message>
         <location filename="../mcp2210.cpp" line="297"/>
@@ -1087,25 +1092,29 @@ The selected file is not a valid MCP2210 configuration file.</source>
         <location filename="../mcp2210.cpp" line="749"/>
         <source>In writeManufacturerDesc(): manufacturer descriptor string cannot be longer than 28 characters.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Em &quot;writeManufacturerDesc()&quot;: o descritor do fabricante não pode ter mais do que 28 caracteres.
+</translation>
     </message>
     <message>
         <location filename="../mcp2210.cpp" line="835"/>
         <source>In writeProductDesc(): product descriptor string cannot be longer than 28 characters.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Em &quot;writeProductDesc()&quot;: o descritor do produto não pode ter mais do que 28 caracteres.
+</translation>
     </message>
     <message>
         <location filename="../mcp2210.cpp" line="864"/>
         <source>Could not initialize libusb.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Falhou ao inicializar o libusb.
+</translation>
     </message>
     <message>
         <location filename="../mcp2210.cpp" line="870"/>
         <source>Failed to retrieve a list of devices.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Falhou em obter uma lista de dispositivos.
+</translation>
     </message>
 </context>
 <context>
