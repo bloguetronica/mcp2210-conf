@@ -142,7 +142,7 @@ void ConfigurationReader::readDescriptor(const QString &name, QString &toVariabl
         if (attr.name().toString() == "string") {
             QString descriptor = attr.value().toString();
             if (static_cast<size_t>(descriptor.size()) > MCP2210::DESC_MAXLEN) {
-                xmlReader_.raiseError(QObject::tr("In \"%1\" element, the \"string\" attribute contains an invalid value. It should contain a valid manufacturer string, having no more than %2 characters.").arg(name).arg(MCP2210::DESC_MAXLEN));
+                xmlReader_.raiseError(QObject::tr("In \"%1\" element, the \"string\" attribute contains an invalid value. It should contain a valid descriptor string, having no more than %2 characters.").arg(name).arg(MCP2210::DESC_MAXLEN));
             } else {
                 toVariable = descriptor;
             }
