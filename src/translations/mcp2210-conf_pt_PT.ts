@@ -81,7 +81,7 @@
     <message>
         <location filename="../configuratorwindow.ui" line="311"/>
         <source>Remote wake-up capable</source>
-        <translation type="unfinished"></translation>
+        <translation>Capaz de despertar remoto</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="327"/>
@@ -121,7 +121,7 @@
     <message>
         <location filename="../configuratorwindow.ui" line="507"/>
         <source>Chip Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Definições do Integrado</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="519"/>
@@ -190,7 +190,7 @@
     <message>
         <location filename="../configuratorwindow.ui" line="674"/>
         <source>Suspend</source>
-        <translation type="unfinished"></translation>
+        <translation>Suspensão</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="704"/>
@@ -200,7 +200,7 @@
     <message>
         <location filename="../configuratorwindow.ui" line="739"/>
         <source>SPI transfer LED</source>
-        <translation type="unfinished"></translation>
+        <translation>LED de transferência SPI</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="769"/>
@@ -210,7 +210,7 @@
     <message>
         <location filename="../configuratorwindow.ui" line="804"/>
         <source>USB low power</source>
-        <translation type="unfinished"></translation>
+        <translation>USB em baixo consumo</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="834"/>
@@ -220,7 +220,7 @@
     <message>
         <location filename="../configuratorwindow.ui" line="869"/>
         <source>USB configured</source>
-        <translation type="unfinished"></translation>
+        <translation>USB configurado</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="899"/>
@@ -230,7 +230,7 @@
     <message>
         <location filename="../configuratorwindow.ui" line="934"/>
         <source>External interrupt</source>
-        <translation type="unfinished"></translation>
+        <translation>Interrupção externa</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="964"/>
@@ -240,7 +240,7 @@
     <message>
         <location filename="../configuratorwindow.ui" line="999"/>
         <source>SPI bus release ACK</source>
-        <translation type="unfinished"></translation>
+        <translation>ACK do barramento SPI</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="1029"/>
@@ -250,7 +250,7 @@
     <message>
         <location filename="../configuratorwindow.ui" line="1054"/>
         <source>SPI bus release REQ</source>
-        <translation type="unfinished"></translation>
+        <translation>REQ do barramento SPI</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="1072"/>
@@ -285,17 +285,17 @@
     <message>
         <location filename="../configuratorwindow.ui" line="1125"/>
         <source>Remote wake-up enabled</source>
-        <translation type="unfinished"></translation>
+        <translation>Despertar remoto habilitado</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="1141"/>
         <source>SPI bus captive between transfers</source>
-        <translation type="unfinished"></translation>
+        <translation>Barramento SPI cativo entre transferências</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="1147"/>
         <source>SPI Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Definições SPI</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="1159"/>
@@ -325,7 +325,7 @@
     <message>
         <location filename="../configuratorwindow.ui" line="1328"/>
         <source>Active Chip Select Values</source>
-        <translation type="unfinished"></translation>
+        <translation>Valores das Linhas de Selecção no Activo</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="1340"/>
@@ -378,7 +378,7 @@
     <message>
         <location filename="../configuratorwindow.ui" line="1448"/>
         <source>Idle Chip Select Values</source>
-        <translation type="unfinished"></translation>
+        <translation>Valores das Linhas de Selecção em Espera</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="1568"/>
@@ -388,12 +388,12 @@
     <message>
         <location filename="../configuratorwindow.ui" line="1580"/>
         <source>Chip select to data (100 μs):</source>
-        <translation type="unfinished"></translation>
+        <translation>Selecção para dados (100 μs):</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="1609"/>
         <source>Data to chip select (100 μs):</source>
-        <translation type="unfinished"></translation>
+        <translation>Dados para selecção (100 μs):</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="1638"/>
@@ -453,7 +453,7 @@
     <message>
         <location filename="../configuratorwindow.ui" line="1772"/>
         <source>Use &amp;Password...</source>
-        <translation>Usar &amp;Palavra-Passe</translation>
+        <translation>Usar &amp;Palavra-Passe...</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.ui" line="1777"/>
@@ -544,7 +544,7 @@ Por favor, confirme que o mesmo não está a ser utilizado.</translation>
     <message>
         <location filename="../configuratorwindow.cpp" line="105"/>
         <source>apply chip settings</source>
-        <translation type="unfinished"></translation>
+        <translation>aplicar as definições do integrado</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.cpp" line="114"/>
@@ -628,12 +628,12 @@ Por favor, corriga a informação nos campos marcados a vermelho.</translation>
     <message>
         <location filename="../configuratorwindow.cpp" line="207"/>
         <source>The password was successfully entered and full write access to the NVRAM is now granted.</source>
-        <translation type="unfinished"></translation>
+        <translation>A palavra-passe foi introduzida correctamente e o acesso de escrita sobre a NVRAM foi concedido.</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.cpp" line="213"/>
         <source>Verify EEPROM Contents against File</source>
-        <translation type="unfinished"></translation>
+        <translation>Verificar Conteúdos da EEPROM contra o Ficheiro</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.cpp" line="219"/>
@@ -649,7 +649,7 @@ Por favor, corriga a informação nos campos marcados a vermelho.</translation>
     <message>
         <location filename="../configuratorwindow.cpp" line="231"/>
         <source>EEPROM was successfully verified.</source>
-        <translation></translation>
+        <translation>A EEPROM foi verificada com sucesso.</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.cpp" line="233"/>
@@ -693,7 +693,7 @@ Por favor, corriga a informação nos campos marcados a vermelho.</translation>
 Do you still wish to proceed?</source>
         <translation>Isto irá escrever as definições modificadas na NVRAM do seu dispositivo. Estas alterações serão permanentes e irreversíveis.
 
-Deseja prosseguir?</translation>
+Deseja, ainda assim, prosseguir?</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.cpp" line="452"/>
@@ -717,7 +717,7 @@ Deseja prosseguir?</translation>
     <message>
         <location filename="../configuratorwindow.cpp" line="523"/>
         <source>write chip settings</source>
-        <translation type="unfinished"></translation>
+        <translation>escrever as definições do integrado</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.cpp" line="532"/>
@@ -807,7 +807,7 @@ Por favor, ligue-o e tente novamente.</translation>
     <message>
         <location filename="../configuratorwindow.cpp" line="1051"/>
         <source>The password was not accepted and access is temporarily blocked. Please disconnect and reconnect your device, and try again.</source>
-        <translation type="unfinished"></translation>
+        <translation>A palavra-passe não foi aceite e o acesso está temporariamente bloqueado. Por favor, deslige e ligue o dispositivo, e tente novamente.</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.cpp" line="1053"/>
@@ -817,7 +817,7 @@ Por favor, ligue-o e tente novamente.</translation>
     <message>
         <location filename="../configuratorwindow.cpp" line="1053"/>
         <source>Full write access to the NVRAM was rejected for unknown reasons.</source>
-        <translation type="unfinished"></translation>
+        <translation>O acesso de escrita sobre a NVRAM foi rejeitado por.razões desconhecidas.</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.cpp" line="1055"/>
@@ -827,7 +827,7 @@ Por favor, ligue-o e tente novamente.</translation>
     <message>
         <location filename="../configuratorwindow.cpp" line="1055"/>
         <source>The password was not accepted. Please try again.</source>
-        <translation type="unfinished"></translation>
+        <translation>A palavra-passe não foi aceite. Por favor, tente novamente.</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.cpp" line="1070"/>
@@ -1032,61 +1032,71 @@ O ficheiro seleccionado não é um ficheiro de configuração do MCP2210 válido
         <location filename="../mcp2210.cpp" line="297"/>
         <source>In getGPIO(): GPIO pin number must be between 0 and 8.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Em &quot;getGPIO()&quot;: O número do pino GPIO deve estar compreendido entre 0 e 8.
+</translation>
     </message>
     <message>
         <location filename="../mcp2210.cpp" line="311"/>
         <source>In getGPIODirection(): GPIO pin number must be between 0 and 7.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Em &quot;getGPIODirection()&quot;: O número do pino GPIO deve estar compreendido entre 0 e 7.
+</translation>
     </message>
     <message>
         <location filename="../mcp2210.cpp" line="456"/>
         <source>Received invalid response to HID command.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Resposta inválida recebida após o comando HID.
+</translation>
     </message>
     <message>
         <location filename="../mcp2210.cpp" line="520"/>
         <source>In readEEPROMRange(): the first address cannot be greater than the last address.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Em &quot;readEEPROMRange(&quot;: o primeiro endereço não pode ser maior do que o último endereço.
+</translation>
     </message>
     <message>
         <location filename="../mcp2210.cpp" line="551"/>
         <source>In setGPIO(): GPIO pin number must be between 0 and 7.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Em &quot;setGPIO()&quot;: O número do pino GPIO deve estar compreendido entre 0 e 7.
+</translation>
     </message>
     <message>
         <location filename="../mcp2210.cpp" line="577"/>
         <source>In setGPIODirection(): GPIO pin number must be between 0 and 7.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Em &quot;setGPIODirection()&quot;: O número do pino GPIO deve estar compreendido entre 0 e 7.
+</translation>
     </message>
     <message>
         <location filename="../mcp2210.cpp" line="627"/>
         <source>In spiTransfer(): vector size cannot exceed 60 bytes.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Em &quot;spiTransfer()&quot;: o tamanho do vector não pode exceder 60 bytes.
+</translation>
     </message>
     <message>
         <location filename="../mcp2210.cpp" line="656"/>
         <source>In toggleGPIO(): GPIO pin number must be between 0 and 7.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Em &quot;toggleGPIO():&quot;: O número do pino GPIO deve estar compreendido entre 0 e 7.
+</translation>
     </message>
     <message>
         <location filename="../mcp2210.cpp" line="721"/>
         <source>In writeEEPROMRange(): the first address cannot be greater than the last address.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Em &quot;writeEEPROMRange()&quot;: o primeiro endereço não pode ser maior do que o último endereço.
+</translation>
     </message>
     <message>
         <location filename="../mcp2210.cpp" line="727"/>
         <source>In writeEEPROMRange(): vector size does not match range size.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Em &quot;writeEEPROMRange()&quot;: o tamanho do vector não condiz com o tamanho do escopo.
+</translation>
     </message>
     <message>
         <location filename="../mcp2210.cpp" line="749"/>
