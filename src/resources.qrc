@@ -10,4 +10,10 @@
     <qresource prefix="/images">
         <file>images/banner.png</file>
     </qresource>
+    <qresource prefix="/translations">
+        <file>translations/mcp2210-conf_en_US.qm</file>
+        <file>translations/mcp2210-conf_en.qm</file>
+        <file>translations/mcp2210-conf_pt_PT.qm</file>
+        <file>translations/mcp2210-conf_pt.qm</file>
+    </qresource>
 </RCC>
