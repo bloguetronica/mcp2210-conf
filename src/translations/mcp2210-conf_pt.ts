@@ -1032,14 +1032,14 @@ O ficheiro seleccionado não é um ficheiro de configuração do MCP2210 válido
         <location filename="../mcp2210.cpp" line="297"/>
         <source>In getGPIO(): GPIO pin number must be between 0 and 8.
 </source>
-        <translation>Em &quot;getGPIO()&quot;: O número do pino GPIO deve estar compreendido entre 0 e 8.
+        <translation>Em &quot;getGPIO()&quot;: o número do pino GPIO deve estar compreendido entre 0 e 8.
 </translation>
     </message>
     <message>
         <location filename="../mcp2210.cpp" line="311"/>
         <source>In getGPIODirection(): GPIO pin number must be between 0 and 7.
 </source>
-        <translation>Em &quot;getGPIODirection()&quot;: O número do pino GPIO deve estar compreendido entre 0 e 7.
+        <translation>Em &quot;getGPIODirection()&quot;: o número do pino GPIO deve estar compreendido entre 0 e 7.
 </translation>
     </message>
     <message>
@@ -1053,21 +1053,21 @@ O ficheiro seleccionado não é um ficheiro de configuração do MCP2210 válido
         <location filename="../mcp2210.cpp" line="520"/>
         <source>In readEEPROMRange(): the first address cannot be greater than the last address.
 </source>
-        <translation>Em &quot;readEEPROMRange(&quot;: o primeiro endereço não pode ser maior do que o último endereço.
+        <translation>Em &quot;readEEPROMRange()&quot;: o primeiro endereço não pode ser maior do que o último endereço.
 </translation>
     </message>
     <message>
         <location filename="../mcp2210.cpp" line="551"/>
         <source>In setGPIO(): GPIO pin number must be between 0 and 7.
 </source>
-        <translation>Em &quot;setGPIO()&quot;: O número do pino GPIO deve estar compreendido entre 0 e 7.
+        <translation>Em &quot;setGPIO()&quot;: o número do pino GPIO deve estar compreendido entre 0 e 7.
 </translation>
     </message>
     <message>
         <location filename="../mcp2210.cpp" line="577"/>
         <source>In setGPIODirection(): GPIO pin number must be between 0 and 7.
 </source>
-        <translation>Em &quot;setGPIODirection()&quot;: O número do pino GPIO deve estar compreendido entre 0 e 7.
+        <translation>Em &quot;setGPIODirection()&quot;: o número do pino GPIO deve estar compreendido entre 0 e 7.
 </translation>
     </message>
     <message>
@@ -1081,7 +1081,7 @@ O ficheiro seleccionado não é um ficheiro de configuração do MCP2210 válido
         <location filename="../mcp2210.cpp" line="656"/>
         <source>In toggleGPIO(): GPIO pin number must be between 0 and 7.
 </source>
-        <translation>Em &quot;toggleGPIO():&quot;: O número do pino GPIO deve estar compreendido entre 0 e 7.
+        <translation>Em &quot;toggleGPIO():&quot;: o número do pino GPIO deve estar compreendido entre 0 e 7.
 </translation>
     </message>
     <message>
