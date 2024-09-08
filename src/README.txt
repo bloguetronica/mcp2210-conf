@@ -43,14 +43,14 @@ Configurator. A list of relevant files follows:
 – statusdialog.cpp;
 – statusdialog.h;
 – statusdialog.ui;
-– translations/mcp2210-conf_en_US.qm;
-– translations/mcp2210-conf_en_US.ts;
 – translations/mcp2210-conf_en.qm;
 – translations/mcp2210-conf_en.ts;
-– translations/mcp2210-conf_pt_PT.qm;
-– translations/mcp2210-conf_pt_PT.ts;
+– translations/mcp2210-conf_en_US.qm;
+– translations/mcp2210-conf_en_US.ts;
 – translations/mcp2210-conf_pt.qm;
-– translations/mcp2210-conf_pt.ts.
+– translations/mcp2210-conf_pt.ts;
+– translations/mcp2210-conf_pt_PT.qm;
+– translations/mcp2210-conf_pt_PT.ts.
 
 In order to compile successfully, you must have the packages
 "build-essential", "libusb-1.0-0-dev" and "qt5-default" (or "qtbase5-dev")
