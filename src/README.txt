@@ -1,4 +1,4 @@
-This directory contains the QT project required for compiling CP2130
+This directory contains the QT project required for compiling MCP2210
 Configurator. A list of relevant files follows:
 – aboutdialog.cpp;
 – aboutdialog.h;
