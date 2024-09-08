@@ -639,7 +639,7 @@ Por favor, corriga a informação nos campos marcados a vermelho.</translation>
         <location filename="../configuratorwindow.cpp" line="219"/>
         <location filename="../configuratorwindow.cpp" line="248"/>
         <source>The selected file is not a valid MCP2210 EEPROM binary file.</source>
-        <translation>O ficheiro seleccionado não é um ficheiro binário válido para a EEPROM do MP2210.</translation>
+        <translation>O ficheiro seleccionado não é um ficheiro binário de EEPROM do MCP2210 válido.</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.cpp" line="231"/>
