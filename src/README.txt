@@ -31,9 +31,9 @@ Configurator. A list of relevant files follows:
 – mainwindow.ui;
 – mcp2210-conf.pro;
 – mcp2210.cpp;
+– mcp2210.h;
 – mcp2210eeprom.cpp;
 – mcp2210eeprom.h;
-– mcp2210.h;
 – mcp2210limits.h;
 – misc/mcp2210-conf.desktop;
 – passworddialog.cpp;
