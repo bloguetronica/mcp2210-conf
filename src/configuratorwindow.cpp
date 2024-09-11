@@ -1,4 +1,4 @@
-/* MCP2210 Configurator - Version 1.0.0 for Debian Linux
+/* MCP2210 Configurator - Version 1.0.1 for Debian Linux
    Copyright (c) 2023-2024 Samuel Lourenço
 
    This program is free software: you can redistribute it and/or modify it
@@ -582,6 +582,8 @@ void ConfiguratorWindow::configureDevice()
 void ConfiguratorWindow::disableView()
 {
     ui->actionStatus->setEnabled(false);
+    ui->menuEEPROM->setEnabled(false);  // Bug fix implemented in version 1.0.1
+    ui->actionUsePassword->setEnabled(false);  // Bug fix implemented in version 1.0.1
     ui->actionLoadConfiguration->setEnabled(false);
     ui->actionClose->setText(tr("&Close Window"));
     ui->centralWidget->setEnabled(false);
@@ -811,7 +813,7 @@ quint32 ConfiguratorWindow::getNearestCompatibleBitRate(quint32 bitrate)
 // Determines the type of error and acts accordingly, always showing a message
 void ConfiguratorWindow::handleError()
 {
-    if (mcp2210_.disconnected() || !mcp2210_.isOpen()) {
+    if (mcp2210_.disconnected()) {  // Simplified in version 1.0.1
         disableView();  // Disable configurator window
         mcp2210_.close();  // If the device is already closed, this will have no effect
     }
