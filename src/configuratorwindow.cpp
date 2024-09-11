@@ -813,7 +813,7 @@ quint32 ConfiguratorWindow::getNearestCompatibleBitRate(quint32 bitrate)
 // Determines the type of error and acts accordingly, always showing a message
 void ConfiguratorWindow::handleError()
 {
-    if (mcp2210_.disconnected() || !mcp2210_.isOpen()) {
+    if (mcp2210_.disconnected()) {  // Simplified in version 1.0.1
         disableView();  // Disable configurator window
         mcp2210_.close();  // If the device is already closed, this will have no effect
     }
