@@ -582,8 +582,8 @@ void ConfiguratorWindow::configureDevice()
 void ConfiguratorWindow::disableView()
 {
     ui->actionStatus->setEnabled(false);
-    ui->menuEEPROM->setEnabled(false);  // Bug fix added in version 1.0.1
-    ui->actionUsePassword->setEnabled(false);  // Bug fix added in version 1.0.1
+    ui->menuEEPROM->setEnabled(false);  // Bug fix implemented in version 1.0.1
+    ui->actionUsePassword->setEnabled(false);  // Bug fix implemented in version 1.0.1
     ui->actionLoadConfiguration->setEnabled(false);
     ui->actionClose->setText(tr("&Close Window"));
     ui->centralWidget->setEnabled(false);
