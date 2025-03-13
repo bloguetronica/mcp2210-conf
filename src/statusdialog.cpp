@@ -1,5 +1,5 @@
-/* MCP2210 Configurator - Version 1.0.1 for Debian Linux
-   Copyright (c) 2023-2024 Samuel Lourenço
+/* MCP2210 Configurator - Version 1.0.2 for Debian Linux
+   Copyright (c) 2023-2025 Samuel Lourenço
 
    This program is free software: you can redistribute it and/or modify it
    under the terms of the GNU General Public License as published by the Free
@@ -36,10 +36,10 @@ StatusDialog::~StatusDialog()
 }
 
 // Sets the text of "labelBusOnwerValue"
-void StatusDialog::setBusOwnerValueLabelText(quint8 busowner)
+void StatusDialog::setBusOwnerValueLabelText(quint8 busOwner)
 {
     QString owner;
-    switch (busowner) {
+    switch (busOwner) {
     case MCP2210::BONO:
         owner = tr("No owner");
         break;
@@ -56,19 +56,19 @@ void StatusDialog::setBusOwnerValueLabelText(quint8 busowner)
 }
 
 // Sets the text of "labelBusRequestValue"
-void StatusDialog::setBusRequestValueLabelText(bool busreq)
+void StatusDialog::setBusRequestValueLabelText(bool busRequest)
 {
-    ui->labelBusRequestValue->setText(busreq ? tr("Pending") : tr("None"));
+    ui->labelBusRequestValue->setText(busRequest ? tr("Pending") : tr("None"));
 }
 
 // Sets the text of "labelPasswordStatusValue"
-void StatusDialog::setPasswordStatusValueLabelText(bool pwok)
+void StatusDialog::setPasswordStatusValueLabelText(bool passwordOk)
 {
-    ui->labelPasswordStatusValue->setText(pwok ? tr("Guessed") : tr("Not guessed"));
+    ui->labelPasswordStatusValue->setText(passwordOk ? tr("Guessed") : tr("Not guessed"));
 }
 
 // Sets the text of "labelPasswordTriesValue"
-void StatusDialog::setPasswordTriesValueLabelText(quint8 pwtries)
+void StatusDialog::setPasswordTriesValueLabelText(quint8 passwordTries)
 {
-    ui->labelPasswordTriesValue->setText(tr("%1 of 5").arg(pwtries));
+    ui->labelPasswordTriesValue->setText(tr("%1 of 5").arg(passwordTries));
 }
