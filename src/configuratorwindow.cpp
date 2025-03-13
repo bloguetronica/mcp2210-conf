@@ -1,5 +1,5 @@
-/* MCP2210 Configurator - Version 1.0.1 for Debian Linux
-   Copyright (c) 2023-2024 Samuel Lourenço
+/* MCP2210 Configurator - Version 1.0.2 for Debian Linux
+   Copyright (c) 2023-2025 Samuel Lourenço
 
    This program is free software: you can redistribute it and/or modify it
    under the terms of the GNU General Public License as published by the Free
@@ -512,7 +512,7 @@ void ConfiguratorWindow::writeChipSettings()
     QString password;
     if (editedConfiguration_.accessMode == MCP2210::ACPASSWORD) {
         if (ui->checkBoxDoNotChangePassword->isChecked()) {
-            password = validPassword_;
+            password = "";  // There is no need to keep the current password, because it will be implicitly kept by the MCP2210 if an empty string is entered (modified in version 1.0.2)
         } else {
             password = ui->lineEditNewPassword->text();
         }
@@ -815,7 +815,7 @@ void ConfiguratorWindow::handleError()
 {
     if (mcp2210_.disconnected()) {  // Simplified in version 1.0.1
         disableView();  // Disable configurator window
-        mcp2210_.close();  // If the device is already closed, this will have no effect
+        mcp2210_.close();
     }
     QMessageBox::critical(this, tr("Error"), errmsg_);
 }
@@ -1044,7 +1044,6 @@ bool ConfiguratorWindow::validatePassword()
             }
             if (response == MCP2210::COMPLETED) {  // If error check passes and password is verified
                 setUsePasswordEnabled(false);  // Disable "Use Password" action
-                validPassword_ = passwordDialog.passwordLineEditText();
                 passwordIsValid_ = true;
                 retval = true;
             } else if (response == MCP2210::BLOCKED || chipStatus.pwtries > 4) {  // If access is blocked (redundancy is necessary)
