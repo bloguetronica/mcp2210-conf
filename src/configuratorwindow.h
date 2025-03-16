@@ -1,5 +1,5 @@
-/* MCP2210 Configurator - Version 1.0.1 for Debian Linux
-   Copyright (c) 2023-2024 Samuel Lourenço
+/* MCP2210 Configurator - Version 1.0.2 for Debian Linux
+   Copyright (c) 2023-2025 Samuel Lourenço
 
    This program is free software: you can redistribute it and/or modify it
    under the terms of the GNU General Public License as published by the Free
@@ -100,7 +100,7 @@ private:
     Configuration deviceConfiguration_, editedConfiguration_;
     MCP2210 mcp2210_;
     QPointer<StatusDialog> statusDialog_;
-    QString errmsg_, serialString_, validPassword_;
+    QString errmsg_, serialString_;
     bool err_, passwordIsLocked_, passwordIsValid_, viewEnabled_ = false;
 
     void configureDevice();

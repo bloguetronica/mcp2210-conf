@@ -15,8 +15,8 @@
     </message>
     <message>
         <location filename="../aboutdialog.ui" line="81"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Version 1.0.1&lt;br/&gt;© 2023-2024 Samuel Lourenço&lt;/p&gt;&lt;p&gt;This program is distributed under the terms of the &lt;a href=&quot;https://www.gnu.org/licenses/gpl-3.0-standalone.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;GNU GPL v3&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Versão 1.0.1&lt;br/&gt;© 2023-2024 Samuel Lourenço&lt;/p&gt;&lt;p&gt;Este programa é distribuido sob os termos da licença &lt;a href=&quot;https://www.gnu.org/licenses/gpl-3.0-standalone.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;GNU GPL v3&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Version 1.0.2&lt;br/&gt;© 2023-2025 Samuel Lourenço&lt;/p&gt;&lt;p&gt;This program is distributed under the terms of the &lt;a href=&quot;https://www.gnu.org/licenses/gpl-3.0-standalone.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;GNU GPL v3&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Versão 1.0.2&lt;br/&gt;© 2023-2025 Samuel Lourenço&lt;/p&gt;&lt;p&gt;Este programa é distribuido sob os termos da licença &lt;a href=&quot;https://www.gnu.org/licenses/gpl-3.0-standalone.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;GNU GPL v3&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -800,37 +800,37 @@ Por favor, ligue-o e tente novamente.</translation>
         <translation>usar palavra-passe</translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="1053"/>
+        <location filename="../configuratorwindow.cpp" line="1052"/>
         <source>Access Blocked</source>
         <translation>Acesso Bloqueado</translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="1053"/>
+        <location filename="../configuratorwindow.cpp" line="1052"/>
         <source>The password was not accepted and access is temporarily blocked. Please disconnect and reconnect your device, and try again.</source>
         <translation>A palavra-passe não foi aceite e o acesso está temporariamente bloqueado. Por favor, deslige e ligue o dispositivo, e tente novamente.</translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="1055"/>
+        <location filename="../configuratorwindow.cpp" line="1054"/>
         <source>Access Rejected</source>
         <translation>Acesso Rejeitado</translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="1055"/>
+        <location filename="../configuratorwindow.cpp" line="1054"/>
         <source>Full write access to the NVRAM was rejected for unknown reasons.</source>
         <translation>O acesso de escrita sobre a NVRAM foi rejeitado por.razões desconhecidas.</translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="1057"/>
+        <location filename="../configuratorwindow.cpp" line="1056"/>
         <source>Access Denied</source>
         <translation>Acesso Negado</translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="1057"/>
+        <location filename="../configuratorwindow.cpp" line="1056"/>
         <source>The password was not accepted. Please try again.</source>
         <translation>A palavra-passe não foi aceite. Por favor, tente novamente.</translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="1072"/>
+        <location filename="../configuratorwindow.cpp" line="1071"/>
         <source>write EEPROM</source>
         <translation>escrever a EEPROM</translation>
     </message>

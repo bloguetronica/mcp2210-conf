@@ -1,5 +1,5 @@
-/* MCP2210 Configurator - Version 1.0.1 for Debian Linux
-   Copyright (c) 2023-2024 Samuel Lourenço
+/* MCP2210 Configurator - Version 1.0.2 for Debian Linux
+   Copyright (c) 2023-2025 Samuel Lourenço
 
    This program is free software: you can redistribute it and/or modify it
    under the terms of the GNU General Public License as published by the Free
@@ -36,10 +36,10 @@ public:
     explicit StatusDialog(QWidget *parent = nullptr);
     ~StatusDialog();
 
-    void setBusOwnerValueLabelText(quint8 busowner);
-    void setBusRequestValueLabelText(bool busreq);
-    void setPasswordStatusValueLabelText(bool pwok);
-    void setPasswordTriesValueLabelText(quint8 pwtries);
+    void setBusOwnerValueLabelText(quint8 busOwner);
+    void setBusRequestValueLabelText(bool busRequest);
+    void setPasswordStatusValueLabelText(bool passwordOk);
+    void setPasswordTriesValueLabelText(quint8 passwordTries);
 
 private:
     Ui::StatusDialog *ui;
