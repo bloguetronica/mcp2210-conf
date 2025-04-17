@@ -15,8 +15,8 @@
     </message>
     <message>
         <location filename="../aboutdialog.ui" line="81"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Version 1.0.2&lt;br/&gt;© 2023-2025 Samuel Lourenço&lt;/p&gt;&lt;p&gt;This program is distributed under the terms of the &lt;a href=&quot;https://www.gnu.org/licenses/gpl-3.0-standalone.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;GNU GPL v3&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Versão 1.0.2&lt;br/&gt;© 2023-2025 Samuel Lourenço&lt;/p&gt;&lt;p&gt;Este programa é distribuido sob os termos da licença &lt;a href=&quot;https://www.gnu.org/licenses/gpl-3.0-standalone.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;GNU GPL v3&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Version 1.0.3&lt;br/&gt;© 2023-2025 Samuel Lourenço&lt;/p&gt;&lt;p&gt;This program is distributed under the terms of the &lt;a href=&quot;https://www.gnu.org/licenses/gpl-3.0-standalone.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;GNU GPL v3&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Versão 1.0.3&lt;br/&gt;© 2023-2025 Samuel Lourenço&lt;/p&gt;&lt;p&gt;Este programa é distribuido sob os termos da licença &lt;a href=&quot;https://www.gnu.org/licenses/gpl-3.0-standalone.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;GNU GPL v3&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -491,17 +491,17 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="75"/>
+        <location filename="../configuratorwindow.cpp" line="79"/>
         <source>MCP2210 Device (S/N: %1)</source>
         <translation>Dispositivo MCP2210 (NS: %1)</translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="81"/>
+        <location filename="../configuratorwindow.cpp" line="85"/>
         <source>Critical Error</source>
         <translation>Erro Crítico</translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="81"/>
+        <location filename="../configuratorwindow.cpp" line="85"/>
         <source>Could not initialize libusb.
 
 This is a critical error and execution will be aborted.</source>
@@ -510,30 +510,30 @@ This is a critical error and execution will be aborted.</source>
 Este é um erro crítico e a execução será abortada.</translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="85"/>
-        <location filename="../configuratorwindow.cpp" line="87"/>
-        <location filename="../configuratorwindow.cpp" line="128"/>
-        <location filename="../configuratorwindow.cpp" line="148"/>
-        <location filename="../configuratorwindow.cpp" line="162"/>
-        <location filename="../configuratorwindow.cpp" line="168"/>
-        <location filename="../configuratorwindow.cpp" line="217"/>
-        <location filename="../configuratorwindow.cpp" line="219"/>
-        <location filename="../configuratorwindow.cpp" line="246"/>
-        <location filename="../configuratorwindow.cpp" line="248"/>
-        <location filename="../configuratorwindow.cpp" line="442"/>
-        <location filename="../configuratorwindow.cpp" line="572"/>
-        <location filename="../configuratorwindow.cpp" line="820"/>
-        <location filename="../configuratorwindow.cpp" line="829"/>
+        <location filename="../configuratorwindow.cpp" line="89"/>
+        <location filename="../configuratorwindow.cpp" line="91"/>
+        <location filename="../configuratorwindow.cpp" line="132"/>
+        <location filename="../configuratorwindow.cpp" line="152"/>
+        <location filename="../configuratorwindow.cpp" line="166"/>
+        <location filename="../configuratorwindow.cpp" line="172"/>
+        <location filename="../configuratorwindow.cpp" line="221"/>
+        <location filename="../configuratorwindow.cpp" line="223"/>
+        <location filename="../configuratorwindow.cpp" line="250"/>
+        <location filename="../configuratorwindow.cpp" line="252"/>
+        <location filename="../configuratorwindow.cpp" line="446"/>
+        <location filename="../configuratorwindow.cpp" line="575"/>
+        <location filename="../configuratorwindow.cpp" line="821"/>
+        <location filename="../configuratorwindow.cpp" line="830"/>
         <source>Error</source>
         <translation>Erro</translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="85"/>
+        <location filename="../configuratorwindow.cpp" line="89"/>
         <source>Could not find device.</source>
         <translation>Dispositivo não encontrado.</translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="87"/>
+        <location filename="../configuratorwindow.cpp" line="91"/>
         <source>Device is currently unavailable.
 
 Please confirm that the device is not in use.</source>
@@ -542,30 +542,30 @@ Please confirm that the device is not in use.</source>
 Por favor, confirme que o mesmo não está a ser utilizado.</translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="105"/>
+        <location filename="../configuratorwindow.cpp" line="109"/>
         <source>apply chip settings</source>
         <translation>aplicar as definições do integrado</translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="114"/>
+        <location filename="../configuratorwindow.cpp" line="118"/>
         <source>apply SPI settings</source>
         <translation>aplicar as definições SPI</translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="124"/>
+        <location filename="../configuratorwindow.cpp" line="128"/>
         <source>Load Configuration from File</source>
         <translation>Carregar Configuração a partir do Ficheiro</translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="124"/>
-        <location filename="../configuratorwindow.cpp" line="164"/>
+        <location filename="../configuratorwindow.cpp" line="128"/>
+        <location filename="../configuratorwindow.cpp" line="168"/>
         <source>XML files (*.xml);;All files (*)</source>
         <translation>Ficheiros XML (*.xml);;Todos os ficheiros (*)</translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="128"/>
-        <location filename="../configuratorwindow.cpp" line="217"/>
-        <location filename="../configuratorwindow.cpp" line="246"/>
+        <location filename="../configuratorwindow.cpp" line="132"/>
+        <location filename="../configuratorwindow.cpp" line="221"/>
+        <location filename="../configuratorwindow.cpp" line="250"/>
         <source>Could not read from %1.
 
 Please verify that you have read access to this file.</source>
@@ -574,20 +574,20 @@ Please verify that you have read access to this file.</source>
 Por favor, verifique se tem permissões de leitura sobre este ficheiro.</translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="144"/>
+        <location filename="../configuratorwindow.cpp" line="148"/>
         <source>Save EEPROM Contents to File</source>
         <translation>Gravar Conteúdos da EEPROM para Ficheiro</translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="144"/>
-        <location filename="../configuratorwindow.cpp" line="213"/>
-        <location filename="../configuratorwindow.cpp" line="242"/>
+        <location filename="../configuratorwindow.cpp" line="148"/>
+        <location filename="../configuratorwindow.cpp" line="217"/>
+        <location filename="../configuratorwindow.cpp" line="246"/>
         <source>Binary files (*.bin);;All files (*)</source>
         <translation>Ficheiros binários (*.bin);;Todos os ficheiros (*)</translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="148"/>
-        <location filename="../configuratorwindow.cpp" line="168"/>
+        <location filename="../configuratorwindow.cpp" line="152"/>
+        <location filename="../configuratorwindow.cpp" line="172"/>
         <source>Could not write to %1.
 
 Please verify that you have write access to this file.</source>
@@ -596,8 +596,8 @@ Please verify that you have write access to this file.</source>
 Por favor, verifique se tem permissões de escrita sobre este ficheiro.</translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="162"/>
-        <location filename="../configuratorwindow.cpp" line="442"/>
+        <location filename="../configuratorwindow.cpp" line="166"/>
+        <location filename="../configuratorwindow.cpp" line="446"/>
         <source>One or more fields have invalid information.
 
 Please correct the information in the fields highlighted in red.</source>
@@ -606,88 +606,88 @@ Please correct the information in the fields highlighted in red.</source>
 Por favor, corriga a informação nos campos marcados a vermelho.</translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="164"/>
+        <location filename="../configuratorwindow.cpp" line="168"/>
         <source>Save Configuration to File</source>
         <translation>Gravar Configuração para Ficheiro</translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="185"/>
+        <location filename="../configuratorwindow.cpp" line="189"/>
         <source>retrieve device status</source>
         <translation>obter o estado do dispositivo</translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="191"/>
+        <location filename="../configuratorwindow.cpp" line="195"/>
         <source>Device Status (S/N: %1)</source>
         <translation>Estado do Dispositivo (NS: %1)</translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="207"/>
+        <location filename="../configuratorwindow.cpp" line="211"/>
         <source>Access Granted</source>
         <translation>Acesso Concedido</translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="207"/>
+        <location filename="../configuratorwindow.cpp" line="211"/>
         <source>The password was successfully entered and full write access to the NVRAM is now granted.</source>
         <translation>A palavra-passe foi introduzida correctamente e o acesso de escrita sobre a NVRAM foi concedido.</translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="213"/>
+        <location filename="../configuratorwindow.cpp" line="217"/>
         <source>Verify EEPROM Contents against File</source>
         <translation>Verificar Conteúdos da EEPROM contra o Ficheiro</translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="219"/>
-        <location filename="../configuratorwindow.cpp" line="248"/>
+        <location filename="../configuratorwindow.cpp" line="223"/>
+        <location filename="../configuratorwindow.cpp" line="252"/>
         <source>The selected file is not a valid MCP2210 EEPROM binary file.</source>
         <translation>O ficheiro seleccionado não é um ficheiro binário de EEPROM do MCP2210 válido.</translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="231"/>
+        <location filename="../configuratorwindow.cpp" line="235"/>
         <source>EEPROM Verified</source>
         <translation>EEPROM Verificada</translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="231"/>
+        <location filename="../configuratorwindow.cpp" line="235"/>
         <source>EEPROM was successfully verified.</source>
         <translation>A EEPROM foi verificada com sucesso.</translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="233"/>
+        <location filename="../configuratorwindow.cpp" line="237"/>
         <source>EEPROM Mismatch</source>
         <translation>Disparidade na EEPROM</translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="233"/>
+        <location filename="../configuratorwindow.cpp" line="237"/>
         <source>Verification failed because EEPROM contents don&apos;t match file contents.</source>
         <translation>A verificação falhou porque os conteúdos da EEPROM não condizem com os conteúdos do ficheiro.</translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="242"/>
+        <location filename="../configuratorwindow.cpp" line="246"/>
         <source>Load EEPROM Contents from File</source>
         <translation>Carregar Conteúdos para a EEPROM a partir do Ficheiro</translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="260"/>
+        <location filename="../configuratorwindow.cpp" line="264"/>
         <source>EEPROM Written</source>
         <translation>EEPROM Escrita</translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="260"/>
+        <location filename="../configuratorwindow.cpp" line="264"/>
         <source>EEPROM was successfully written.</source>
         <translation>A EEPROM foi escrita com sucesso.</translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="446"/>
+        <location filename="../configuratorwindow.cpp" line="450"/>
         <source>No Changes Done</source>
         <translation>Sem Alterações</translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="446"/>
+        <location filename="../configuratorwindow.cpp" line="450"/>
         <source>No changes were effected, because no settings were modified.</source>
         <translation>Não houve alterações, dado que nenhuma definição foi modificada.</translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="450"/>
+        <location filename="../configuratorwindow.cpp" line="454"/>
         <source>This will write the changes to the NVRAM of your device. These changes will be permanent and irreversible.
 
 Do you still wish to proceed?</source>
@@ -696,7 +696,7 @@ Do you still wish to proceed?</source>
 Deseja, ainda assim, prosseguir?</translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="452"/>
+        <location filename="../configuratorwindow.cpp" line="456"/>
         <source>This will write the changes to the NVRAM of your device.
 
 Do you wish to proceed?</source>
@@ -705,77 +705,77 @@ Do you wish to proceed?</source>
 Deseja prosseguir?</translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="454"/>
+        <location filename="../configuratorwindow.cpp" line="458"/>
         <source>Write Configuration?</source>
         <translation>Escrever Configuração?</translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="504"/>
+        <location filename="../configuratorwindow.cpp" line="507"/>
         <source>Failed verification.</source>
         <translation>A verificação falhou.</translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="523"/>
+        <location filename="../configuratorwindow.cpp" line="526"/>
         <source>write chip settings</source>
         <translation>escrever as definições do integrado</translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="532"/>
+        <location filename="../configuratorwindow.cpp" line="535"/>
         <source>write manufacturer descriptor</source>
         <translation>escrever o descritor de fabricante</translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="541"/>
+        <location filename="../configuratorwindow.cpp" line="544"/>
         <source>write product descriptor</source>
         <translation>escrever o descritor de produto</translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="550"/>
+        <location filename="../configuratorwindow.cpp" line="553"/>
         <source>write SPI settings</source>
         <translation>escrever as definições SPI</translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="559"/>
+        <location filename="../configuratorwindow.cpp" line="562"/>
         <source>write USB parameters</source>
         <translation>escrever os parâmetros USB</translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="572"/>
+        <location filename="../configuratorwindow.cpp" line="575"/>
         <source>The device configuration could not be completed.</source>
         <translation>A configuração do dispositivo não foi finalizada.</translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="577"/>
+        <location filename="../configuratorwindow.cpp" line="580"/>
         <source>Device Configured</source>
         <translation>Dispositivo Configurado</translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="577"/>
+        <location filename="../configuratorwindow.cpp" line="580"/>
         <source>Device was successfully configured.</source>
         <translation>O dispositivo foi configurado com sucesso.</translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="588"/>
+        <location filename="../configuratorwindow.cpp" line="591"/>
         <source>&amp;Close Window</source>
         <translation>&amp;Fechar Janela</translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="804"/>
+        <location filename="../configuratorwindow.cpp" line="805"/>
         <source>get nearest compatible bit rate</source>
         <translation>obter a taxa de bits compatível mais próxima</translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="886"/>
+        <location filename="../configuratorwindow.cpp" line="887"/>
         <source>read device configuration</source>
         <translation>ler a configuração do dispositivo</translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="898"/>
+        <location filename="../configuratorwindow.cpp" line="899"/>
         <source>read EEPROM</source>
         <translation>ler a EEPROM</translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="1018"/>
+        <location filename="../configuratorwindow.cpp" line="1019"/>
         <source>Device disconnected.
 
 Please reconnect it and try again.</source>
@@ -784,7 +784,7 @@ Please reconnect it and try again.</source>
 Por favor, ligue-o e tente novamente.</translation>
     </message>
     <message numerus="yes">
-        <location filename="../configuratorwindow.cpp" line="1021"/>
+        <location filename="../configuratorwindow.cpp" line="1022"/>
         <source>Failed to %1. The operation returned the following error(s):
 – %2</source>
         <translation>
@@ -795,42 +795,42 @@ Por favor, ligue-o e tente novamente.</translation>
         </translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="1037"/>
+        <location filename="../configuratorwindow.cpp" line="1038"/>
         <source>use password</source>
         <translation>usar palavra-passe</translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="1052"/>
+        <location filename="../configuratorwindow.cpp" line="1053"/>
         <source>Access Blocked</source>
         <translation>Acesso Bloqueado</translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="1052"/>
+        <location filename="../configuratorwindow.cpp" line="1053"/>
         <source>The password was not accepted and access is temporarily blocked. Please disconnect and reconnect your device, and try again.</source>
         <translation>A palavra-passe não foi aceite e o acesso está temporariamente bloqueado. Por favor, deslige e ligue o dispositivo, e tente novamente.</translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="1054"/>
+        <location filename="../configuratorwindow.cpp" line="1055"/>
         <source>Access Rejected</source>
         <translation>Acesso Rejeitado</translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="1054"/>
+        <location filename="../configuratorwindow.cpp" line="1055"/>
         <source>Full write access to the NVRAM was rejected for unknown reasons.</source>
         <translation>O acesso de escrita sobre a NVRAM foi rejeitado por.razões desconhecidas.</translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="1056"/>
+        <location filename="../configuratorwindow.cpp" line="1057"/>
         <source>Access Denied</source>
         <translation>Acesso Negado</translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="1056"/>
+        <location filename="../configuratorwindow.cpp" line="1057"/>
         <source>The password was not accepted. Please try again.</source>
         <translation>A palavra-passe não foi aceite. Por favor, tente novamente.</translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="1071"/>
+        <location filename="../configuratorwindow.cpp" line="1072"/>
         <source>write EEPROM</source>
         <translation>escrever a EEPROM</translation>
     </message>

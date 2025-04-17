@@ -1,4 +1,4 @@
-/* MCP2210 Configurator - Version 1.0.2 for Debian Linux
+/* MCP2210 Configurator - Version 1.0.3 for Debian Linux
    Copyright (c) 2023-2025 Samuel Lourenço
 
    This program is free software: you can redistribute it and/or modify it
@@ -37,6 +37,10 @@
 // Definitions
 const int CENTRAL_HEIGHT = 581;
 
+// The following values are applicable to displayConfiguration() (implemented in version 1.0.3)
+const bool FULL_UPDATE= true;
+const bool PARTIAL_UPDATE = false;
+
 ConfiguratorWindow::ConfiguratorWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::ConfiguratorWindow)
@@ -73,7 +77,7 @@ void ConfiguratorWindow::openDevice(quint16 vid, quint16 pid, const QString &ser
             this->deleteLater();  // Close window after the subsequent show() call
         } else {  // Device is now open
             this->setWindowTitle(tr("MCP2210 Device (S/N: %1)").arg(serialString));
-            displayConfiguration(deviceConfiguration_, true);
+            displayConfiguration(deviceConfiguration_, FULL_UPDATE);
             serialString_ = serialString;  // Pass the serial number
             viewEnabled_ = true;
         }
@@ -187,7 +191,7 @@ void ConfiguratorWindow::on_actionStatus_triggered()
             handleError();
         } else {  // Success
             statusDialog_ = new StatusDialog(this);
-            statusDialog_->setAttribute(Qt::WA_DeleteOnClose);  // It is important to delete the dialog in memory once closed, in order to force the application to retrieve the device status if the window is opened again???
+            statusDialog_->setAttribute(Qt::WA_DeleteOnClose);  // It is important to delete the dialog in memory once closed, in order to force the application to retrieve the device status if the window is opened again
             statusDialog_->setWindowTitle(tr("Device Status (S/N: %1)").arg(serialString_));
             statusDialog_->setBusRequestValueLabelText(chipStatus.busreq);
             statusDialog_->setBusOwnerValueLabelText(chipStatus.busowner);
@@ -376,10 +380,10 @@ void ConfiguratorWindow::on_lineEditPID_textEdited(const QString &text)
     ui->lineEditPID->setCursorPosition(curPosition);
 }
 
-void ConfiguratorWindow::on_lineEditProduct_textEdited()
+void ConfiguratorWindow::on_lineEditProduct_textEdited(QString text)  // The variable "text" is passed by value here, because it needs to be modified locally! (refactored in version 1.0.3)
 {
     int curPosition = ui->lineEditProduct->cursorPosition();
-    ui->lineEditProduct->setText(ui->lineEditProduct->text().replace('\n', ' '));
+    ui->lineEditProduct->setText(text.replace('\n', ' '));
     ui->lineEditProduct->setCursorPosition(curPosition);
 }
 
@@ -433,7 +437,7 @@ void ConfiguratorWindow::on_pushButtonRevealRepeatPassword_released()
 
 void ConfiguratorWindow::on_pushButtonRevert_clicked()
 {
-    displayConfiguration(deviceConfiguration_, false);  // A partial update is done here for efficiency purposes
+    displayConfiguration(deviceConfiguration_, PARTIAL_UPDATE);  // A partial update is done here for efficiency purposes
 }
 
 void ConfiguratorWindow::on_pushButtonWrite_clicked()
@@ -462,8 +466,7 @@ void ConfiguratorWindow::on_pushButtonWrite_clicked()
 
 void ConfiguratorWindow::on_radioButtonPasswordProtected_toggled(bool checked)
 {
-    if (checked == false) {
-        ui->checkBoxDoNotChangePassword->setChecked(false);
+    if (checked == false) {  // Cleaned up in version 1.0.3
         ui->lineEditNewPassword->clear();
         ui->lineEditRepeatPassword->clear();
     }
@@ -498,7 +501,7 @@ void ConfiguratorWindow::verifyConfiguration()
 {
     readDeviceConfiguration();
     if (!err_) {
-        displayConfiguration(deviceConfiguration_, true);
+        displayConfiguration(deviceConfiguration_, FULL_UPDATE);
         if (deviceConfiguration_ != editedConfiguration_) {
             err_ = true;
             errmsg_ = tr("Failed verification.");
@@ -745,22 +748,20 @@ void ConfiguratorWindow::getEditedConfiguration()
     editedConfiguration_.spiSettings.mode = static_cast<quint8>(ui->spinBoxMode->value());
     editedConfiguration_.spiSettings.actcs = static_cast<quint8>(ui->checkBoxActiveCS7->isChecked() << 7 |
                                                                  ui->checkBoxActiveCS6->isChecked() << 6 |
-                                                                 ui->checkBoxActiveCS6->isChecked() << 6 |
                                                                  ui->checkBoxActiveCS5->isChecked() << 5 |
                                                                  ui->checkBoxActiveCS4->isChecked() << 4 |
                                                                  ui->checkBoxActiveCS3->isChecked() << 3 |
                                                                  ui->checkBoxActiveCS2->isChecked() << 2 |
                                                                  ui->checkBoxActiveCS1->isChecked() << 1 |
-                                                                 ui->checkBoxActiveCS0->isChecked());
+                                                                 ui->checkBoxActiveCS0->isChecked());  // Corrected in version 1.0.3
     editedConfiguration_.spiSettings.idlcs = static_cast<quint8>(ui->checkBoxIdleCS7->isChecked() << 7 |
-                                                                 ui->checkBoxIdleCS6->isChecked() << 6 |
                                                                  ui->checkBoxIdleCS6->isChecked() << 6 |
                                                                  ui->checkBoxIdleCS5->isChecked() << 5 |
                                                                  ui->checkBoxIdleCS4->isChecked() << 4 |
                                                                  ui->checkBoxIdleCS3->isChecked() << 3 |
                                                                  ui->checkBoxIdleCS2->isChecked() << 2 |
                                                                  ui->checkBoxIdleCS1->isChecked() << 1 |
-                                                                 ui->checkBoxIdleCS0->isChecked());
+                                                                 ui->checkBoxIdleCS0->isChecked());  // Corrected in version 1.0.3
     editedConfiguration_.spiSettings.csdtdly = static_cast<quint16>(ui->spinBoxCSToDataDelay->value());
     editedConfiguration_.spiSettings.dtcsdly = static_cast<quint16>(ui->spinBoxDataToCSDelay->value());
     editedConfiguration_.spiSettings.itbytdly = static_cast<quint16>(ui->spinBoxInterByteDelay->value());
@@ -833,7 +834,7 @@ void ConfiguratorWindow::loadConfigurationFromFile(QFile &file)
         if (err_) {  // If an error has occured
             handleError();
         }
-        displayConfiguration(editedConfiguration_, false);  // A full update is not done here, in order to prevent any fields from being disabled
+        displayConfiguration(editedConfiguration_, PARTIAL_UPDATE);  // A full update is not done here, in order to prevent any fields from being disabled
     }
 }
 
@@ -1048,7 +1049,7 @@ bool ConfiguratorWindow::validatePassword()
                 retval = true;
             } else if (response == MCP2210::BLOCKED || chipStatus.pwtries > 4) {  // If access is blocked (redundancy is necessary)
                 passwordIsLocked_ = true;  // From this point on, the device will be viewed as if it was locked
-                displayConfiguration(deviceConfiguration_, true);
+                displayConfiguration(deviceConfiguration_, FULL_UPDATE);
                 QMessageBox::warning(this, tr("Access Blocked"), tr("The password was not accepted and access is temporarily blocked. Please disconnect and reconnect your device, and try again."));
             } else if (response == MCP2210::REJECTED) {  // If access is somehow rejected
                 QMessageBox::warning(this, tr("Access Rejected"), tr("Full write access to the NVRAM was rejected for unknown reasons."));
