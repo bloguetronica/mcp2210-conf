@@ -37,6 +37,10 @@
 // Definitions
 const int CENTRAL_HEIGHT = 581;
 
+// The following values are applicable to displayConfiguration() (implemented in version 1.0.3)
+const bool FULL_UPDATE= true;
+const bool PARTIAL_UPDATE = false;
+
 ConfiguratorWindow::ConfiguratorWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::ConfiguratorWindow)
@@ -73,7 +77,7 @@ void ConfiguratorWindow::openDevice(quint16 vid, quint16 pid, const QString &ser
             this->deleteLater();  // Close window after the subsequent show() call
         } else {  // Device is now open
             this->setWindowTitle(tr("MCP2210 Device (S/N: %1)").arg(serialString));
-            displayConfiguration(deviceConfiguration_, true);
+            displayConfiguration(deviceConfiguration_, FULL_UPDATE);
             serialString_ = serialString;  // Pass the serial number
             viewEnabled_ = true;
         }
@@ -433,7 +437,7 @@ void ConfiguratorWindow::on_pushButtonRevealRepeatPassword_released()
 
 void ConfiguratorWindow::on_pushButtonRevert_clicked()
 {
-    displayConfiguration(deviceConfiguration_, false);  // A partial update is done here for efficiency purposes
+    displayConfiguration(deviceConfiguration_, PARTIAL_UPDATE);  // A partial update is done here for efficiency purposes
 }
 
 void ConfiguratorWindow::on_pushButtonWrite_clicked()
@@ -497,7 +501,7 @@ void ConfiguratorWindow::verifyConfiguration()
 {
     readDeviceConfiguration();
     if (!err_) {
-        displayConfiguration(deviceConfiguration_, true);
+        displayConfiguration(deviceConfiguration_, FULL_UPDATE);
         if (deviceConfiguration_ != editedConfiguration_) {
             err_ = true;
             errmsg_ = tr("Failed verification.");
@@ -830,7 +834,7 @@ void ConfiguratorWindow::loadConfigurationFromFile(QFile &file)
         if (err_) {  // If an error has occured
             handleError();
         }
-        displayConfiguration(editedConfiguration_, false);  // A full update is not done here, in order to prevent any fields from being disabled
+        displayConfiguration(editedConfiguration_, PARTIAL_UPDATE);  // A full update is not done here, in order to prevent any fields from being disabled
     }
 }
 
@@ -1045,7 +1049,7 @@ bool ConfiguratorWindow::validatePassword()
                 retval = true;
             } else if (response == MCP2210::BLOCKED || chipStatus.pwtries > 4) {  // If access is blocked (redundancy is necessary)
                 passwordIsLocked_ = true;  // From this point on, the device will be viewed as if it was locked
-                displayConfiguration(deviceConfiguration_, true);
+                displayConfiguration(deviceConfiguration_, FULL_UPDATE);
                 QMessageBox::warning(this, tr("Access Blocked"), tr("The password was not accepted and access is temporarily blocked. Please disconnect and reconnect your device, and try again."));
             } else if (response == MCP2210::REJECTED) {  // If access is somehow rejected
                 QMessageBox::warning(this, tr("Access Rejected"), tr("Full write access to the NVRAM was rejected for unknown reasons."));

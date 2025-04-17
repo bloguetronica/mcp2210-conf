@@ -74,7 +74,7 @@ private slots:
     void on_lineEditNewPassword_textChanged(const QString &text);
     void on_lineEditPID_textChanged(const QString &text);
     void on_lineEditPID_textEdited(const QString &text);
-    void on_lineEditProduct_textEdited();
+    void on_lineEditProduct_textEdited(QString text);
     void on_lineEditRepeatPassword_textChanged(const QString &text);
     void on_lineEditVID_textChanged(const QString &text);
     void on_lineEditVID_textEdited(const QString &text);
