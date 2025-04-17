@@ -1,4 +1,4 @@
-/* MCP2210 Configurator - Version 1.0.2 for Debian Linux
+/* MCP2210 Configurator - Version 1.0.3 for Debian Linux
    Copyright (c) 2023-2025 Samuel Lourenço
 
    This program is free software: you can redistribute it and/or modify it
@@ -187,7 +187,7 @@ void ConfiguratorWindow::on_actionStatus_triggered()
             handleError();
         } else {  // Success
             statusDialog_ = new StatusDialog(this);
-            statusDialog_->setAttribute(Qt::WA_DeleteOnClose);  // It is important to delete the dialog in memory once closed, in order to force the application to retrieve the device status if the window is opened again???
+            statusDialog_->setAttribute(Qt::WA_DeleteOnClose);  // It is important to delete the dialog in memory once closed, in order to force the application to retrieve the device status if the window is opened again
             statusDialog_->setWindowTitle(tr("Device Status (S/N: %1)").arg(serialString_));
             statusDialog_->setBusRequestValueLabelText(chipStatus.busreq);
             statusDialog_->setBusOwnerValueLabelText(chipStatus.busowner);
@@ -745,7 +745,6 @@ void ConfiguratorWindow::getEditedConfiguration()
     editedConfiguration_.spiSettings.mode = static_cast<quint8>(ui->spinBoxMode->value());
     editedConfiguration_.spiSettings.actcs = static_cast<quint8>(ui->checkBoxActiveCS7->isChecked() << 7 |
                                                                  ui->checkBoxActiveCS6->isChecked() << 6 |
-                                                                 ui->checkBoxActiveCS6->isChecked() << 6 |
                                                                  ui->checkBoxActiveCS5->isChecked() << 5 |
                                                                  ui->checkBoxActiveCS4->isChecked() << 4 |
                                                                  ui->checkBoxActiveCS3->isChecked() << 3 |
@@ -753,7 +752,6 @@ void ConfiguratorWindow::getEditedConfiguration()
                                                                  ui->checkBoxActiveCS1->isChecked() << 1 |
                                                                  ui->checkBoxActiveCS0->isChecked());
     editedConfiguration_.spiSettings.idlcs = static_cast<quint8>(ui->checkBoxIdleCS7->isChecked() << 7 |
-                                                                 ui->checkBoxIdleCS6->isChecked() << 6 |
                                                                  ui->checkBoxIdleCS6->isChecked() << 6 |
                                                                  ui->checkBoxIdleCS5->isChecked() << 5 |
                                                                  ui->checkBoxIdleCS4->isChecked() << 4 |
