@@ -380,7 +380,7 @@ void ConfiguratorWindow::on_lineEditPID_textEdited(const QString &text)
     ui->lineEditPID->setCursorPosition(curPosition);
 }
 
-void ConfiguratorWindow::on_lineEditProduct_textEdited()
+void ConfiguratorWindow::on_lineEditProduct_textEdited(QString text)  // The variable "text" is passed by value here, because it needs to be modified locally! (refactored in version 1.0.3)
 {
     int curPosition = ui->lineEditProduct->cursorPosition();
     ui->lineEditProduct->setText(ui->lineEditProduct->text().replace('\n', ' '));
