@@ -462,8 +462,7 @@ void ConfiguratorWindow::on_pushButtonWrite_clicked()
 
 void ConfiguratorWindow::on_radioButtonPasswordProtected_toggled(bool checked)
 {
-    if (checked == false) {
-        ui->checkBoxDoNotChangePassword->setChecked(false);
+    if (checked == false) {  // Cleaned up in version 1.0.3
         ui->lineEditNewPassword->clear();
         ui->lineEditRepeatPassword->clear();
     }
@@ -750,7 +749,7 @@ void ConfiguratorWindow::getEditedConfiguration()
                                                                  ui->checkBoxActiveCS3->isChecked() << 3 |
                                                                  ui->checkBoxActiveCS2->isChecked() << 2 |
                                                                  ui->checkBoxActiveCS1->isChecked() << 1 |
-                                                                 ui->checkBoxActiveCS0->isChecked());
+                                                                 ui->checkBoxActiveCS0->isChecked());  // Corrected in version 1.0.3
     editedConfiguration_.spiSettings.idlcs = static_cast<quint8>(ui->checkBoxIdleCS7->isChecked() << 7 |
                                                                  ui->checkBoxIdleCS6->isChecked() << 6 |
                                                                  ui->checkBoxIdleCS5->isChecked() << 5 |
@@ -758,7 +757,7 @@ void ConfiguratorWindow::getEditedConfiguration()
                                                                  ui->checkBoxIdleCS3->isChecked() << 3 |
                                                                  ui->checkBoxIdleCS2->isChecked() << 2 |
                                                                  ui->checkBoxIdleCS1->isChecked() << 1 |
-                                                                 ui->checkBoxIdleCS0->isChecked());
+                                                                 ui->checkBoxIdleCS0->isChecked());  // Corrected in version 1.0.3
     editedConfiguration_.spiSettings.csdtdly = static_cast<quint16>(ui->spinBoxCSToDataDelay->value());
     editedConfiguration_.spiSettings.dtcsdly = static_cast<quint16>(ui->spinBoxDataToCSDelay->value());
     editedConfiguration_.spiSettings.itbytdly = static_cast<quint16>(ui->spinBoxInterByteDelay->value());
