@@ -1,4 +1,4 @@
-/* MCP2210 Configurator - Version 1.0.3 for Debian Linux
+/* MCP2210 Configurator - Version 1.0.4 for Debian Linux
    Copyright (c) 2023-2025 Samuel Lourenço
 
    This program is free software: you can redistribute it and/or modify it
@@ -27,7 +27,7 @@ bool Configuration::operator ==(const Configuration &other) const
     return manufacturer == other.manufacturer && product == other.product && usbParameters == other.usbParameters && chipSettings == other.chipSettings && spiSettings == other.spiSettings && accessMode == other.accessMode;
 }
 
-// "Not equal to" operator for SiliconVersion
+// "Not equal to" operator for Configuration
 bool Configuration::operator !=(const Configuration &other) const
 {
     return !(operator ==(other));
