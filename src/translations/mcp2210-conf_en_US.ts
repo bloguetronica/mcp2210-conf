@@ -15,7 +15,7 @@
     </message>
     <message>
         <location filename="../aboutdialog.ui" line="81"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Version 1.0.4&lt;br/&gt;© 2023-2025 Samuel Lourenço&lt;/p&gt;&lt;p&gt;This program is distributed under the terms of the &lt;a href=&quot;https://www.gnu.org/licenses/gpl-3.0-standalone.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;GNU GPL v3&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Version 1.0.5&lt;br/&gt;© 2023-2025 Samuel Lourenço&lt;/p&gt;&lt;p&gt;This program is distributed under the terms of the &lt;a href=&quot;https://www.gnu.org/licenses/gpl-3.0-standalone.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;GNU GPL v3&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation></translation>
     </message>
 </context>
@@ -520,8 +520,8 @@ This is a critical error and execution will be aborted.</source>
         <location filename="../configuratorwindow.cpp" line="253"/>
         <location filename="../configuratorwindow.cpp" line="447"/>
         <location filename="../configuratorwindow.cpp" line="576"/>
-        <location filename="../configuratorwindow.cpp" line="822"/>
-        <location filename="../configuratorwindow.cpp" line="831"/>
+        <location filename="../configuratorwindow.cpp" line="823"/>
+        <location filename="../configuratorwindow.cpp" line="832"/>
         <source>Error</source>
         <translation></translation>
     </message>
@@ -746,29 +746,29 @@ Do you wish to proceed?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="806"/>
+        <location filename="../configuratorwindow.cpp" line="807"/>
         <source>get nearest compatible bit rate</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="888"/>
+        <location filename="../configuratorwindow.cpp" line="889"/>
         <source>read device configuration</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="900"/>
+        <location filename="../configuratorwindow.cpp" line="901"/>
         <source>read EEPROM</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="1020"/>
+        <location filename="../configuratorwindow.cpp" line="1021"/>
         <source>Device disconnected.
 
 Please reconnect it and try again.</source>
         <translation></translation>
     </message>
     <message numerus="yes">
-        <location filename="../configuratorwindow.cpp" line="1023"/>
+        <location filename="../configuratorwindow.cpp" line="1024"/>
         <source>Failed to %1. The operation returned the following error(s):
 – %2</source>
         <translation>
@@ -779,42 +779,42 @@ Please reconnect it and try again.</source>
         </translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="1039"/>
+        <location filename="../configuratorwindow.cpp" line="1040"/>
         <source>use password</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="1054"/>
+        <location filename="../configuratorwindow.cpp" line="1055"/>
         <source>Access Blocked</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="1054"/>
+        <location filename="../configuratorwindow.cpp" line="1055"/>
         <source>The password was not accepted and access is temporarily blocked. Please disconnect and reconnect your device, and try again.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="1056"/>
+        <location filename="../configuratorwindow.cpp" line="1057"/>
         <source>Access Rejected</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="1056"/>
+        <location filename="../configuratorwindow.cpp" line="1057"/>
         <source>Full write access to the NVRAM was rejected for unknown reasons.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="1058"/>
+        <location filename="../configuratorwindow.cpp" line="1059"/>
         <source>Access Denied</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="1058"/>
+        <location filename="../configuratorwindow.cpp" line="1059"/>
         <source>The password was not accepted. Please try again.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../configuratorwindow.cpp" line="1073"/>
+        <location filename="../configuratorwindow.cpp" line="1074"/>
         <source>write EEPROM</source>
         <translation></translation>
     </message>
