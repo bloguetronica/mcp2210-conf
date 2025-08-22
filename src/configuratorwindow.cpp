@@ -53,6 +53,7 @@ ConfiguratorWindow::ConfiguratorWindow(QWidget *parent) :
     ui->lineEditMaxPowerHex->setValidator(new QRegExpValidator(QRegExp("[A-Fa-f\\d]+"), this));
     ui->lineEditNewPassword->setValidator(new QRegExpValidator(QRegExp("[!-~]+"), this));  // All printable ASCII characters except space
     ui->lineEditRepeatPassword->setValidator(new QRegExpValidator(QRegExp("[!-~]+"), this));  // Same as above
+    ui->doubleSpinBoxBitRate->setLocale(systemLocale);  // Added in version 1.0.6
 }
 
 ConfiguratorWindow::~ConfiguratorWindow()
