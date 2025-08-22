@@ -1,5 +1,5 @@
-/* MCP2210 class for Qt - Version 1.2.2
-   Copyright (c) 2022-2024 Samuel Lourenço
+/* MCP2210 class for Qt - Version 1.3.0
+   Copyright (c) 2022-2025 Samuel Lourenço
 
    This library is free software: you can redistribute it and/or modify it
    under the terms of the GNU Lesser General Public License as published by
@@ -77,6 +77,7 @@ public:
     static const quint8 SET_NVRAM_SETTINGS = 0x60;   // Set NVRAM settings
     static const quint8 GET_NVRAM_SETTINGS = 0x61;   // Get NVRAM settings
     static const quint8 SEND_PASSWORD = 0x70;        // Send password
+    static const quint8 REQUEST_BUS_RELEASE = 0x80;  // Request SPI bus release
 
     // NVRAM settings sub-command IDs
     static const quint8 NV_SPI_SETTINGS = 0x10;    // Power-up (non-volatile) SPI transfer settings
@@ -290,6 +291,7 @@ public:
     int open(quint16 vid, quint16 pid, const QString &serial = QString());
     quint8 readEEPROMByte(quint8 address, int &errcnt, QString &errstr);
     QVector<quint8> readEEPROMRange(quint8 begin, quint8 end, int &errcnt, QString &errstr);
+    quint8 requestSPIBusRelease(bool value, int &errcnt, QString &errstr);
     quint8 resetEventCounter(int &errcnt, QString &errstr);
     quint8 setGPIO(int gpio, bool value, int &errcnt, QString &errstr);
     quint8 setGPIODirection(int gpio, bool direction, int &errcnt, QString &errstr);

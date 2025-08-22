@@ -1,5 +1,5 @@
-/* MCP2210 class for Qt - Version 1.2.2
-   Copyright (c) 2022-2024 Samuel Lourenço
+/* MCP2210 class for Qt - Version 1.3.0
+   Copyright (c) 2022-2025 Samuel Lourenço
 
    This library is free software: you can redistribute it and/or modify it
    under the terms of the GNU Lesser General Public License as published by
@@ -529,6 +529,18 @@ QVector<quint8> MCP2210::readEEPROMRange(quint8 begin, quint8 end, int &errcnt, 
         }
     }
     return values;
+}
+
+// Requests the SPI bus to be released from the MCP2210 end (added in version 1.3.0)
+// This function also allows you to set the value of the SPI Bus Release ACK pin (GP7 pin assigned to dedicated function)
+quint8 MCP2210::requestSPIBusRelease(bool value, int &errcnt, QString &errstr)
+{
+    QVector<quint8> command{
+        REQUEST_BUS_RELEASE,  // Header
+        value                 // Value of SPI Bus Release ACK pin
+    };
+    QVector<quint8> response = hidTransfer(command, errcnt, errstr);
+    return response[1];
 }
 
 // Resets the interrupt event counter
