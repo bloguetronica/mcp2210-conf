@@ -1,4 +1,4 @@
-/* MCP2210 Configurator - Version 1.0.5 for Debian Linux
+/* MCP2210 Configurator - Version 1.0.6 for Debian Linux
    Copyright (c) 2023-2025 Samuel Lourenço
 
    This program is free software: you can redistribute it and/or modify it
@@ -20,15 +20,15 @@
 
 // Includes
 #include <QApplication>
-#include <QLocale>
 #include <QTranslator>
+#include "common.h"
 #include "mainwindow.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     QTranslator translator;
-    if (!translator.load("mcp2210-conf_" + QLocale::system().name(), ":/translations/translations")) {  // It the locale translation does not exist or cannot be loaded
+    if (!translator.load("mcp2210-conf_" + systemLocale.name(), ":/translations/translations")) {  // It the locale translation does not exist or cannot be loaded (modified in version 1.0.6)
         translator.load("mcp2210-conf_en_US", ":/translations/translations");  // Fall back to the en-US translation
     }
     a.installTranslator(&translator);

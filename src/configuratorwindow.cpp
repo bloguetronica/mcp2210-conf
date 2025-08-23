@@ -1,4 +1,4 @@
-/* MCP2210 Configurator - Version 1.0.5 for Debian Linux
+/* MCP2210 Configurator - Version 1.0.6 for Debian Linux
    Copyright (c) 2023-2025 Samuel Lourenço
 
    This program is free software: you can redistribute it and/or modify it
@@ -53,6 +53,7 @@ ConfiguratorWindow::ConfiguratorWindow(QWidget *parent) :
     ui->lineEditMaxPowerHex->setValidator(new QRegExpValidator(QRegExp("[A-Fa-f\\d]+"), this));
     ui->lineEditNewPassword->setValidator(new QRegExpValidator(QRegExp("[!-~]+"), this));  // All printable ASCII characters except space
     ui->lineEditRepeatPassword->setValidator(new QRegExpValidator(QRegExp("[!-~]+"), this));  // Same as above
+    ui->doubleSpinBoxBitRate->setLocale(systemLocale);  // Added in version 1.0.6
 }
 
 ConfiguratorWindow::~ConfiguratorWindow()
