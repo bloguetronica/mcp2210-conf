@@ -26,9 +26,9 @@
 #include <QString>
 
 // Global variables
-extern QLocale systemLocale;  // Added in version 1.0.6
-extern QString binFilePath;
-extern QString xmlFilePath;
+extern QLocale systemLocale;           // Added in version 1.0.6
+extern QString configurationFilePath;  // Renamed in version 1.0.7
+extern QString eepromFilePath;         // Renamed in version 1.0.7
 
 // Function prototypes
 void closeAboutDialog();

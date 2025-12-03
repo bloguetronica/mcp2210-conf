@@ -25,9 +25,9 @@
 #include "common.h"
 
 // Global definitions
-QLocale systemLocale = QLocale::system();  // Added in version 1.0.6
-QString binFilePath = QDir::homePath();
-QString xmlFilePath = QDir::homePath();
+QLocale systemLocale = QLocale::system();          // Added in version 1.0.6
+QString configurationFilePath = QDir::homePath();  // Renamed in version 1.0.7
+QString eepromFilePath = QDir::homePath();         // Renamed in version 1.0.7
 
 // Local definitions
 QPointer<AboutDialog> aboutDialog_;

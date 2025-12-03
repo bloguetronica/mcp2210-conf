@@ -127,7 +127,7 @@ void ConfiguratorWindow::on_actionAbout_triggered()
 
 void ConfiguratorWindow::on_actionLoadConfiguration_triggered()
 {
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Load Configuration from File"), xmlFilePath, tr("XML files (*.xml);;All files (*)"));
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Load Configuration from File"), configurationFilePath, tr("XML files (*.xml);;All files (*)"));  // Modified in version 1.0.7
     if (!fileName.isEmpty()) {  // Note that the previous dialog will return an empty string if the user cancels it
         QFile file(fileName);
         if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
@@ -135,7 +135,7 @@ void ConfiguratorWindow::on_actionLoadConfiguration_triggered()
         } else {
             loadConfigurationFromFile(file);
             file.close();
-            xmlFilePath = fileName;
+            configurationFilePath = fileName;  // Modified in version 1.0.7
         }
     }
 }
@@ -147,7 +147,7 @@ void ConfiguratorWindow::on_actionReadEEPROM_triggered()
     if (err_) {  // If an error has occured
         handleError();
     } else {  // Successful read
-        QString fileName = QFileDialog::getSaveFileName(this, tr("Save EEPROM Contents to File"), binFilePath, tr("Binary files (*.bin);;All files (*)"));
+        QString fileName = QFileDialog::getSaveFileName(this, tr("Save EEPROM Contents to File"), eepromFilePath, tr("Binary files (*.bin);;All files (*)"));  // Modified in version 1.0.7
         if (!fileName.isEmpty()) {  // Note that the previous dialog will return an empty string if the user cancels it
             QFile file(fileName);
             if (!file.open(QIODevice::WriteOnly)) {
@@ -156,7 +156,7 @@ void ConfiguratorWindow::on_actionReadEEPROM_triggered()
                 QDataStream out(&file);
                 out << eeprom;
                 file.close();
-                binFilePath = fileName;
+                eepromFilePath = fileName;  // Modified in version 1.0.7
             }
         }
     }
@@ -167,7 +167,7 @@ void ConfiguratorWindow::on_actionSaveConfiguration_triggered()
     if(showInvalidInput()) {
         QMessageBox::critical(this, tr("Error"), tr("One or more fields have invalid information.\n\nPlease correct the information in the fields highlighted in red."));
     } else {
-        QString fileName = QFileDialog::getSaveFileName(this, tr("Save Configuration to File"), xmlFilePath, tr("XML files (*.xml);;All files (*)"));
+        QString fileName = QFileDialog::getSaveFileName(this, tr("Save Configuration to File"), configurationFilePath, tr("XML files (*.xml);;All files (*)"));  // Modified in version 1.0.7
         if (!fileName.isEmpty()) {  // Note that the previous dialog will return an empty string if the user cancels it
             QFile file(fileName);
             if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
@@ -175,7 +175,7 @@ void ConfiguratorWindow::on_actionSaveConfiguration_triggered()
             } else {
                 saveConfigurationToFile(file);
                 file.close();
-                xmlFilePath = fileName;
+                configurationFilePath = fileName;  // Modified in version 1.0.7
             }
         }
     }
@@ -216,7 +216,7 @@ void ConfiguratorWindow::on_actionUsePassword_triggered()
 
 void ConfiguratorWindow::on_actionVerifyEEPROM_triggered()
 {
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Verify EEPROM Contents against File"), binFilePath, tr("Binary files (*.bin);;All files (*)"));
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Verify EEPROM Contents against File"), eepromFilePath, tr("Binary files (*.bin);;All files (*)"));  // Modified in version 1.0.7
     if (!fileName.isEmpty()) {  // Note that the previous dialog will return an empty string if the user cancels it
         QFile file(fileName);
         if (!file.open(QIODevice::ReadOnly)) {
@@ -228,7 +228,7 @@ void ConfiguratorWindow::on_actionVerifyEEPROM_triggered()
             QDataStream in(&file);
             in >> eepromFromFile;
             file.close();
-            binFilePath = fileName;
+            eepromFilePath = fileName;  // Modified in version 1.0.7
             err_ = false;
             eeprom = readEEPROM();
             if (err_) {  // If an error has occured
@@ -245,7 +245,7 @@ void ConfiguratorWindow::on_actionVerifyEEPROM_triggered()
 void ConfiguratorWindow::on_actionWriteEEPROM_triggered()
 {
     if (deviceConfiguration_.accessMode == MCP2210::ACNONE || (deviceConfiguration_.accessMode == MCP2210::ACPASSWORD && (passwordIsValid_ || validatePassword()))) {
-        QString fileName = QFileDialog::getOpenFileName(this, tr("Load EEPROM Contents from File"), binFilePath, tr("Binary files (*.bin);;All files (*)"));
+        QString fileName = QFileDialog::getOpenFileName(this, tr("Load EEPROM Contents from File"), eepromFilePath, tr("Binary files (*.bin);;All files (*)"));  // Modified in version 1.0.7
         if (!fileName.isEmpty()) {  // Note that the previous dialog will return an empty string if the user cancels it
             QFile file(fileName);
             if (!file.open(QIODevice::ReadOnly)) {
@@ -257,7 +257,7 @@ void ConfiguratorWindow::on_actionWriteEEPROM_triggered()
                 QDataStream in(&file);
                 in >> eepromFromFile;
                 file.close();
-                binFilePath = fileName;
+                eepromFilePath = fileName;  // Modified in version 1.0.7
                 err_ = false;
                 writeEEPROM(eepromFromFile);
                 if (err_) {  // If an error has occured
