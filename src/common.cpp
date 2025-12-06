@@ -1,4 +1,4 @@
-/* MCP2210 Configurator - Version 1.0.6 for Debian Linux
+/* MCP2210 Configurator - Version 1.0.7 for Debian Linux
    Copyright (c) 2023-2025 Samuel Lourenço
 
    This program is free software: you can redistribute it and/or modify it
@@ -25,9 +25,9 @@
 #include "common.h"
 
 // Global definitions
-QLocale systemLocale = QLocale::system();  // Added in version 1.0.6
-QString binFilePath = QDir::homePath();
-QString xmlFilePath = QDir::homePath();
+QLocale systemLocale = QLocale::system();          // Added in version 1.0.6
+QString configurationFilePath = QDir::homePath();  // Renamed in version 1.0.7
+QString eepromFilePath = QDir::homePath();         // Renamed in version 1.0.7
 
 // Local definitions
 QPointer<AboutDialog> aboutDialog_;
