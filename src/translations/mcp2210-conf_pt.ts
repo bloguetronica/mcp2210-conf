@@ -15,8 +15,8 @@
     </message>
     <message>
         <location filename="../aboutdialog.ui" line="81"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Version 1.0.6&lt;br/&gt;© 2023-2025 Samuel Lourenço&lt;/p&gt;&lt;p&gt;This program is distributed under the terms of the &lt;a href=&quot;https://www.gnu.org/licenses/gpl-3.0-standalone.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;GNU GPL v3&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Versão 1.0.6&lt;br/&gt;© 2023-2025 Samuel Lourenço&lt;/p&gt;&lt;p&gt;Este programa é distribuido sob os termos da licença &lt;a href=&quot;https://www.gnu.org/licenses/gpl-3.0-standalone.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;GNU GPL v3&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Version 1.0.7&lt;br/&gt;© 2023-2025 Samuel Lourenço&lt;/p&gt;&lt;p&gt;This program is distributed under the terms of the &lt;a href=&quot;https://www.gnu.org/licenses/gpl-3.0-standalone.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;GNU GPL v3&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Versão 1.0.7&lt;br/&gt;© 2023-2025 Samuel Lourenço&lt;/p&gt;&lt;p&gt;Este programa é distribuido sob os termos da licença &lt;a href=&quot;https://www.gnu.org/licenses/gpl-3.0-standalone.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;GNU GPL v3&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -613,7 +613,7 @@ Por favor, corriga a informação nos campos marcados a vermelho.</translation>
     <message>
         <location filename="../configuratorwindow.cpp" line="191"/>
         <source>retrieve device status</source>
-        <translation>obter o estado do dispositivo</translation>
+        <translation>retornar o estado do dispositivo</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.cpp" line="197"/>
@@ -817,7 +817,7 @@ Por favor, ligue-o e tente novamente.</translation>
     <message>
         <location filename="../configuratorwindow.cpp" line="1058"/>
         <source>Full write access to the NVRAM was rejected for unknown reasons.</source>
-        <translation>O acesso de escrita sobre a NVRAM foi rejeitado por.razões desconhecidas.</translation>
+        <translation>O acesso de escrita sobre a NVRAM foi rejeitado por razões desconhecidas.</translation>
     </message>
     <message>
         <location filename="../configuratorwindow.cpp" line="1060"/>

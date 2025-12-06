@@ -15,7 +15,7 @@
     </message>
     <message>
         <location filename="../aboutdialog.ui" line="81"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Version 1.0.6&lt;br/&gt;© 2023-2025 Samuel Lourenço&lt;/p&gt;&lt;p&gt;This program is distributed under the terms of the &lt;a href=&quot;https://www.gnu.org/licenses/gpl-3.0-standalone.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;GNU GPL v3&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Version 1.0.7&lt;br/&gt;© 2023-2025 Samuel Lourenço&lt;/p&gt;&lt;p&gt;This program is distributed under the terms of the &lt;a href=&quot;https://www.gnu.org/licenses/gpl-3.0-standalone.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;GNU GPL v3&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation></translation>
     </message>
 </context>
